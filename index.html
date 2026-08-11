@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>찾았대</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    :root {
+      --navy:#7B5038; --navy2:#6A4228; --gold:#D4922A;
+      --gbg:#FAF7F2; --gline:#E5D5C0; --text:#3D2B1F; --sub:#9B7B5B;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;
+      font-family:-apple-system,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;}
+    html,body{background:#E8D5BC;}
+
+    /* ── Main App ── */
+    #app{max-width:430px;min-height:100vh;margin:0 auto;
+         background:var(--gbg);box-shadow:0 0 30px rgba(0,0,0,.2);}
+
+    .hd{background:var(--navy);padding:13px 16px;position:sticky;top:0;z-index:10;}
+    .hd-row{display:flex;justify-content:space-between;align-items:center;}
+    .hd-logo{display:flex;gap:8px;align-items:center;}
+    .hd-icon{width:34px;height:34px;background:var(--gold);border-radius:10px;
+             display:flex;align-items:center;justify-content:center;font-size:18px;}
+    .hd-title{font-size:19px;font-weight:800;color:#fff;}
+    .hd-sub{font-size:10px;color:rgba(255,255,255,.5);}
+    .hd-right{display:flex;align-items:center;gap:10px;}
+    .hd-menu-btn{background:rgba(255,255,255,.18);color:#fff;border:none;
+                 width:36px;height:36px;border-radius:10px;font-size:18px;
+                 cursor:pointer;display:flex;align-items:center;justify-content:center;}
+    .hd-menu-btn:active{background:rgba(255,255,255,.3);}
+    /* 사이드 메뉴 */
+    .menu-ov{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;z-index:4000;}
+    .menu-ov.on{display:block;}
+    .menu-sheet{position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+                width:100%;max-width:430px;background:#fff;border-radius:22px 22px 0 0;
+                overflow:hidden;}
+    .menu-handle{width:36px;height:4px;background:#ddd;border-radius:2px;margin:12px auto 0;}
+    .menu-user-row{display:flex;align-items:center;gap:14px;padding:18px 20px 16px;
+                   border-bottom:1px solid var(--gline);}
+    .menu-user-av{width:50px;height:50px;background:var(--gold);border-radius:50%;
+                  display:flex;align-items:center;justify-content:center;
+                  font-size:22px;font-weight:900;color:#fff;flex-shrink:0;}
+    .menu-user-name{font-size:17px;font-weight:800;color:var(--text);}
+    .menu-user-univ{font-size:12px;color:var(--sub);margin-top:3px;}
+    .menu-item{display:flex;align-items:center;gap:14px;padding:16px 20px;
+               cursor:pointer;border-bottom:1px solid var(--gline);}
+    .menu-item:active{background:var(--gbg);}
+    .menu-item-icon{width:42px;height:42px;background:var(--gbg);border-radius:12px;
+                    display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+    .menu-item-label{font-size:15px;font-weight:600;color:var(--text);flex:1;}
+    .menu-item-arr{color:#ccc;font-size:18px;}
+    .menu-footer{padding:16px 20px 28px;display:flex;justify-content:flex-end;}
+    .menu-logout-btn{background:#fff0f0;color:#e74c3c;border:1.5px solid #fac8c8;
+                     padding:11px 22px;border-radius:22px;font-size:14px;font-weight:700;
+                     cursor:pointer;font-family:inherit;}
+    .menu-logout-btn:active{background:#ffe0e0;}
+
+    .stats{background:var(--navy2);display:grid;grid-template-columns:repeat(4,1fr);padding:10px 0 12px;}
+    .stat{text-align:center;cursor:pointer;padding:4px 0;border-radius:10px;transition:background .15s;}
+    .stat:hover{background:rgba(255,255,255,.08);}
+    .stat.on{background:rgba(255,255,255,.15);}
+    .stat-n{font-size:23px;font-weight:800;color:#fff;}
+    .stat-n.g{color:var(--gold);}
+    .stat-n.gr{color:#5de898;}
+    .stat-l{font-size:10px;color:rgba(255,255,255,.5);margin-top:3px;}
+    .stat.on .stat-l{color:rgba(255,255,255,.85);font-weight:700;}
+
+    .tabs{background:#fff;display:flex;border-bottom:1.5px solid var(--gline);}
+    .tab{flex:1;text-align:center;padding:13px 4px;font-size:13px;color:var(--sub);
+         cursor:pointer;border-bottom:2.5px solid transparent;}
+    .tab.on{color:var(--navy);border-bottom-color:var(--navy);font-weight:700;}
+
+    .filters{background:#fff;border-bottom:1px solid var(--gline);}
+    .f1{display:flex;gap:8px;padding:10px 14px 6px;}
+    .cat-wrap{position:relative;flex:1;}
+    .cat-wrap::after{content:'▾';position:absolute;right:10px;top:50%;
+                     transform:translateY(-50%);color:var(--sub);pointer-events:none;font-size:11px;}
+    .cat-sel{width:100%;padding:8px 28px 8px 12px;border:1.5px solid var(--gline);
+             border-radius:8px;font-size:13px;background:var(--gbg);
+             outline:none;appearance:none;cursor:pointer;font-family:inherit;}
+    .f2{display:flex;gap:6px;padding:0 14px 10px;}
+    .fbtn{padding:5px 14px;border-radius:20px;border:1.5px solid var(--gline);
+          font-size:12px;cursor:pointer;background:#fff;color:var(--sub);font-family:inherit;}
+    .fbtn.on{background:var(--navy);color:#fff;border-color:var(--navy);font-weight:700;}
+
+    .srch{background:#fff;padding:10px 14px 12px;border-bottom:1px solid var(--gline);}
+    .srch-in{display:flex;align-items:center;background:var(--gbg);
+             border:1.5px solid var(--gline);border-radius:24px;padding:0 13px;gap:7px;}
+    .srch-inp{flex:1;border:none;background:transparent;padding:10px 0;
+              font-size:13px;outline:none;font-family:inherit;}
+    .srch-inp::placeholder{color:#aaa;}
+
+    .feed{padding:12px 12px 90px;display:flex;flex-direction:column;gap:12px;}
+
+    .card{background:#fff;border-radius:14px;overflow:hidden;
+          box-shadow:0 2px 14px rgba(0,0,0,.07);cursor:pointer;}
+    .card:active{opacity:.92;}
+    .card-img{width:100%;height:180px;background:linear-gradient(135deg,#EDE3D5,#D9C9B5);
+              display:flex;align-items:center;justify-content:center;font-size:54px;
+              position:relative;overflow:hidden;}
+    .card-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+    .card-body{padding:12px 13px 0;}
+    .badges{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:7px;}
+    .badge{display:inline-block;padding:3px 8px;border-radius:5px;font-size:11px;font-weight:700;}
+    .b-lost{background:#fff0e0;color:#d46d00;}
+    .b-found{background:#e0edff;color:#1a5fd4;}
+    .b-cat{background:#f0f2f8;color:#556;}
+    .b-active{background:#e0edff;color:#1a5fd4;font-size:10px;padding:2px 7px;border-radius:10px;}
+    .b-hold{background:#fff4e0;color:#c07000;font-size:10px;padding:2px 7px;border-radius:10px;}
+    .b-done{background:#e4fff0;color:#1a8c42;font-size:10px;padding:2px 7px;border-radius:10px;}
+    .card-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px;}
+    .card-meta{font-size:11px;color:var(--sub);margin-bottom:6px;}
+    .card-desc{font-size:12px;color:#888;line-height:1.5;
+               display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+    .card-foot{display:flex;align-items:center;padding:9px 13px;
+               border-top:1px solid var(--gline);margin-top:10px;gap:12px;}
+    .ft-item{font-size:12px;color:#999;cursor:pointer;display:flex;align-items:center;gap:4px;}
+    .ft-item.liked{color:#e74c3c;}
+    .ft-space{flex:1;}
+    .chat-btn{background:var(--navy);color:#fff;border:none;padding:7px 15px;
+              border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;}
+
+    .empty{text-align:center;padding:60px 20px;color:var(--sub);}
+    .empty-i{font-size:50px;margin-bottom:12px;}
+
+    .fab-wrap{position:fixed;bottom:22px;left:0;right:0;
+              display:flex;justify-content:center;z-index:9999;pointer-events:none;}
+    .fab{background:var(--navy);color:#fff;border:none;border-radius:30px;padding:15px 30px;
+         font-size:15px;font-weight:800;cursor:pointer;
+         box-shadow:0 6px 24px rgba(123,80,56,.4);pointer-events:auto;font-family:inherit;}
+    .fab:active{opacity:.88;}
+
+    .toast-wrap{position:fixed;bottom:85px;left:0;right:0;
+                display:flex;justify-content:center;z-index:9999;pointer-events:none;}
+    .toast{background:rgba(61,43,31,.88);color:#fff;padding:10px 22px;
+           border-radius:22px;font-size:13px;opacity:0;transition:opacity .25s;pointer-events:none;}
+    .toast.show{opacity:1;}
+
+    .overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);
+             display:none;align-items:flex-end;justify-content:center;z-index:1000;}
+    .overlay.on{display:flex;}
+    #det-ov{z-index:1600;}
+    .sheet{background:#fff;border-radius:22px 22px 0 0;
+           width:100%;max-width:430px;max-height:92vh;overflow-y:auto;}
+    .sheet-handle{width:36px;height:4px;background:#ddd;border-radius:2px;margin:10px auto 0;}
+    .sheet-head{display:flex;justify-content:space-between;align-items:center;
+                padding:14px 18px 12px;border-bottom:1px solid var(--gline);
+                position:sticky;top:0;background:#fff;z-index:1;}
+    .sheet-title{font-size:17px;font-weight:800;}
+    .sheet-close{width:30px;height:30px;background:var(--gbg);border-radius:50%;
+                 display:flex;align-items:center;justify-content:center;
+                 font-size:18px;color:#888;cursor:pointer;border:none;font-family:inherit;}
+    .sheet-body{padding:18px;}
+
+    .type-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;}
+    .type-card{border:2px solid var(--gline);border-radius:14px;padding:18px 10px;
+               text-align:center;cursor:pointer;background:#fff;}
+    .type-card.on{border-color:var(--navy);background:#FDF5EC;}
+    .te{font-size:30px;margin-bottom:6px;}
+    .tn{font-size:15px;font-weight:800;}
+    .td{font-size:11px;color:var(--sub);margin-top:3px;}
+    .fg{margin-bottom:16px;}
+    .fl{font-size:13px;font-weight:700;margin-bottom:7px;display:flex;align-items:center;gap:6px;}
+    .req{color:#e74c3c;}
+    .ai-tag{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;
+            font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;}
+    .ai-hint{background:#f4f2ff;border:1px solid #d0c8f0;border-radius:10px;
+             padding:10px 13px;font-size:12px;color:#5a4fa0;margin-bottom:12px;}
+    .pzone{border:2px dashed #c8d0e8;border-radius:14px;padding:28px 16px;
+           text-align:center;cursor:pointer;position:relative;}
+    .pzone:hover{border-color:var(--navy);}
+    .pzone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+    .pzone-i{font-size:32px;margin-bottom:8px;}
+    .pzone-t{font-size:14px;color:var(--sub);font-weight:600;}
+    .pzone-s{font-size:11px;color:#aaa;margin-top:3px;}
+    .prev-wrap{position:relative;border-radius:12px;overflow:hidden;}
+    .prev-wrap img{width:100%;max-height:200px;object-fit:cover;display:block;}
+    .prev-rm{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.5);
+             color:#fff;border:none;border-radius:50%;width:28px;height:28px;font-size:16px;cursor:pointer;}
+    .fi{width:100%;padding:12px 13px;border:1.5px solid var(--gline);
+        border-radius:10px;font-size:14px;outline:none;font-family:inherit;}
+    .fi:focus{border-color:var(--navy);}
+    .fi::placeholder{color:#bbb;}
+    select.fi{appearance:none;cursor:pointer;
+              background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7'%3E%3Cpath d='M0 0l6 7 6-7z' fill='%23888'/%3E%3C/svg%3E") no-repeat right 13px center;}
+    textarea.fi{resize:none;line-height:1.6;}
+    .cc{font-size:11px;color:#bbb;text-align:right;margin-top:4px;}
+    .maprow{display:flex;align-items:center;gap:9px;padding:11px 13px;
+            background:#FDF0E4;border:1px solid #E5D0B8;border-radius:10px;
+            font-size:13px;color:var(--navy);}
+    .maprow input{width:16px;height:16px;accent-color:var(--navy);cursor:pointer;}
+    .map-section{display:none;margin-top:10px;border-radius:12px;overflow:hidden;border:1.5px solid var(--gline);}
+    .map-search-row{display:flex;gap:8px;padding:10px;background:#fff;}
+    .map-search-inp{flex:1;padding:9px 12px;border:1.5px solid var(--gline);border-radius:9px;
+                    font-size:13px;font-family:inherit;outline:none;}
+    .map-search-btn{padding:9px 14px;background:var(--navy);color:#fff;border:none;
+                    border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;}
+    .map-addr-label{padding:0 10px 8px;font-size:11px;color:var(--sub);}
+    #reg-map{height:200px;width:100%;}
+    .det-map-wrap{margin-top:10px;border-radius:12px;overflow:hidden;border:1.5px solid var(--gline);}
+    .det-map-addr{padding:8px 12px;background:#FDF0E4;font-size:12px;color:var(--navy);font-weight:600;}
+    #det-map{height:200px;width:100%;}
+    .div{height:1px;background:var(--gline);margin:14px 0;}
+    .sbtn{width:100%;padding:16px;background:var(--navy);color:#fff;border:none;
+          border-radius:12px;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit;}
+    .sbtn:active{opacity:.88;}
+
+    .det-img{width:100%;height:220px;background:linear-gradient(135deg,#EDE3D5,#D9C9B5);
+             display:flex;align-items:center;justify-content:center;font-size:70px;
+             position:relative;overflow:hidden;}
+    .det-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+    .det-body{padding:18px;}
+    .det-title{font-size:21px;font-weight:800;color:var(--text);margin:10px 0 6px;}
+    .det-meta{font-size:12px;color:var(--sub);margin-bottom:14px;}
+    .det-desc{font-size:14px;line-height:1.75;color:#444;
+              background:var(--gbg);border-radius:10px;padding:14px 15px;margin-bottom:12px;}
+    .ibox{display:flex;align-items:center;gap:8px;padding:11px 13px;
+          border-radius:10px;font-size:13px;margin-bottom:8px;}
+    .ibox.loc{background:#FDF0E4;color:var(--navy);}
+    .ibox.dt{background:#fff8f0;color:#9b5d00;}
+    .chat-cta{width:100%;padding:15px;background:var(--navy);color:#fff;border:none;
+              border-radius:12px;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit;}
+    .status-box{background:var(--gbg);border-radius:14px;padding:14px;margin-bottom:10px;border:1.5px solid var(--gline);}
+    .status-lbl{font-size:11px;font-weight:700;color:var(--sub);margin-bottom:10px;text-transform:uppercase;letter-spacing:.4px;}
+    .status-opts{display:flex;gap:8px;}
+    .sopt{flex:1;padding:11px 6px;border-radius:10px;border:2px solid var(--gline);
+          font-size:13px;font-weight:700;cursor:pointer;background:#fff;font-family:inherit;color:var(--sub);text-align:center;}
+    .sopt.on.sactive{border-color:#E07830;background:#FFF4EA;color:#C06020;}
+    .sopt.on.sresolved{border-color:#1a8c42;background:#e8fff2;color:#1a8c42;}
+    .mine-note{text-align:center;color:#bbb;font-size:13px;padding:8px 0 2px;}
+    .author-link{cursor:pointer;font-weight:700;color:var(--navy);}
+    .det-actions{display:flex;gap:8px;margin-top:10px;padding-top:12px;border-top:1px solid var(--gline);}
+    .act-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+             padding:10px 4px;border-radius:12px;border:1.5px solid var(--gline);background:#fff;
+             font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;color:var(--sub);}
+    .act-btn .act-ico{font-size:20px;line-height:1;}
+    .act-btn.like-on{border-color:#e84393;background:#fff0f7;color:#e84393;}
+    .act-btn.act-del{border-color:#fac8c8;background:#fff0f0;color:#e74c3c;}
+    .act-chat-btn{flex:2;padding:14px;border-radius:12px;border:none;background:var(--navy);
+                  color:#fff;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;}
+    .spick-ov{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;z-index:3000;}
+    .spick-ov.on{display:block;}
+    .spick-sheet{position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+                 width:100%;max-width:430px;background:#fff;border-radius:22px 22px 0 0;padding-bottom:24px;}
+    .spick-handle{width:36px;height:4px;background:#ddd;border-radius:2px;margin:12px auto 8px;}
+    .spick-title{text-align:center;font-size:13px;font-weight:700;color:var(--sub);padding:4px 0 12px;border-bottom:1px solid var(--gline);}
+    .spick-opt{display:flex;align-items:center;gap:14px;padding:16px 24px;cursor:pointer;font-size:15px;font-weight:700;color:var(--text);}
+    .spick-opt:active{background:var(--gbg);}
+    .spick-opt.cur{color:var(--gold);}
+    .author-link:hover{text-decoration:underline;}
+
+    /* ── 채팅 목록 ── */
+    .chatlist-scr{position:fixed;inset:0;max-width:430px;margin:0 auto;
+                  background:var(--gbg);display:none;flex-direction:column;z-index:1500;}
+    .chatlist-scr.on{display:flex;}
+    .cl-empty{text-align:center;padding:70px 20px;color:var(--sub);}
+    .cl-empty-i{font-size:52px;margin-bottom:14px;}
+    .cl-item{display:flex;gap:12px;padding:14px 16px;border-bottom:1px solid var(--gline);
+             cursor:pointer;background:#fff;align-items:center;}
+    .cl-item:active{background:var(--gbg);}
+    .cl-av{width:48px;height:48px;background:var(--gbg);border-radius:50%;
+           display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;
+           border:1.5px solid var(--gline);}
+    .cl-body{flex:1;min-width:0;}
+    .cl-name{font-size:14px;font-weight:700;color:var(--text);margin-bottom:2px;}
+    .cl-post{font-size:11px;color:var(--sub);margin-bottom:4px;
+             white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .cl-last{font-size:13px;color:#666;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .cl-right{text-align:right;flex-shrink:0;}
+    .cl-time{font-size:11px;color:#bbb;}
+    .hd-chat-btn{position:relative;background:rgba(255,255,255,.18);color:#fff;border:none;
+                 padding:5px 10px;border-radius:20px;font-size:15px;cursor:pointer;
+                 font-family:inherit;line-height:1;}
+    .chat-cnt{position:absolute;top:-4px;right:-4px;background:#e74c3c;color:#fff;
+              font-size:9px;font-weight:800;padding:2px 5px;border-radius:10px;
+              display:none;line-height:1;}
+    .chat-cnt.on{display:block;}
+
+    /* ── 프로필 화면 ── */
+    .profile-scr{position:fixed;inset:0;max-width:430px;margin:0 auto;
+                 background:var(--gbg);display:none;flex-direction:column;z-index:2500;}
+    .profile-scr.on{display:flex;}
+    .prof-hd-section{background:var(--navy);padding:20px 20px 26px;text-align:center;flex-shrink:0;}
+    .prof-av-circle{width:70px;height:70px;background:var(--gold);border-radius:50%;
+                    display:flex;align-items:center;justify-content:center;
+                    font-size:28px;font-weight:900;color:#fff;margin:0 auto 12px;}
+    .prof-nm{font-size:19px;font-weight:800;color:#fff;}
+    .prof-stats-row{display:flex;justify-content:center;gap:0;margin-top:16px;}
+    .prof-stat{flex:1;text-align:center;border-right:1px solid rgba(255,255,255,.15);}
+    .prof-stat:last-child{border-right:none;}
+    .prof-stat-n{font-size:20px;font-weight:800;color:#fff;}
+    .prof-stat-n.g{color:var(--gold);}
+    .prof-stat-n.gr{color:#5de898;}
+    .prof-stat-l{font-size:10px;color:rgba(255,255,255,.55);margin-top:3px;}
+    .prof-body{flex:1;overflow-y:auto;}
+    .prof-section-title{font-size:12px;font-weight:700;color:var(--sub);letter-spacing:.3px;
+                        padding:14px 14px 10px;border-bottom:1px solid var(--gline);background:#fff;}
+    .prof-feed{padding:12px;display:flex;flex-direction:column;gap:10px;}
+
+    .chat-scr{position:fixed;inset:0;max-width:430px;margin:0 auto;
+              background:#fff;display:none;flex-direction:column;z-index:2000;}
+    .chat-scr.on{display:flex;}
+    .chat-hd{background:var(--navy);color:#fff;padding:14px 16px;
+             display:flex;align-items:center;gap:12px;flex-shrink:0;}
+    .chat-back{font-size:24px;cursor:pointer;background:none;border:none;color:#fff;}
+    .chat-av{width:38px;height:38px;background:rgba(255,255,255,.2);
+             border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;}
+    .chat-prof-btn{display:flex;align-items:center;gap:10px;flex:1;cursor:pointer;
+                   padding:4px 6px;border-radius:10px;}
+    .chat-prof-btn:active{background:rgba(255,255,255,.1);}
+    .chat-nm{font-size:15px;font-weight:700;}
+    .chat-sub{font-size:11px;color:rgba(255,255,255,.6);}
+    .chat-prof-hint{font-size:10px;color:rgba(255,255,255,.4);margin-top:1px;}
+    .chat-leave-btn{background:rgba(255,255,255,.15);border:none;color:#fff;
+                    padding:7px 13px;border-radius:20px;font-size:12px;font-weight:700;
+                    cursor:pointer;font-family:inherit;flex-shrink:0;}
+    .chat-msgs{flex:1;overflow-y:auto;padding:14px;background:#F5EDE0;
+               display:flex;flex-direction:column;gap:10px;}
+    .msg{display:flex;flex-direction:column;}
+    .msg.me{align-items:flex-end;}
+    .msg.them{align-items:flex-start;}
+    .msg-sender{font-size:11px;color:var(--sub);margin-bottom:3px;}
+    .bubble{max-width:75%;padding:10px 14px;border-radius:16px;font-size:14px;line-height:1.5;word-break:break-all;}
+    .msg.me .bubble{background:var(--navy);color:#fff;border-radius:16px 4px 16px 16px;}
+    .msg.them .bubble{background:#fff;border:1px solid var(--gline);border-radius:4px 16px 16px 16px;}
+    .msg-time{font-size:10px;color:#bbb;margin-top:3px;}
+    .chat-ft{display:flex;gap:8px;padding:10px 12px 14px;
+             background:#fff;border-top:1px solid var(--gline);flex-shrink:0;}
+    .chat-inp{flex:1;padding:11px 15px;border:1.5px solid var(--gline);
+              border-radius:24px;font-size:14px;outline:none;font-family:inherit;}
+    .chat-inp:focus{border-color:var(--navy);}
+    .chat-snd{width:43px;height:43px;background:var(--navy);color:#fff;
+              border:none;border-radius:50%;font-size:16px;cursor:pointer;}
+
+    /* ── 인증 화면 ── */
+    #auth-scr{position:fixed;inset:0;z-index:10002;background:#E8D5BC;
+              display:flex;justify-content:center;align-items:center;}
+    .auth-card{max-width:380px;width:90%;background:#fff;border-radius:24px;
+               overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.18);}
+    .auth-hd{background:var(--navy);padding:36px 24px 26px;text-align:center;}
+    .auth-logo{width:58px;height:58px;background:var(--gold);border-radius:18px;
+               display:flex;align-items:center;justify-content:center;font-size:28px;
+               margin:0 auto 12px;}
+    .auth-hd-title{font-size:24px;font-weight:900;color:#fff;}
+    .auth-hd-sub{font-size:12px;color:rgba(255,255,255,.6);margin-top:5px;}
+    .auth-tabs{display:flex;border-bottom:1.5px solid var(--gline);}
+    .atab{flex:1;text-align:center;padding:14px;font-size:15px;font-weight:600;
+          color:var(--sub);cursor:pointer;border-bottom:3px solid transparent;}
+    .atab.on{color:var(--navy);border-bottom-color:var(--navy);font-weight:800;}
+    .auth-body{padding:24px;}
+    .afg{margin-bottom:15px;}
+    .afl{font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px;}
+    .afi{width:100%;padding:12px 14px;border:1.5px solid var(--gline);
+         border-radius:10px;font-size:14px;outline:none;font-family:inherit;background:#fff;}
+    .afi:focus{border-color:var(--navy);}
+    .afi::placeholder{color:#bbb;}
+    .auth-err{font-size:12px;color:#e74c3c;margin-top:5px;display:none;}
+    .auth-err.on{display:block;}
+    .auth-btn{width:100%;padding:15px;background:var(--navy);color:#fff;border:none;
+              border-radius:12px;font-size:16px;font-weight:800;cursor:pointer;
+              font-family:inherit;margin-top:6px;}
+    .auth-btn:active{opacity:.88;}
+    .auth-sw{text-align:center;margin-top:16px;font-size:13px;color:var(--sub);cursor:pointer;}
+    .auth-sw span{color:var(--navy);font-weight:700;}
+
+    /* ── 대학 선택 화면 ── */
+    #univ-scr{position:fixed;inset:0;z-index:10001;background:#E8D5BC;
+              display:flex;justify-content:center;}
+    .usel-inner{max-width:430px;width:100%;background:var(--gbg);
+                display:flex;flex-direction:column;
+                box-shadow:0 0 30px rgba(0,0,0,.2);height:100%;}
+    .usel-hd{background:var(--navy);padding:44px 20px 28px;text-align:center;flex-shrink:0;}
+    .usel-logo{width:64px;height:64px;background:var(--gold);border-radius:20px;
+               display:flex;align-items:center;justify-content:center;font-size:32px;
+               margin:0 auto 14px;}
+    .usel-title{font-size:28px;font-weight:900;color:#fff;letter-spacing:-.5px;}
+    .usel-tagline{font-size:12px;color:rgba(255,255,255,.6);margin-top:7px;line-height:1.6;}
+    .ureg-tabs{display:flex;background:#fff;border-bottom:1.5px solid var(--gline);flex-shrink:0;}
+    .utab{flex:1;text-align:center;padding:14px 4px;font-size:15px;font-weight:600;
+          color:var(--sub);cursor:pointer;border-bottom:3px solid transparent;}
+    .utab.on{color:var(--navy);border-bottom-color:var(--navy);font-weight:800;}
+    .usel-srch{padding:10px 14px;background:#fff;border-bottom:1px solid var(--gline);flex-shrink:0;}
+    .usel-sinp{width:100%;padding:10px 16px;border:1.5px solid var(--gline);
+               border-radius:24px;font-size:13px;outline:none;font-family:inherit;background:var(--gbg);}
+    .usel-sinp:focus{border-color:var(--navy);}
+    .usel-list{flex:1;overflow-y:auto;padding:12px;
+               display:flex;flex-direction:column;gap:8px;min-height:0;}
+    .ucrd{background:#fff;border-radius:14px;padding:14px 16px;
+          cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.06);
+          display:flex;align-items:center;gap:12px;border:2px solid transparent;}
+    .ucrd:active{border-color:var(--navy);background:#FDF5EC;}
+    .ucrd-icon{width:44px;height:44px;background:var(--gbg);border-radius:12px;
+               display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+    .ucrd-info{flex:1;}
+    .ucrd-name{font-size:15px;font-weight:700;color:var(--text);}
+    .ucrd-loc{font-size:11px;color:var(--sub);margin-top:2px;}
+    .ucrd-arr{color:#ccc;font-size:22px;font-weight:300;}
+    .usel-empty{text-align:center;padding:50px 20px;color:var(--sub);font-size:14px;}
+    .usel-cnt{font-size:11px;color:var(--sub);padding:4px 14px 0;flex-shrink:0;}
+  </style>
+</head>
+<body>
+
+<!-- ── 인증 화면 ── -->
+<div id="auth-scr">
+  <div class="auth-card">
+    <div class="auth-hd">
+      <div class="auth-logo">🔍</div>
+      <div class="auth-hd-title">찾았대</div>
+      <div class="auth-hd-sub">대학교 분실물 통합 플랫폼</div>
+    </div>
+    <div class="auth-tabs">
+      <div class="atab on" id="atab-login" onclick="switchAuthTab('login')">로그인</div>
+      <div class="atab" id="atab-signup" onclick="switchAuthTab('signup')">회원가입</div>
+    </div>
+    <div class="auth-body">
+      <!-- 로그인 -->
+      <div id="auth-login">
+        <div class="afg">
+          <div class="afl">아이디</div>
+          <input class="afi" id="li-id" type="text" placeholder="아이디를 입력하세요" maxlength="20">
+        </div>
+        <div class="afg">
+          <div class="afl">비밀번호</div>
+          <input class="afi" id="li-pw" type="password" placeholder="비밀번호"
+                 onkeydown="if(event.key==='Enter')doLogin()">
+          <div class="auth-err" id="li-err">학번 또는 비밀번호가 올바르지 않습니다.</div>
+        </div>
+        <button class="auth-btn" onclick="doLogin()">로그인</button>
+        <div class="auth-sw" onclick="switchAuthTab('signup')">
+          계정이 없으신가요? <span>회원가입</span>
+        </div>
+      </div>
+      <!-- 회원가입 -->
+      <div id="auth-signup" style="display:none">
+        <div class="afg">
+          <div class="afl">아이디</div>
+          <input class="afi" id="su-id" type="text" placeholder="영문·숫자 조합 4~20자" maxlength="20"
+                 oninput="this.value=this.value.replace(/[^a-zA-Z0-9_]/g,'')">
+          <div class="auth-err" id="su-id-err">이미 사용 중인 아이디입니다.</div>
+        </div>
+        <div class="afg">
+          <div class="afl">닉네임</div>
+          <input class="afi" id="su-nm" type="text" placeholder="앱에서 사용할 이름 (한글·영문 2~12자)" maxlength="12">
+          <div class="auth-err" id="su-nm-err">이미 사용 중인 닉네임입니다.</div>
+        </div>
+        <div class="afg">
+          <div class="afl">비밀번호</div>
+          <input class="afi" id="su-pw" type="password" placeholder="6자 이상" maxlength="30">
+        </div>
+        <div class="afg">
+          <div class="afl">비밀번호 확인</div>
+          <input class="afi" id="su-pw2" type="password" placeholder="비밀번호를 다시 입력"
+                 onkeydown="if(event.key==='Enter')doSignup()">
+          <div class="auth-err" id="su-pw-err">비밀번호가 일치하지 않습니다.</div>
+        </div>
+        <button class="auth-btn" onclick="doSignup()">가입하기</button>
+        <div class="auth-sw" onclick="switchAuthTab('login')">
+          이미 계정이 있으신가요? <span>로그인</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 대학 선택 ── -->
+<div id="univ-scr">
+  <div class="usel-inner">
+    <div class="usel-hd">
+      <div class="usel-logo">🔍</div>
+      <div class="usel-title">찾았대</div>
+      <div class="usel-tagline">학교를 선택하면 해당 캠퍼스의<br>분실물 게시판으로 이동해요</div>
+    </div>
+    <div class="ureg-tabs">
+      <div class="utab on" onclick="setRegion('seoul',this)">🏙 서울권</div>
+      <div class="utab" onclick="setRegion('gyeonggi',this)">🌿 경기/인천권</div>
+    </div>
+    <div class="usel-srch">
+      <input class="usel-sinp" id="usel-q" placeholder="🔍  학교 이름으로 검색..." oninput="setUnivQ(this.value)">
+    </div>
+    <div class="usel-cnt" id="usel-cnt"></div>
+    <div class="usel-list" id="univ-list"></div>
+  </div>
+</div>
+
+<!-- ── 메인 앱 ── -->
+<div id="app" style="display:none">
+  <div class="hd">
+    <div class="hd-row">
+      <div class="hd-logo">
+        <div class="hd-icon">🔍</div>
+        <div><div class="hd-title">찾았대</div><div class="hd-sub" id="univ-nm"></div></div>
+      </div>
+      <div class="hd-right">
+        <button class="hd-chat-btn" onclick="openChatList()">
+          💬<span class="chat-cnt" id="chat-cnt"></span>
+        </button>
+        <button class="hd-menu-btn" onclick="openMenu()">☰</button>
+        <span id="user-nm" style="display:none"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat on" id="st-all" onclick="setStat('all')"><div class="stat-n" id="s-all">0</div><div class="stat-l">전체 등록</div></div>
+    <div class="stat" id="st-lost" onclick="setStat('lost')"><div class="stat-n" id="s-lost">0</div><div class="stat-l">찾는 중</div></div>
+    <div class="stat" id="st-found" onclick="setStat('found')"><div class="stat-n g" id="s-found">0</div><div class="stat-l">보관 중</div></div>
+    <div class="stat" id="st-done" onclick="setStat('done')"><div class="stat-n gr" id="s-done">0</div><div class="stat-l">해결됨</div></div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab on" onclick="setTab('all',this)">전체</div>
+    <div class="tab" onclick="setTab('lost',this)">분실물</div>
+    <div class="tab" onclick="setTab('found',this)">습득물</div>
+  </div>
+
+  <div class="filters">
+    <div class="f1">
+      <div class="cat-wrap">
+        <select class="cat-sel" onchange="setCat(this.value)">
+          <option value="">모든 카테고리</option>
+          <option value="전자기기">📱 전자기기</option>
+          <option value="가방/지갑">👜 가방/지갑</option>
+          <option value="의류">👕 의류</option>
+          <option value="문구류">✏️ 문구류</option>
+          <option value="스포츠용품">⚽ 스포츠용품</option>
+          <option value="기타">📦 기타</option>
+        </select>
+      </div>
+    </div>
+    <div class="f2">
+      <button class="fbtn on" onclick="setSF('active',this)">진행 중</button>
+      <button class="fbtn" onclick="setSF('all',this)">전체</button>
+      <button class="fbtn" onclick="setSF('resolved',this)">해결됨</button>
+    </div>
+  </div>
+
+  <div class="srch">
+    <div class="srch-in">
+      <span>🔍</span>
+      <input class="srch-inp" id="si" placeholder="물품명, 장소로 검색..." oninput="setQ(this.value)">
+    </div>
+  </div>
+
+  <div class="feed" id="feed"></div>
+</div>
+
+<!-- FAB -->
+<div class="fab-wrap">
+  <button class="fab" onclick="openReg()">✏️ 등록하기</button>
+</div>
+
+<!-- Toast -->
+<div class="toast-wrap"><div class="toast" id="toast"></div></div>
+
+<!-- 등록 모달 -->
+<div class="overlay" id="reg-ov" onclick="if(event.target===this)closeReg()">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-head">
+      <span class="sheet-title">분실물 / 습득물 등록</span>
+      <button class="sheet-close" onclick="closeReg()">×</button>
+    </div>
+    <div class="sheet-body">
+      <div class="fg">
+        <div class="fl">유형 <span class="req">*</span></div>
+        <div class="type-grid">
+          <div class="type-card on" id="tc-lost" onclick="setType('lost')">
+            <div class="te">😢</div><div class="tn">분실물</div><div class="td">내가 잃어버렸어요</div>
+          </div>
+          <div class="type-card" id="tc-found" onclick="setType('found')">
+            <div class="te">🎉</div><div class="tn">습득물</div><div class="td">내가 주웠어요</div>
+          </div>
+        </div>
+      </div>
+      <div class="fg">
+        <div class="fl">사진 <span style="font-size:11px;font-weight:400;color:var(--sub)">(선택)</span>
+          <span class="ai-tag">✨ AI 자동완성</span></div>
+        <div class="ai-hint">✨ 사진을 올리면 AI가 물품명·카테고리·설명을 자동으로 채워드려요</div>
+        <div id="pzw">
+          <label class="pzone">
+            <div class="pzone-i">☁️</div>
+            <div class="pzone-t">사진을 올려주세요</div>
+            <div class="pzone-s">클릭해서 추가</div>
+            <input type="file" accept="image/*" id="pinp" onchange="handlePhoto(this)">
+          </label>
+        </div>
+      </div>
+      <div class="fg">
+        <div class="fl">물품명 <span class="req">*</span></div>
+        <input class="fi" id="fn" type="text" placeholder="예: 검정 우산, 에어팟 케이스" maxlength="50"
+               oninput="document.getElementById('fnc').textContent=this.value.length">
+        <div class="cc"><span id="fnc">0</span>/50</div>
+      </div>
+      <div class="fg">
+        <div class="fl">카테고리 <span class="req">*</span></div>
+        <select class="fi" id="fcat">
+          <option value="">선택하세요</option>
+          <option value="전자기기">📱 전자기기</option>
+          <option value="가방/지갑">👜 가방/지갑</option>
+          <option value="의류">👕 의류</option>
+          <option value="문구류">✏️ 문구류</option>
+          <option value="스포츠용품">⚽ 스포츠용품</option>
+          <option value="기타">📦 기타</option>
+        </select>
+      </div>
+      <div class="fg">
+        <div class="fl" id="loc-lbl">분실 위치 <span class="req">*</span></div>
+        <input class="fi" id="floc" type="text" placeholder="예: 3층 복도, 도서관" maxlength="50"
+               oninput="document.getElementById('flc').textContent=this.value.length">
+        <div class="cc"><span id="flc">0</span>/50</div>
+      </div>
+      <div class="fg">
+        <div class="fl">날짜 <span class="req">*</span></div>
+        <input class="fi" id="fdate" type="date">
+      </div>
+      <div class="fg">
+        <div class="fl">상세 설명 <span style="font-size:11px;font-weight:400;color:var(--sub)">(선택)</span></div>
+        <textarea class="fi" id="fdesc" rows="3" placeholder="물건 특징, 발견 경위 등을 자세히 적어주세요" maxlength="200"
+                  oninput="document.getElementById('fdc').textContent=this.value.length"></textarea>
+        <div class="cc"><span id="fdc">0</span>/200</div>
+      </div>
+      <label class="maprow">
+        <input type="checkbox" id="fmap" onchange="toggleMapSection(this.checked)"> 🗺️ 지도에서 위치 표시 (선택)
+      </label>
+      <div class="map-section" id="map-section">
+        <div class="map-search-row">
+          <input class="map-search-inp" id="map-addr-inp" placeholder="주소를 입력하세요 (예: 수원시 장안구)"
+                 onkeydown="if(event.key==='Enter')searchMapAddr()">
+          <button class="map-search-btn" onclick="searchMapAddr()">검색</button>
+        </div>
+        <div class="map-addr-label" id="map-addr-label"></div>
+        <div id="reg-map"></div>
+      </div>
+      <div class="div"></div>
+      <button class="sbtn" onclick="submitPost()">등록하기</button>
+    </div>
+  </div>
+</div>
+
+<!-- 상태 변경 픽커 -->
+<div class="spick-ov" id="spick-ov" onclick="if(event.target===this)closeStatusPicker()">
+  <div class="spick-sheet">
+    <div class="spick-handle"></div>
+    <div class="spick-title">상태 변경</div>
+    <div class="spick-opt" id="sopt-active" onclick="pickStatus('active')">🔍 해결 안 됨</div>
+    <div class="spick-opt" id="sopt-resolved" onclick="pickStatus('resolved')">✅ 해결 됨</div>
+  </div>
+</div>
+
+<!-- 상세 모달 -->
+<div class="overlay" id="det-ov" onclick="if(event.target===this)closeDet()">
+  <div class="sheet" style="max-height:94vh">
+    <div class="sheet-handle"></div>
+    <div class="sheet-head">
+      <span class="sheet-title">게시물 상세</span>
+      <button class="sheet-close" onclick="closeDet()">×</button>
+    </div>
+    <div id="det-body"></div>
+  </div>
+</div>
+
+<!-- 채팅 -->
+<div class="chat-scr" id="chat-scr">
+  <div class="chat-hd">
+    <button class="chat-back" onclick="closeChat()">←</button>
+    <div class="chat-prof-btn" id="chat-prof-btn" onclick="openProfileFromChat()">
+      <div class="chat-av" id="chat-av">👤</div>
+      <div>
+        <div class="chat-nm" id="chat-nm"></div>
+        <div class="chat-sub" id="chat-sub"></div>
+        <div class="chat-prof-hint">프로필 보기 ›</div>
+      </div>
+    </div>
+    <button class="chat-leave-btn" onclick="leaveChat()">나가기</button>
+  </div>
+  <div class="chat-msgs" id="chat-msgs"></div>
+  <div class="chat-ft">
+    <input class="chat-inp" id="chat-inp" placeholder="메시지를 입력하세요..."
+           onkeydown="if(event.key==='Enter')sendMsg()">
+    <button class="chat-snd" onclick="sendMsg()">➤</button>
+  </div>
+</div>
+
+<!-- 더보기 메뉴 -->
+<div class="menu-ov" id="menu-ov" onclick="if(event.target===this)closeMenu()">
+  <div class="menu-sheet">
+    <div class="menu-handle"></div>
+    <div class="menu-user-row">
+      <div class="menu-user-av" id="menu-av"></div>
+      <div>
+        <div class="menu-user-name" id="menu-nm"></div>
+        <div class="menu-user-univ" id="menu-univ"></div>
+      </div>
+    </div>
+    <div class="menu-item" onclick="closeMenu();openProfile(ST.me)">
+      <div class="menu-item-icon">👤</div>
+      <div class="menu-item-label">내 프로필</div>
+      <span class="menu-item-arr">›</span>
+    </div>
+    <div class="menu-item" onclick="closeMenu();changeUniv()">
+      <div class="menu-item-icon">🏫</div>
+      <div class="menu-item-label">학교 변경</div>
+      <span class="menu-item-arr">›</span>
+    </div>
+    <div class="menu-footer">
+      <button class="menu-logout-btn" onclick="doLogout()">로그아웃</button>
+    </div>
+  </div>
+</div>
+
+<!-- 채팅 목록 -->
+<div class="chatlist-scr" id="chatlist-scr">
+  <div class="chat-hd">
+    <button class="chat-back" onclick="closeChatList()">←</button>
+    <div style="flex:1"><div class="chat-nm">💬 메시지</div></div>
+  </div>
+  <div id="chatlist-body" style="flex:1;overflow-y:auto;"></div>
+</div>
+
+<!-- 프로필 화면 -->
+<div class="profile-scr" id="profile-scr">
+  <div class="chat-hd">
+    <button class="chat-back" onclick="closeProfile()">←</button>
+    <div style="flex:1"><div class="chat-nm">프로필</div></div>
+  </div>
+  <div class="prof-body">
+    <div class="prof-hd-section">
+      <div class="prof-av-circle" id="prof-av"></div>
+      <div class="prof-nm" id="prof-nm"></div>
+      <div class="prof-stats-row">
+        <div class="prof-stat"><div class="prof-stat-n" id="prof-total">0</div><div class="prof-stat-l">전체 게시물</div></div>
+        <div class="prof-stat"><div class="prof-stat-n" id="prof-lost">0</div><div class="prof-stat-l">분실물</div></div>
+        <div class="prof-stat"><div class="prof-stat-n g" id="prof-found">0</div><div class="prof-stat-l">습득물</div></div>
+        <div class="prof-stat"><div class="prof-stat-n gr" id="prof-resolved">0</div><div class="prof-stat-l">해결됨</div></div>
+      </div>
+    </div>
+    <div class="prof-section-title">📋 게시물 목록</div>
+    <div class="prof-feed" id="prof-feed"></div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════
+// Supabase 설정 — 아래 두 값을 본인 프로젝트 값으로 교체하세요
+// ══════════════════════════════════════════════════════════
+var SUPABASE_URL  = 'https://xxxxxxxxxxxx.supabase.co';
+var SUPABASE_ANON = 'your-anon-key-here';
+var sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+/*
+  ── SQL 스키마 (Supabase Dashboard › SQL Editor에서 실행) ──
+
+  create table users (
+    id         bigint generated always as identity primary key,
+    student_id text unique not null,
+    nickname   text unique not null,
+    password   text not null,
+    created_at timestamptz default now()
+  );
+
+  create table posts (
+    id         bigint generated always as identity primary key,
+    type       text not null,
+    title      text not null,
+    category   text not null,
+    location   text not null,
+    date       text not null,
+    author     text not null,
+    desc       text,
+    status     text default 'active',
+    likes      text[] default '{}',
+    views      integer default 0,
+    img        text,
+    coords     jsonb,
+    univ       text not null,
+    created_at timestamptz default now()
+  );
+
+  create table chat_messages (
+    id         bigint generated always as identity primary key,
+    post_id    bigint not null,
+    from_user  text not null,
+    msg_text   text not null,
+    msg_time   text not null,
+    created_at timestamptz default now()
+  );
+
+  alter table users         disable row level security;
+  alter table posts         disable row level security;
+  alter table chat_messages disable row level security;
+
+  -- Realtime 활성화:
+  -- Dashboard › Database › Replication › Source 탭에서 chat_messages 테이블 토글 ON
+*/
+
+// ── 상태 ──
+function getSession(){return JSON.parse(localStorage.getItem('cjd2_session')||'null');}
+
+function switchAuthTab(t){
+  document.getElementById('auth-login').style.display=t==='login'?'block':'none';
+  document.getElementById('auth-signup').style.display=t==='signup'?'block':'none';
+  document.getElementById('atab-login').classList.toggle('on',t==='login');
+  document.getElementById('atab-signup').classList.toggle('on',t==='signup');
+  document.querySelectorAll('.auth-err').forEach(function(e){e.classList.remove('on');});
+}
+
+async function doLogin(){
+  var sid=document.getElementById('li-id').value.trim();
+  var pw=document.getElementById('li-pw').value;
+  var err=document.getElementById('li-err');
+  err.classList.remove('on');
+  var res=await sb.from('users').select('*').eq('student_id',sid).eq('password',pw).maybeSingle();
+  if(!res.data){err.classList.add('on');return;}
+  localStorage.setItem('cjd2_session',JSON.stringify({studentId:res.data.student_id,nickname:res.data.nickname}));
+  afterAuth(res.data.nickname);
+}
+
+async function doSignup(){
+  var sid=document.getElementById('su-id').value.trim();
+  var nm=document.getElementById('su-nm').value.trim();
+  var pw=document.getElementById('su-pw').value;
+  var pw2=document.getElementById('su-pw2').value;
+  document.querySelectorAll('.auth-err').forEach(function(e){e.classList.remove('on');});
+  if(!sid||!nm){toast('모든 필드를 입력해주세요');return;}
+  if(sid.length<4||!/^[a-zA-Z0-9_]+$/.test(sid)){toast('아이디는 영문·숫자·_로 4자 이상 입력해주세요');return;}
+  if(nm.length<2){toast('닉네임은 2자 이상이어야 해요');return;}
+  if(pw.length<6){toast('비밀번호는 6자 이상이어야 해요');return;}
+  if(pw!==pw2){document.getElementById('su-pw-err').classList.add('on');return;}
+  var eid=await sb.from('users').select('id').eq('student_id',sid).maybeSingle();
+  if(eid.data){document.getElementById('su-id-err').classList.add('on');return;}
+  var enm=await sb.from('users').select('id').eq('nickname',nm).maybeSingle();
+  if(enm.data){document.getElementById('su-nm-err').classList.add('on');return;}
+  var ins=await sb.from('users').insert({student_id:sid,nickname:nm,password:pw});
+  if(ins.error){toast('가입 중 오류가 발생했습니다');return;}
+  localStorage.setItem('cjd2_session',JSON.stringify({studentId:sid,nickname:nm}));
+  afterAuth(nm);
+}
+
+async function afterAuth(nickname){
+  ST.me=nickname;
+  document.getElementById('user-nm').textContent=nickname;
+  document.getElementById('auth-scr').style.display='none';
+  var lastUniv=localStorage.getItem('cjd2_lastUniv');
+  if(lastUniv){await selectUniv(lastUniv);}
+  else{document.getElementById('univ-scr').style.display='flex';setRegion('seoul');}
+}
+
+function doLogout(){
+  localStorage.removeItem('cjd2_session');
+  ST.me=''; ST.posts=[]; ST.chats={}; ST.univ='';
+  _viewedPosts.clear();
+  if(_chatChannel){sb.removeChannel(_chatChannel);_chatChannel=null;}
+  document.getElementById('app').style.display='none';
+  document.getElementById('univ-scr').style.display='none';
+  document.getElementById('auth-scr').style.display='flex';
+  switchAuthTab('login');
+  document.getElementById('li-id').value='';
+  document.getElementById('li-pw').value='';
+}
+
+var CE={'전자기기':'📱','가방/지갑':'👜','의류':'👕','문구류':'✏️','스포츠용품':'⚽','기타':'📦'};
+var ST={posts:[],me:'',tab:'all',sf:'active',cf:'',q:'',regType:'lost',photoUrl:null,chats:{},univ:'',editId:null,statusPickId:null,mapCoords:null};
+var _viewedPosts=new Set();
+var _chatChannel=null;
+var SAMPLE_AUTHORS=['kim_sw','inchang_helper','park_2023','lee_campus','choi_yun','shin_helper','jung_h'];
+
+var SAMPLE=[
+  {type:'lost',title:'검정 에어팟 케이스 분실',category:'전자기기',location:'중앙도서관 3층 열람실',date:'2026-06-10',author:'kim_sw',desc:'자리 옮기다 잃어버렸어요. 흰색 스티커가 붙은 검정 에어팟 케이스입니다.',status:'active',likes:[],views:47,img:null,coords:null},
+  {type:'found',title:'바나나 인형 키링 습득',category:'기타',location:'공학관 엘리베이터 앞',date:'2026-05-11',author:'inchang_helper',desc:'공학관 1층 엘리베이터 앞에서 발견했습니다. 노란 얼굴에 하얀 눈썹이 특징입니다.',status:'active',likes:[],views:310,img:null,coords:null},
+  {type:'lost',title:'학생증 분실 (홍길동)',category:'가방/지갑',location:'학생식당 1층',date:'2026-06-08',author:'park_2023',desc:'점심 먹고 학생증이 없어졌어요. 발견하시면 연락 주세요.',status:'active',likes:[],views:22,img:null,coords:null},
+  {type:'found',title:'검정 우산 습득',category:'기타',location:'본관 1층 우산꽂이 옆',date:'2026-06-12',author:'lee_campus',desc:'본관 1층 입구 검정 우산. 손잡이에 노란 고무줄이 묶여 있어요.',status:'active',likes:[],views:88,img:null,coords:null},
+  {type:'lost',title:'파란색 나이키 후드 분실',category:'의류',location:'체육관 라커룸',date:'2026-06-05',author:'choi_yun',desc:'파란색 나이키 후드 왼쪽 소매 안쪽에 볼펜 자국 있어요.',status:'resolved',likes:[],views:15,img:null,coords:null},
+  {type:'found',title:'갤럭시 이어버즈 베이지색 습득',category:'전자기기',location:'소프트웨어관 302호',date:'2026-06-13',author:'shin_helper',desc:'의자 아래에서 갤럭시 이어버즈 베이지색 케이스를 발견했습니다.',status:'active',likes:[],views:134,img:null,coords:null},
+  {type:'lost',title:'연두색 텀블러 분실',category:'기타',location:'스타벅스 교내점',date:'2026-06-14',author:'jung_h',desc:'테이블에 연두색 텀블러를 두고 왔습니다. 안쪽에 흠집이 있어요.',status:'active',likes:[],views:31,img:null,coords:null},
+];
+
+// ── 대학 목록 ──
+var UNIVS={
+  seoul:[
+    {name:'서울대학교',loc:'서울 관악구'},
+    {name:'연세대학교',loc:'서울 서대문구'},
+    {name:'고려대학교',loc:'서울 성북구'},
+    {name:'성균관대학교',loc:'서울 종로구'},
+    {name:'한양대학교',loc:'서울 성동구'},
+    {name:'서강대학교',loc:'서울 마포구'},
+    {name:'중앙대학교',loc:'서울 동작구'},
+    {name:'경희대학교',loc:'서울 동대문구'},
+    {name:'서울시립대학교',loc:'서울 동대문구'},
+    {name:'이화여자대학교',loc:'서울 서대문구'},
+    {name:'숙명여자대학교',loc:'서울 용산구'},
+    {name:'홍익대학교',loc:'서울 마포구'},
+    {name:'동국대학교',loc:'서울 중구'},
+    {name:'건국대학교',loc:'서울 광진구'},
+    {name:'숭실대학교',loc:'서울 동작구'},
+    {name:'국민대학교',loc:'서울 성북구'},
+    {name:'광운대학교',loc:'서울 노원구'},
+    {name:'세종대학교',loc:'서울 광진구'},
+    {name:'한국외국어대학교',loc:'서울 동대문구'},
+    {name:'동덕여자대학교',loc:'서울 성북구'},
+    {name:'성신여자대학교',loc:'서울 성북구'},
+    {name:'덕성여자대학교',loc:'서울 도봉구'},
+    {name:'서울여자대학교',loc:'서울 노원구'},
+    {name:'삼육대학교',loc:'서울 노원구'},
+    {name:'명지대학교 서울캠퍼스',loc:'서울 서대문구'},
+    {name:'서경대학교',loc:'서울 성북구'},
+    {name:'상명대학교',loc:'서울 서대문구'},
+    {name:'한성대학교',loc:'서울 성북구'},
+    {name:'서울과학기술대학교',loc:'서울 노원구'},
+    {name:'가톨릭대학교 성신교정',loc:'서울 종로구'},
+  ],
+  gyeonggi:[
+    {name:'수원대학교',loc:'경기 화성시'},
+    {name:'아주대학교',loc:'경기 수원시'},
+    {name:'경기대학교',loc:'경기 수원시'},
+    {name:'성균관대학교 자연과학캠퍼스',loc:'경기 수원시'},
+    {name:'단국대학교 죽전캠퍼스',loc:'경기 용인시'},
+    {name:'한국외대 글로벌캠퍼스',loc:'경기 용인시'},
+    {name:'한양대학교 ERICA캠퍼스',loc:'경기 안산시'},
+    {name:'가천대학교',loc:'경기 성남시'},
+    {name:'인하대학교',loc:'인천 미추홀구'},
+    {name:'인천대학교',loc:'인천 연수구'},
+    {name:'용인대학교',loc:'경기 용인시'},
+    {name:'안양대학교',loc:'경기 안양시'},
+    {name:'강남대학교',loc:'경기 용인시'},
+    {name:'차의과학대학교',loc:'경기 포천시'},
+    {name:'대진대학교',loc:'경기 포천시'},
+    {name:'평택대학교',loc:'경기 평택시'},
+    {name:'을지대학교 성남캠퍼스',loc:'경기 성남시'},
+    {name:'경인교육대학교',loc:'경기 안양시'},
+    {name:'신한대학교',loc:'경기 의정부시'},
+    {name:'명지대학교 자연캠퍼스',loc:'경기 용인시'},
+    {name:'한세대학교',loc:'경기 군포시'},
+    {name:'수원과학대학교',loc:'경기 화성시'},
+    {name:'경기과학기술대학교',loc:'경기 시흥시'},
+    {name:'협성대학교',loc:'경기 화성시'},
+    {name:'한경국립대학교',loc:'경기 안성시'},
+    {name:'가톨릭대학교 성의교정',loc:'경기 부천시'},
+    {name:'대림대학교',loc:'경기 안양시'},
+    {name:'동원대학교',loc:'경기 광주시'},
+    {name:'경복대학교',loc:'경기 포천시'},
+    {name:'부천대학교',loc:'경기 부천시'},
+  ]
+};
+
+var curRegion='seoul';
+var univQ='';
+
+function setRegion(r,el){
+  curRegion=r; univQ='';
+  document.getElementById('usel-q').value='';
+  document.querySelectorAll('.utab').forEach(function(x){x.classList.remove('on');});
+  if(el) el.classList.add('on');
+  else document.querySelectorAll('.utab')[r==='seoul'?0:1].classList.add('on');
+  renderUnivList();
+}
+
+function setUnivQ(v){univQ=v;renderUnivList();}
+
+function renderUnivList(){
+  var list;
+  if(univQ.trim()){
+    var q=univQ.toLowerCase();
+    list=UNIVS.seoul.concat(UNIVS.gyeonggi).filter(function(u){
+      return u.name.toLowerCase().indexOf(q)>=0||u.loc.toLowerCase().indexOf(q)>=0;
+    });
+  } else {
+    list=UNIVS[curRegion];
+  }
+  document.getElementById('usel-cnt').textContent=list.length+'개 학교';
+  var el=document.getElementById('univ-list');
+  if(!list.length){
+    el.innerHTML='<div class="usel-empty">검색 결과가 없습니다 🔍</div>';
+    return;
+  }
+  el.innerHTML=list.map(function(u){
+    return '<div class="ucrd" onclick="selectUniv(\''+u.name.replace(/'/g,"\\'")+'\')">'
+      +'<div class="ucrd-icon">🏫</div>'
+      +'<div class="ucrd-info"><div class="ucrd-name">'+u.name+'</div><div class="ucrd-loc">📍 '+u.loc+'</div></div>'
+      +'<div class="ucrd-arr">›</div>'
+    +'</div>';
+  }).join('');
+}
+
+async function selectUniv(name){
+  ST.univ=name;
+  localStorage.setItem('cjd2_lastUniv',name);
+  document.getElementById('univ-nm').textContent=name;
+  document.getElementById('univ-scr').style.display='none';
+  document.getElementById('app').style.display='block';
+  ST.tab='all';ST.sf='active';ST.cf='';ST.q='';
+  if(document.getElementById('si'))document.getElementById('si').value='';
+  document.querySelectorAll('.tab').forEach(function(x,i){x.classList.toggle('on',i===0);});
+  document.querySelectorAll('.fbtn').forEach(function(x,i){x.classList.toggle('on',i===0);});
+  document.getElementById('feed').innerHTML='<div class="empty"><div class="empty-i">⏳</div><div>불러오는 중...</div></div>';
+  await initData();
+  render();updateChatCnt();
+}
+
+function changeUniv(){
+  closeReg();closeDet();closeChat();
+  document.getElementById('univ-scr').style.display='flex';
+  setRegion('seoul');
+}
+
+// ── 데이터 (Supabase) ──
+async function initData(){
+  var res=await sb.from('posts').select('*').eq('univ',ST.univ).order('id',{ascending:false});
+  if(res.error){toast('데이터를 불러올 수 없습니다 😢');return;}
+  if(!res.data||!res.data.length){
+    var seeds=SAMPLE.map(function(p){
+      return {type:p.type,title:p.title,category:p.category,location:p.location,
+              date:p.date,author:p.author,desc:p.desc,status:p.status,
+              likes:[],views:p.views,img:null,coords:null,univ:ST.univ};
+    });
+    var ins=await sb.from('posts').insert(seeds).select();
+    ST.posts=ins.data||[];
+  } else {
+    ST.posts=res.data;
+  }
+  await loadMyChats();
+}
+
+async function loadMyChats(){
+  var key='cjd2_my_chats_'+ST.univ;
+  var myPids=JSON.parse(localStorage.getItem(key)||'[]');
+  if(!myPids.length)return;
+  var res=await sb.from('chat_messages').select('*').in('post_id',myPids).order('created_at');
+  ST.chats={};
+  (res.data||[]).forEach(function(m){
+    if(!ST.chats[m.post_id])ST.chats[m.post_id]=[];
+    ST.chats[m.post_id].push({from:m.from_user,text:m.msg_text,time:m.msg_time,id:m.id});
+  });
+}
+
+function trackChat(pid){
+  var key='cjd2_my_chats_'+ST.univ;
+  var list=JSON.parse(localStorage.getItem(key)||'[]');
+  if(list.indexOf(pid)<0){list.push(pid);localStorage.setItem(key,JSON.stringify(list));}
+}
+
+// ── 필터 ──
+function getFeed(){
+  var ps=ST.posts.slice().sort(function(a,b){return b.id-a.id;});
+  if(ST.tab==='lost')  ps=ps.filter(function(p){return p.type==='lost';});
+  if(ST.tab==='found') ps=ps.filter(function(p){return p.type==='found';});
+  if(ST.tab==='mine')  ps=ps.filter(function(p){return p.author===ST.me;});
+  if(ST.sf==='active')   ps=ps.filter(function(p){return p.status==='active';});
+  if(ST.sf==='resolved') ps=ps.filter(function(p){return p.status==='resolved';});
+  if(ST.cf) ps=ps.filter(function(p){return p.category===ST.cf;});
+  if(ST.q){var q=ST.q.toLowerCase();ps=ps.filter(function(p){return(p.title+p.location+(p.desc||'')).toLowerCase().indexOf(q)>=0;});}
+  return ps;
+}
+
+function chip(p){
+  if(p.status==='resolved')return'<span class="badge b-done">해결됨</span>';
+  return p.type==='lost'?'<span class="badge b-active">찾는 중</span>':'<span class="badge b-hold">보관 중</span>';
+}
+function fd(d){var dt=new Date(d);return dt.getFullYear()+'.'+(dt.getMonth()+1)+'.'+dt.getDate();}
+function nt(){var d=new Date();return d.getHours()+':'+('0'+d.getMinutes()).slice(-2);}
+
+// ── 렌더 ──
+function render(){
+  document.getElementById('s-all').textContent=ST.posts.length;
+  document.getElementById('s-lost').textContent=ST.posts.filter(function(p){return p.type==='lost'&&p.status==='active';}).length;
+  document.getElementById('s-found').textContent=ST.posts.filter(function(p){return p.type==='found'&&p.status==='active';}).length;
+  document.getElementById('s-done').textContent=ST.posts.filter(function(p){return p.status==='resolved';}).length;
+  var ps=getFeed();
+  var el=document.getElementById('feed');
+  if(!ps.length){
+    el.innerHTML='<div class="empty"><div class="empty-i">🔍</div><div>게시물이 없습니다</div><div style="font-size:13px;color:#bbb;margin-top:6px">등록하기 버튼으로 첫 게시물을 올려보세요!</div></div>';
+    return;
+  }
+  el.innerHTML=ps.map(function(p){
+    var ce=CE[p.category]||'📦';
+    var tc=p.type==='lost'?'b-lost':'b-found';
+    var tl=p.type==='lost'?'분실물':'습득물';
+    var imgH=p.img?'<img src="'+p.img+'" alt="">':'';
+    var likes=Array.isArray(p.likes)?p.likes:[];
+    var liked=likes.indexOf(ST.me)>-1;
+    var lk=liked?'❤️':'🤍';
+    return '<div class="card" onclick="openDet('+p.id+')">'
+      +'<div class="card-img">'+imgH+(p.img?'':ce)+'</div>'
+      +'<div class="card-body">'
+        +'<div class="badges"><span class="badge '+tc+'">'+tl+'</span><span class="badge b-cat">'+ce+' '+p.category+'</span>'+chip(p)+'</div>'
+        +'<div class="card-title">'+p.title+'</div>'
+        +'<div class="card-meta"><span class="author-link" onclick="event.stopPropagation();openProfile(\''+p.author+'\')">@'+p.author+'</span> · 📍'+p.location+' · '+fd(p.date)+'</div>'
+        +'<div class="card-desc">'+(p.desc||'')+'</div>'
+      +'</div>'
+      +'<div class="card-foot">'
+        +'<span class="ft-item'+(liked?' liked':'')+'" onclick="event.stopPropagation();like('+p.id+')">'+lk+' '+likes.length+'</span>'
+        +'<span class="ft-item">👁 '+p.views+'</span>'
+        +'<span class="ft-space"></span>'
+        +'<button class="chat-btn" onclick="event.stopPropagation();doChat('+p.id+')">💬 채팅하기</button>'
+      +'</div>'
+    +'</div>';
+  }).join('');
+}
+
+// ── 액션 ──
+function setStat(k){
+  var tabMap={all:'all',lost:'lost',found:'found',done:'all'};
+  var sfMap={all:'all',lost:'active',found:'active',done:'resolved'};
+  ST.tab=tabMap[k]; ST.sf=sfMap[k]; ST.cf=''; ST.q='';
+  if(document.getElementById('si'))document.getElementById('si').value='';
+  document.querySelectorAll('.stat').forEach(function(x){x.classList.remove('on');});
+  document.getElementById('st-'+k).classList.add('on');
+  var tabIdx={all:0,lost:1,found:2,done:0};
+  document.querySelectorAll('.tab').forEach(function(x,i){x.classList.toggle('on',i===tabIdx[k]);});
+  var sfIdx={all:1,lost:0,found:0,done:2};
+  document.querySelectorAll('.fbtn').forEach(function(x,i){x.classList.toggle('on',i===sfIdx[k]);});
+  document.querySelector('.cat-sel').value='';
+  render();
+}
+function setTab(t,el){
+  ST.tab=t;
+  document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('on');});el.classList.add('on');
+  document.querySelectorAll('.stat').forEach(function(x){x.classList.remove('on');});
+  render();
+}
+function setSF(v,el){
+  ST.sf=v;
+  document.querySelectorAll('.fbtn').forEach(function(x){x.classList.remove('on');});el.classList.add('on');
+  document.querySelectorAll('.stat').forEach(function(x){x.classList.remove('on');});
+  render();
+}
+function setCat(v){ST.cf=v;render();}
+function setQ(v){ST.q=v;render();}
+async function like(id){
+  var p=ST.posts.find(function(x){return x.id===id;});if(!p)return;
+  var likes=Array.isArray(p.likes)?p.likes.slice():[];
+  var idx=likes.indexOf(ST.me);
+  if(idx>-1)likes.splice(idx,1); else likes.push(ST.me);
+  p.likes=likes;
+  await sb.from('posts').update({likes:likes}).eq('id',id);
+  render();
+}
+
+// ── 상세 ──
+async function openDet(id){
+  var p=ST.posts.find(function(x){return x.id===id;});if(!p)return;
+  if(!_viewedPosts.has(id)){
+    _viewedPosts.add(id);
+    p.views++;
+    await sb.from('posts').update({views:p.views}).eq('id',id);
+  }
+  var ce=CE[p.category]||'📦';
+  var isMine=p.author===ST.me;
+  var imgH=p.img?'<img src="'+p.img+'" alt="">':'';
+  var locLbl=p.type==='lost'?'분실 위치':'습득 위치';
+  var likes=Array.isArray(p.likes)?p.likes:[];
+  var liked=likes.indexOf(ST.me)>-1;
+  var likeBtn='<button class="act-btn'+(liked?' like-on':'')+'" onclick="toggleLike('+id+')">'
+    +'<span class="act-ico">'+(liked?'❤️':'🤍')+'</span>'
+    +likes.length
+    +'</button>';
+  var actBtns=isMine
+    ?likeBtn
+      +'<button class="act-btn" onclick="openEditPost('+id+')"><span class="act-ico">✏️</span>수정</button>'
+      +'<button class="act-btn" onclick="openStatusPicker('+id+')"><span class="act-ico">📋</span>상태변경</button>'
+      +'<button class="act-btn act-del" onclick="deletePost('+id+')"><span class="act-ico">🗑</span>삭제</button>'
+    :likeBtn+'<button class="act-chat-btn" onclick="doChat('+id+')">💬 채팅하기</button>';
+  document.getElementById('det-body').innerHTML=
+    '<div class="det-img">'+imgH+(p.img?'':ce)+'</div>'
+    +'<div class="det-body">'
+      +'<div class="badges"><span class="badge '+(p.type==='lost'?'b-lost':'b-found')+'">'+(p.type==='lost'?'분실물':'습득물')+'</span>'
+        +'<span class="badge b-cat">'+ce+' '+p.category+'</span>'+chip(p)+'</div>'
+      +'<div class="det-title">'+p.title+'</div>'
+      +'<div class="det-meta">👤 <span class="author-link" onclick="openProfile(\''+p.author+'\')">@'+p.author+'</span> &nbsp;|&nbsp; 📅 '+fd(p.date)+' &nbsp;|&nbsp; 👁 '+p.views+'회</div>'
+      +(p.desc?'<div class="det-desc">'+p.desc+'</div>':'')
+      +'<div class="ibox loc">📍 '+locLbl+': <strong>'+p.location+'</strong></div>'
+      +'<div class="ibox dt">📅 날짜: <strong>'+fd(p.date)+'</strong></div>'
+      +(p.coords?'<div class="det-map-wrap"><div class="det-map-addr">📍 '+p.coords.addr+'</div><div id="det-map"></div></div>':'')
+      +'<div class="det-actions">'+actBtns+'</div>'
+    +'</div>';
+  document.getElementById('det-ov').classList.add('on');
+  document.querySelector('.fab-wrap').style.display='none';
+  if(p.coords) setTimeout(function(){initDetMap(p.coords.lat,p.coords.lng);},80);
+  render();
+}
+function closeDet(){
+  document.getElementById('det-ov').classList.remove('on');
+  var profOpen=document.getElementById('profile-scr').classList.contains('on');
+  if(!profOpen) document.querySelector('.fab-wrap').style.display='';
+}
+function openMenu(){
+  var s=ST.me||'';
+  document.getElementById('menu-av').textContent=s.charAt(0).toUpperCase();
+  document.getElementById('menu-nm').textContent=s;
+  document.getElementById('menu-univ').textContent='📍 '+(ST.univ||'');
+  document.getElementById('menu-ov').classList.add('on');
+  document.querySelector('.fab-wrap').style.display='none';
+}
+function closeMenu(){
+  document.getElementById('menu-ov').classList.remove('on');
+  var anyOpen=document.getElementById('chat-scr').classList.contains('on')
+    ||document.getElementById('chatlist-scr').classList.contains('on')
+    ||document.getElementById('profile-scr').classList.contains('on')
+    ||document.getElementById('det-ov').classList.contains('on')
+    ||document.getElementById('reg-ov').classList.contains('on');
+  if(!anyOpen) document.querySelector('.fab-wrap').style.display='';
+}
+async function openChatList(){
+  await loadMyChats();
+  renderChatList();
+  document.getElementById('chatlist-scr').classList.add('on');
+  document.querySelector('.fab-wrap').style.display='none';
+}
+function closeChatList(){
+  document.getElementById('chatlist-scr').classList.remove('on');
+  document.querySelector('.fab-wrap').style.display='';
+}
+function renderChatList(){
+  var ids=Object.keys(ST.chats);
+  var el=document.getElementById('chatlist-body');
+  var items=ids.map(function(id){
+    var p=ST.posts.find(function(x){return x.id===parseInt(id);});
+    if(!p)return null;
+    var msgs=ST.chats[id];
+    if(!msgs||!msgs.length)return null;
+    return{p:p,last:msgs[msgs.length-1],id:parseInt(id)};
+  }).filter(function(x){return x!==null;});
+  if(!items.length){
+    el.innerHTML='<div class="cl-empty"><div class="cl-empty-i">💬</div><div style="font-size:15px;font-weight:700;margin-bottom:6px">진행 중인 채팅이 없어요</div><div style="font-size:13px;color:#bbb">게시물에서 채팅하기를 눌러보세요</div></div>';
+    return;
+  }
+  el.innerHTML=items.map(function(item){
+    var p=item.p;
+    var av=p.type==='lost'?'😢':'🎉';
+    var lastText=item.last.text.length>30?item.last.text.slice(0,30)+'…':item.last.text;
+    var isMine=item.last.from===ST.me;
+    return '<div class="cl-item" onclick="doChat('+p.id+')">'
+      +'<div class="cl-av">'+av+'</div>'
+      +'<div class="cl-body">'
+        +'<div class="cl-name">@'+p.author+'</div>'
+        +'<div class="cl-post">'+p.title+'</div>'
+        +'<div class="cl-last">'+(isMine?'나: ':'')+lastText+'</div>'
+      +'</div>'
+      +'<div class="cl-right"><div class="cl-time">'+item.last.time+'</div></div>'
+    +'</div>';
+  }).join('');
+}
+function updateChatCnt(){
+  var cnt=Object.keys(ST.chats).filter(function(id){
+    return ST.chats[id]&&ST.chats[id].length>0;
+  }).length;
+  var el=document.getElementById('chat-cnt');
+  if(el){el.textContent=cnt;el.classList.toggle('on',cnt>0);}
+}
+
+function openProfileFromChat(){
+  var nm=document.getElementById('chat-nm').textContent.replace('@','');
+  if(nm) openProfile(nm);
+}
+function openProfile(author){
+  closeDet();
+  var posts=ST.posts.filter(function(p){return p.author===author;}).sort(function(a,b){return b.id-a.id;});
+  var ch=author.charAt(0).toUpperCase();
+  document.getElementById('prof-av').textContent=ch;
+  document.getElementById('prof-nm').textContent=author;
+  document.getElementById('prof-total').textContent=posts.length;
+  document.getElementById('prof-lost').textContent=posts.filter(function(p){return p.type==='lost'&&p.status!=='resolved';}).length;
+  document.getElementById('prof-found').textContent=posts.filter(function(p){return p.type==='found'&&p.status!=='resolved';}).length;
+  document.getElementById('prof-resolved').textContent=posts.filter(function(p){return p.status==='resolved';}).length;
+  var el=document.getElementById('prof-feed');
+  if(!posts.length){
+    el.innerHTML='<div class="empty"><div class="empty-i">📭</div><div>게시물이 없습니다</div></div>';
+  } else {
+    el.innerHTML=posts.map(function(p){
+      var ce=CE[p.category]||'📦';
+      var tc=p.type==='lost'?'b-lost':'b-found';
+      var tl=p.type==='lost'?'분실물':'습득물';
+      var likes=Array.isArray(p.likes)?p.likes:[];
+      return '<div class="card" onclick="openDet('+p.id+')">'
+        +'<div class="card-body" style="padding:13px 13px 0">'
+          +'<div class="badges"><span class="badge '+tc+'">'+tl+'</span><span class="badge b-cat">'+ce+' '+p.category+'</span>'+chip(p)+'</div>'
+          +'<div class="card-title">'+p.title+'</div>'
+          +'<div class="card-meta">📍 '+p.location+' · '+fd(p.date)+'</div>'
+        +'</div>'
+        +'<div class="card-foot"><span class="ft-item">🤍 '+likes.length+'</span><span class="ft-item">👁 '+p.views+'</span></div>'
+      +'</div>';
+    }).join('');
+  }
+  document.getElementById('profile-scr').classList.add('on');
+  document.querySelector('.fab-wrap').style.display='none';
+}
+function closeProfile(){
+  document.getElementById('profile-scr').classList.remove('on');
+  var chatOpen=document.getElementById('chat-scr').classList.contains('on');
+  var clOpen=document.getElementById('chatlist-scr').classList.contains('on');
+  if(!chatOpen&&!clOpen) document.querySelector('.fab-wrap').style.display='';
+}
+
+async function toggleLike(id){
+  var p=ST.posts.find(function(x){return x.id===id;});if(!p)return;
+  var likes=Array.isArray(p.likes)?p.likes.slice():[];
+  var idx=likes.indexOf(ST.me);
+  if(idx>-1)likes.splice(idx,1); else likes.push(ST.me);
+  p.likes=likes;
+  await sb.from('posts').update({likes:likes}).eq('id',id);
+  openDet(id);
+}
+async function deletePost(id){
+  if(!confirm('게시물을 삭제할까요?'))return;
+  var res=await sb.from('posts').delete().eq('id',id);
+  if(res.error){toast('삭제 중 오류가 발생했습니다');return;}
+  ST.posts=ST.posts.filter(function(x){return x.id!==id;});
+  closeDet();render();
+  toast('게시물이 삭제됐습니다');
+}
+function openStatusPicker(id){
+  ST.statusPickId=id;
+  var p=ST.posts.find(function(x){return x.id===id;});
+  var cur=p?p.status:'active';
+  document.getElementById('sopt-active').className='spick-opt'+(cur==='active'?' cur':'');
+  document.getElementById('sopt-resolved').className='spick-opt'+(cur==='resolved'?' cur':'');
+  document.getElementById('spick-ov').classList.add('on');
+}
+function closeStatusPicker(){
+  document.getElementById('spick-ov').classList.remove('on');
+}
+async function pickStatus(status){
+  closeStatusPicker();
+  var id=ST.statusPickId;
+  var p=ST.posts.find(function(x){return x.id===id;});
+  if(!p||p.status===status)return;
+  p.status=status;
+  await sb.from('posts').update({status:status}).eq('id',id);
+  openDet(id);
+  toast(status==='resolved'?'해결됨으로 변경됐습니다 ✅':'진행 중으로 변경됐습니다 🔍');
+}
+function openEditPost(id){
+  var p=ST.posts.find(function(x){return x.id===id;});if(!p)return;
+  ST.editId=id;ST.regType=p.type;ST.photoUrl=p.img||null;
+  document.getElementById('fn').value=p.title;
+  document.getElementById('fnc').textContent=p.title.length;
+  document.getElementById('fcat').value=p.category;
+  document.getElementById('floc').value=p.location;
+  document.getElementById('flc').textContent=p.location.length;
+  document.getElementById('fdate').value=p.date;
+  document.getElementById('fdesc').value=p.desc||'';
+  document.getElementById('fdc').textContent=(p.desc||'').length;
+  document.getElementById('tc-lost').classList.toggle('on',p.type==='lost');
+  document.getElementById('tc-found').classList.toggle('on',p.type==='found');
+  document.getElementById('loc-lbl').innerHTML=(p.type==='lost'?'분실 위치':'습득 위치')+' <span class="req">*</span>';
+  if(p.img){
+    document.getElementById('pzw').innerHTML=
+      '<div class="prev-wrap"><img src="'+p.img+'" alt="미리보기">'
+      +'<button class="prev-rm" onclick="ST.photoUrl=null;resetPzone()">×</button></div>';
+  }else{resetPzone();}
+  document.querySelector('.sheet-title').textContent='게시물 수정';
+  document.querySelector('.sbtn').textContent='수정 완료';
+  closeDet();
+  document.getElementById('reg-ov').classList.add('on');
+  document.querySelector('.fab-wrap').style.display='none';
+}
+
+// ── 채팅 ──
+function subscribeChat(postId){
+  if(_chatChannel){sb.removeChannel(_chatChannel);_chatChannel=null;}
+  _chatChannel=sb.channel('chat:'+postId)
+    .on('postgres_changes',{event:'INSERT',schema:'public',table:'chat_messages',filter:'post_id=eq.'+postId},
+      function(payload){
+        var m=payload.new;
+        if(m.from_user===ST.me)return;
+        if(!ST.chats[postId])ST.chats[postId]=[];
+        ST.chats[postId].push({from:m.from_user,text:m.msg_text,time:m.msg_time,id:m.id});
+        renderChat(postId);
+        var msgs=document.getElementById('chat-msgs');
+        if(msgs)msgs.scrollTop=msgs.scrollHeight;
+        updateChatCnt();
+      })
+    .subscribe();
+}
+
+async function doChat(id){
+  var p=ST.posts.find(function(x){return x.id===id;});if(!p)return;
+  if(p.author===ST.me){toast('내 게시물에는 채팅할 수 없어요');return;}
+  closeDet();
+  document.querySelector('.fab-wrap').style.display='none';
+  document.getElementById('chat-nm').textContent='@'+p.author;
+  document.getElementById('chat-sub').textContent='"'+p.title+'"';
+  document.getElementById('chat-av').textContent=p.type==='lost'?'😢':'🎉';
+  document.getElementById('chat-scr').dataset.pid=id;
+  if(!ST.chats[id]){
+    var res=await sb.from('chat_messages').select('*').eq('post_id',id).order('created_at');
+    var msgs=res.data||[];
+    if(!msgs.length){
+      ST.chats[id]=[{from:p.author,text:'안녕하세요! 분실물 관련해서 연락드려요 😊',time:nt()}];
+    } else {
+      ST.chats[id]=msgs.map(function(m){return{from:m.from_user,text:m.msg_text,time:m.msg_time,id:m.id};});
+    }
+    trackChat(id);
+  }
+  renderChat(id);
+  document.getElementById('chat-scr').classList.add('on');
+  setTimeout(function(){var m=document.getElementById('chat-msgs');if(m)m.scrollTop=m.scrollHeight;},80);
+  subscribeChat(id);
+}
+
+function closeChat(){
+  document.getElementById('chat-scr').classList.remove('on');
+  if(_chatChannel){sb.removeChannel(_chatChannel);_chatChannel=null;}
+  var clOpen=document.getElementById('chatlist-scr').classList.contains('on');
+  var profOpen=document.getElementById('profile-scr').classList.contains('on');
+  if(!clOpen&&!profOpen)document.querySelector('.fab-wrap').style.display='';
+  if(clOpen)renderChatList();
+}
+
+function leaveChat(){
+  if(!confirm('채팅방을 나갈까요? 대화 내용이 더 이상 표시되지 않습니다.'))return;
+  var id=parseInt(document.getElementById('chat-scr').dataset.pid);
+  delete ST.chats[id];
+  var key='cjd2_my_chats_'+ST.univ;
+  var list=JSON.parse(localStorage.getItem(key)||'[]').filter(function(x){return x!==id;});
+  localStorage.setItem(key,JSON.stringify(list));
+  updateChatCnt();closeChat();
+  toast('채팅방을 나갔습니다');
+}
+
+function renderChat(id){
+  var msgs=ST.chats[id]||[];
+  document.getElementById('chat-msgs').innerHTML=msgs.map(function(m){
+    var mine=m.from===ST.me;
+    return '<div class="msg '+(mine?'me':'them')+'">'
+      +(!mine?'<div class="msg-sender">@'+m.from+'</div>':'')
+      +'<div class="bubble">'+m.text+'</div>'
+      +'<div class="msg-time">'+m.time+'</div>'
+    +'</div>';
+  }).join('');
+}
+
+async function sendMsg(){
+  var inp=document.getElementById('chat-inp');
+  var txt=inp.value.trim();if(!txt)return;
+  var id=parseInt(document.getElementById('chat-scr').dataset.pid);
+  if(!ST.chats[id])ST.chats[id]=[];
+  var time=nt();
+  ST.chats[id].push({from:ST.me,text:txt,time:time});
+  inp.value='';renderChat(id);updateChatCnt();
+  var m=document.getElementById('chat-msgs');
+  if(m)m.scrollTop=m.scrollHeight;
+  trackChat(id);
+  await sb.from('chat_messages').insert({post_id:id,from_user:ST.me,msg_text:txt,msg_time:time});
+  var p=ST.posts.find(function(x){return x.id===id;});
+  if(p&&SAMPLE_AUTHORS.indexOf(p.author)>-1){
+    var rs=['확인했습니다! 연락처 알려드릴게요 😊','네, 맞아요! 언제 오실 수 있나요?','학생처에 맡겨뒀어요. 주중 방문해 주세요!','아, 정말요? 감사합니다! 🙏','잠깐만요, 지금 확인 중이에요 👀'];
+    setTimeout(async function(){
+      var rt=rs[Math.floor(Math.random()*rs.length)];
+      var rtime=nt();
+      await sb.from('chat_messages').insert({post_id:id,from_user:p.author,msg_text:rt,msg_time:rtime});
+    },1100);
+  }
+}
+
+// ── 등록 ──
+// ── 지도 ──
+var _regMap=null, _regMarker=null, _detMap=null;
+function toggleMapSection(on){
+  var sec=document.getElementById('map-section');
+  sec.style.display=on?'block':'none';
+  if(on){
+    document.getElementById('map-addr-inp').value='';
+    document.getElementById('map-addr-label').textContent='';
+    ST.mapCoords=null;
+    setTimeout(function(){
+      if(_regMap){_regMap.remove();_regMap=null;_regMarker=null;}
+      _regMap=L.map('reg-map',{zoomControl:true}).setView([37.5665,126.9780],13);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19}).addTo(_regMap);
+      _regMap.on('click',function(e){placeRegMarker(e.latlng.lat,e.latlng.lng,'직접 선택한 위치');});
+    },80);
+  }else{
+    ST.mapCoords=null;
+    if(_regMap){_regMap.remove();_regMap=null;_regMarker=null;}
+  }
+}
+function searchMapAddr(){
+  var q=document.getElementById('map-addr-inp').value.trim();
+  if(!q){toast('주소를 입력해주세요');return;}
+  var url='https://nominatim.openstreetmap.org/search?q='+encodeURIComponent(q)+'&format=json&limit=1&accept-language=ko';
+  fetch(url).then(function(r){return r.json();}).then(function(data){
+    if(!data||!data.length){toast('주소를 찾을 수 없습니다');return;}
+    var lat=parseFloat(data[0].lat),lng=parseFloat(data[0].lon);
+    var addr=data[0].display_name.split(',').slice(0,3).join(', ');
+    placeRegMarker(lat,lng,addr);
+  }).catch(function(){toast('검색 중 오류가 발생했습니다');});
+}
+function placeRegMarker(lat,lng,addr){
+  if(!_regMap)return;
+  if(_regMarker) _regMarker.remove();
+  _regMarker=L.marker([lat,lng]).addTo(_regMap).bindPopup(addr).openPopup();
+  _regMap.setView([lat,lng],16);
+  ST.mapCoords={lat:lat,lng:lng,addr:addr};
+  document.getElementById('map-addr-label').textContent='📍 '+addr;
+}
+function initDetMap(lat,lng){
+  if(_detMap){_detMap.remove();_detMap=null;}
+  var el=document.getElementById('det-map');
+  if(!el)return;
+  _detMap=L.map('det-map',{zoomControl:true,scrollWheelZoom:false}).setView([lat,lng],16);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19}).addTo(_detMap);
+  L.marker([lat,lng]).addTo(_detMap);
+}
+
+function openReg(){
+  ST.regType='lost';ST.photoUrl=null;ST.editId=null;ST.mapCoords=null;
+  ['fn','floc','fdesc'].forEach(function(id){document.getElementById(id).value='';});
+  document.getElementById('fcat').value='';
+  document.getElementById('fdate').value=new Date().toISOString().split('T')[0];
+  ['fnc','flc','fdc'].forEach(function(id){document.getElementById(id).textContent='0';});
+  document.getElementById('loc-lbl').innerHTML='분실 위치 <span class="req">*</span>';
+  document.getElementById('fn').placeholder='예: 검정 우산, 에어팟 케이스';
+  document.getElementById('floc').placeholder='예: 3층 복도, 도서관';
+  document.getElementById('tc-lost').classList.add('on');
+  document.getElementById('tc-found').classList.remove('on');
+  document.getElementById('fmap').checked=false;
+  document.getElementById('map-section').style.display='none';
+  if(_regMap){_regMap.remove();_regMap=null;_regMarker=null;}
+  resetPzone();
+  document.querySelector('.sheet-title').textContent='분실물 / 습득물 등록';
+  document.querySelector('.sbtn').textContent='등록하기';
+  document.getElementById('reg-ov').classList.add('on');
+  document.querySelector('.fab-wrap').style.display='none';
+}
+function closeReg(){
+  document.getElementById('reg-ov').classList.remove('on');
+  document.querySelector('.fab-wrap').style.display='';
+}
+function setType(t){
+  ST.regType=t;
+  document.getElementById('tc-lost').classList.toggle('on',t==='lost');
+  document.getElementById('tc-found').classList.toggle('on',t==='found');
+  document.getElementById('loc-lbl').innerHTML=(t==='lost'?'분실 위치':'습득 위치')+' <span class="req">*</span>';
+  document.getElementById('floc').placeholder=t==='lost'?'예: 3층 복도, 도서관':'예: 공학관 1층 로비';
+}
+function resetPzone(){
+  document.getElementById('pzw').innerHTML=
+    '<label class="pzone"><div class="pzone-i">☁️</div>'
+    +'<div class="pzone-t">사진을 올려주세요</div><div class="pzone-s">클릭해서 추가</div>'
+    +'<input type="file" accept="image/*" id="pinp" onchange="handlePhoto(this)"></label>';
+}
+function handlePhoto(inp){
+  var file=inp.files[0];if(!file)return;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    ST.photoUrl=e.target.result;
+    document.getElementById('pzw').innerHTML=
+      '<div class="prev-wrap"><img src="'+e.target.result+'" alt="미리보기">'
+      +'<button class="prev-rm" onclick="ST.photoUrl=null;resetPzone()">×</button></div>';
+  };
+  reader.readAsDataURL(file);
+}
+async function submitPost(){
+  var name=document.getElementById('fn').value.trim();
+  var catRaw=document.getElementById('fcat').value;
+  var loc=document.getElementById('floc').value.trim();
+  var date=document.getElementById('fdate').value;
+  var desc=document.getElementById('fdesc').value.trim();
+  if(!name){toast('물품명을 입력해주세요');return;}
+  if(!catRaw){toast('카테고리를 선택해주세요');return;}
+  if(!loc){toast('위치를 입력해주세요');return;}
+  if(!date){toast('날짜를 선택해주세요');return;}
+  if(ST.editId){
+    var upd={type:ST.regType,title:name,category:catRaw,location:loc,date:date,desc:desc,coords:ST.mapCoords||null};
+    if(ST.photoUrl!==undefined)upd.img=ST.photoUrl;
+    var res=await sb.from('posts').update(upd).eq('id',ST.editId);
+    if(res.error){toast('수정 중 오류가 발생했습니다');return;}
+    var idx=ST.posts.findIndex(function(x){return x.id===ST.editId;});
+    if(idx>-1)Object.assign(ST.posts[idx],upd);
+    ST.editId=null;closeReg();render();
+    toast('게시물이 수정됐습니다 ✅');
+  }else{
+    var np={type:ST.regType,title:name,category:catRaw,location:loc,date:date,
+      author:ST.me,desc:desc||(ST.regType==='lost'?'분실':'습득')+' 장소: '+loc,
+      status:'active',likes:[],views:0,img:ST.photoUrl||null,
+      coords:ST.mapCoords||null,univ:ST.univ};
+    var ins=await sb.from('posts').insert(np).select().single();
+    if(ins.error){toast('등록 중 오류가 발생했습니다');return;}
+    ST.posts.unshift(ins.data);
+    closeReg();render();
+    toast('게시물이 등록되었습니다 ✅');
+  }
+}
+
+function toast(msg){
+  var el=document.getElementById('toast');
+  el.textContent=msg;el.classList.add('show');
+  setTimeout(function(){el.classList.remove('show');},2600);
+}
+
+// ── 초기화 ──
+(function(){
+  var _session=getSession();
+  if(_session){
+    afterAuth(_session.nickname);
+  } else {
+    document.getElementById('univ-scr').style.display='none';
+    switchAuthTab('login');
+  }
+})();
+</script>
+</body>
+</html>
