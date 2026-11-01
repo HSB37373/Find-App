@@ -204,6 +204,18 @@
     .det-map-wrap{margin-top:10px;border-radius:12px;overflow:hidden;border:1.5px solid var(--gline);}
     .det-map-addr{padding:8px 12px;background:#FDF0E4;font-size:12px;color:var(--navy);font-weight:600;}
     #det-map{height:200px;width:100%;}
+    .map-gps-btn{padding:9px 11px;background:#fff;color:var(--navy);border:1.5px solid var(--navy);
+                 border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;}
+    .map-detail-row{padding:10px;background:#fff;}
+    .map-hint{padding:0 10px 8px;font-size:11px;color:var(--sub);}
+    #map-ov{z-index:1500;}
+    .all-map-legend{padding:8px 16px;font-size:12px;color:var(--sub);background:#FDF0E4;}
+    #all-map{height:60vh;width:100%;}
+    .pin-ico{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+             font-size:17px;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.35);}
+    .pin-found{background:#2F6FDE;}
+    .pop-btn{margin-top:6px;padding:6px 10px;background:var(--navy);color:#fff;border:none;
+             border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;}
     .div{height:1px;background:var(--gline);margin:14px 0;}
     .sbtn{width:100%;padding:16px;background:var(--navy);color:#fff;border:none;
           border-radius:12px;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit;}
@@ -516,6 +528,7 @@
     <div class="tab on" onclick="setTab('all',this)">전체</div>
     <div class="tab" onclick="setTab('lost',this)">분실물</div>
     <div class="tab" onclick="setTab('found',this)">습득물</div>
+    <div class="tab" onclick="openAllMap()">🗺️ 지도</div>
   </div>
 
   <div class="filters">
@@ -625,16 +638,22 @@
         <div class="cc"><span id="fdc">0</span>/200</div>
       </div>
       <label class="maprow">
-        <input type="checkbox" id="fmap" onchange="toggleMapSection(this.checked)"> 🗺️ 지도에서 위치 표시 (선택)
+        <input type="checkbox" id="fmap" onchange="toggleMapSection(this.checked)"> <span id="fmap-txt">🗺️ 지도에서 위치 표시 (선택)</span>
       </label>
       <div class="map-section" id="map-section">
         <div class="map-search-row">
-          <input class="map-search-inp" id="map-addr-inp" placeholder="주소를 입력하세요 (예: 수원시 장안구)"
+          <input class="map-search-inp" id="map-addr-inp" placeholder="수원대 주변 주소·장소 검색"
                  onkeydown="if(event.key==='Enter')searchMapAddr()">
           <button class="map-search-btn" onclick="searchMapAddr()">검색</button>
+          <button class="map-gps-btn" onclick="useMyLocation()">📡 내 위치</button>
         </div>
+        <div class="map-hint">지도를 누르면 핀이 찍히고, 핀을 끌어서 위치를 옮길 수 있어요. (수원대 주변 약 5km)</div>
         <div class="map-addr-label" id="map-addr-label"></div>
         <div id="reg-map"></div>
+        <div class="map-detail-row">
+          <div class="fl" id="map-detail-lbl">상세 위치 <span style="font-size:11px;font-weight:400;color:var(--sub)">(선택)</span></div>
+          <input class="fi" id="map-detail" type="text" maxlength="50" placeholder="예: 공학관 3층 302호 앞 복도">
+        </div>
       </div>
       <div class="div"></div>
       <button class="sbtn" onclick="submitPost()">등록하기</button>
@@ -661,6 +680,19 @@
       <button class="sheet-close" onclick="closeDet()">×</button>
     </div>
     <div id="det-body"></div>
+  </div>
+</div>
+
+<!-- 전체 게시물 지도 -->
+<div class="overlay" id="map-ov" onclick="if(event.target===this)closeAllMap()">
+  <div class="sheet" style="max-height:94vh">
+    <div class="sheet-handle"></div>
+    <div class="sheet-head">
+      <span class="sheet-title">🗺️ 수원대 주변 지도</span>
+      <button class="sheet-close" onclick="closeAllMap()">×</button>
+    </div>
+    <div class="all-map-legend" id="all-map-legend"></div>
+    <div id="all-map"></div>
   </div>
 </div>
 
@@ -700,11 +732,6 @@
     <div class="menu-item" onclick="closeMenu();openProfile(ST.me)">
       <div class="menu-item-icon">👤</div>
       <div class="menu-item-label">내 프로필</div>
-      <span class="menu-item-arr">›</span>
-    </div>
-    <div class="menu-item" onclick="closeMenu();changeUniv()">
-      <div class="menu-item-icon">🏫</div>
-      <div class="menu-item-label">학교 변경</div>
       <span class="menu-item-arr">›</span>
     </div>
     <div class="menu-footer">
@@ -750,7 +777,41 @@
 // ══════════════════════════════════════════════════════════
 var SUPABASE_URL  = 'https://xxxxxxxxxxxx.supabase.co';
 var SUPABASE_ANON = 'your-anon-key-here';
-var sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+// 데모 모드(?demo=1): 로그인·Supabase 없이 메모리 DB로 화면만 확인 (새로고침하면 초기화)
+var DEMO = /[?&]demo=1\b/.test(location.search);
+function makeDemoSb(){
+  var db={users:[],posts:[],chat_messages:[]}, seq=1;
+  function Q(t){this.t=t;this.op='select';this.f=[];this.ord=null;this.want=false;this.one=false;}
+  Q.prototype.select=function(){if(this.op!=='select')this.want=true;return this;};
+  Q.prototype.insert=function(r){this.op='insert';this.rows=[].concat(r);return this;};
+  Q.prototype.update=function(v){this.op='update';this.v=v;return this;};
+  Q.prototype.delete=function(){this.op='delete';return this;};
+  Q.prototype.eq=function(k,v){this.f.push(function(r){return r[k]===v;});return this;};
+  Q.prototype.in=function(k,a){this.f.push(function(r){return a.indexOf(r[k])>-1;});return this;};
+  Q.prototype.order=function(k,o){this.ord=[k,!!(o&&o.ascending===false)];return this;};
+  Q.prototype.maybeSingle=Q.prototype.single=function(){this.one=true;return this;};
+  Q.prototype.then=function(ok,fail){return Promise.resolve(this.run()).then(ok,fail);};
+  Q.prototype.run=function(){
+    var t=db[this.t],f=this.f,m=t.filter(function(r){return f.every(function(x){return x(r);});}),data=null;
+    if(this.op==='insert'){
+      var n=this.rows.map(function(r){
+        var o=Object.assign({id:seq++,created_at:new Date().toISOString()},r);
+        if(t===db.posts&&!o.coords)o.coords={lat:37.21+((o.id%5)-2)*0.003,lng:126.9758+(((o.id*3)%5)-2)*0.003,addr:'데모 위치'};
+        return o;});
+      n.forEach(function(o){t.push(o);});
+      data=this.want?(this.one?n[0]:n):null;
+    }else if(this.op==='update'){m.forEach(function(r){Object.assign(r,this.v);},this);}
+    else if(this.op==='delete'){db[this.t]=t.filter(function(r){return m.indexOf(r)<0;});}
+    else{
+      if(this.ord){var k=this.ord[0],d=this.ord[1]?-1:1;m=m.slice().sort(function(a,b){return a[k]>b[k]?d:a[k]<b[k]?-d:0;});}
+      data=this.one?(m[0]||null):m;
+    }
+    return {data:data,error:null};
+  };
+  var ch={on:function(){return ch;},subscribe:function(){return ch;}};
+  return {from:function(t){return new Q(t);},channel:function(){return ch;},removeChannel:function(){}};
+}
+var sb = DEMO ? makeDemoSb() : supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
 /*
   ── SQL 스키마 (Supabase Dashboard › SQL Editor에서 실행) ──
@@ -845,9 +906,7 @@ async function afterAuth(nickname){
   ST.me=nickname;
   document.getElementById('user-nm').textContent=nickname;
   document.getElementById('auth-scr').style.display='none';
-  var lastUniv=localStorage.getItem('cjd2_lastUniv');
-  if(lastUniv){await selectUniv(lastUniv);}
-  else{document.getElementById('univ-scr').style.display='flex';setRegion('seoul');}
+  await selectUniv(SCHOOL);
 }
 
 function doLogout(){
@@ -871,11 +930,11 @@ var SAMPLE_AUTHORS=['kim_sw','inchang_helper','park_2023','lee_campus','choi_yun
 
 var SAMPLE=[
   {type:'lost',title:'검정 에어팟 케이스 분실',category:'전자기기',location:'중앙도서관 3층 열람실',date:'2026-06-10',author:'kim_sw',desc:'자리 옮기다 잃어버렸어요. 흰색 스티커가 붙은 검정 에어팟 케이스입니다.',status:'active',likes:[],views:47,img:null,coords:null},
-  {type:'found',title:'바나나 인형 키링 습득',category:'기타',location:'공학관 엘리베이터 앞',date:'2026-05-11',author:'inchang_helper',desc:'공학관 1층 엘리베이터 앞에서 발견했습니다. 노란 얼굴에 하얀 눈썹이 특징입니다.',status:'active',likes:[],views:310,img:null,coords:null},
+  {type:'found',title:'바나나 인형 키링 습득',category:'기타',location:'공학관 엘리베이터 앞',date:'2026-05-11',author:'inchang_helper',desc:'공학관 1층 엘리베이터 앞에서 발견했습니다. 노란 얼굴에 하얀 눈썹이 특징입니다.',status:'active',likes:[],views:310,img:null,coords:{lat:37.2112,lng:126.9742,addr:'수원대학교 공학관',detail:'1층 엘리베이터 앞'}},
   {type:'lost',title:'학생증 분실 (홍길동)',category:'가방/지갑',location:'학생식당 1층',date:'2026-06-08',author:'park_2023',desc:'점심 먹고 학생증이 없어졌어요. 발견하시면 연락 주세요.',status:'active',likes:[],views:22,img:null,coords:null},
-  {type:'found',title:'검정 우산 습득',category:'기타',location:'본관 1층 우산꽂이 옆',date:'2026-06-12',author:'lee_campus',desc:'본관 1층 입구 검정 우산. 손잡이에 노란 고무줄이 묶여 있어요.',status:'active',likes:[],views:88,img:null,coords:null},
+  {type:'found',title:'검정 우산 습득',category:'기타',location:'본관 1층 우산꽂이 옆',date:'2026-06-12',author:'lee_campus',desc:'본관 1층 입구 검정 우산. 손잡이에 노란 고무줄이 묶여 있어요.',status:'active',likes:[],views:88,img:null,coords:{lat:37.2098,lng:126.9770,addr:'수원대학교 본관',detail:'1층 우산꽂이 옆'}},
   {type:'lost',title:'파란색 나이키 후드 분실',category:'의류',location:'체육관 라커룸',date:'2026-06-05',author:'choi_yun',desc:'파란색 나이키 후드 왼쪽 소매 안쪽에 볼펜 자국 있어요.',status:'resolved',likes:[],views:15,img:null,coords:null},
-  {type:'found',title:'갤럭시 이어버즈 베이지색 습득',category:'전자기기',location:'소프트웨어관 302호',date:'2026-06-13',author:'shin_helper',desc:'의자 아래에서 갤럭시 이어버즈 베이지색 케이스를 발견했습니다.',status:'active',likes:[],views:134,img:null,coords:null},
+  {type:'found',title:'갤럭시 이어버즈 베이지색 습득',category:'전자기기',location:'소프트웨어관 302호',date:'2026-06-13',author:'shin_helper',desc:'의자 아래에서 갤럭시 이어버즈 베이지색 케이스를 발견했습니다.',status:'active',likes:[],views:134,img:null,coords:{lat:37.2086,lng:126.9778,addr:'수원대학교 소프트웨어관',detail:'302호'}},
   {type:'lost',title:'연두색 텀블러 분실',category:'기타',location:'스타벅스 교내점',date:'2026-06-14',author:'jung_h',desc:'테이블에 연두색 텀블러를 두고 왔습니다. 안쪽에 흠집이 있어요.',status:'active',likes:[],views:31,img:null,coords:null},
 ];
 
@@ -987,6 +1046,7 @@ function renderUnivList(){
 }
 
 async function selectUniv(name){
+  name=SCHOOL;
   ST.univ=name;
   localStorage.setItem('cjd2_lastUniv',name);
   document.getElementById('univ-nm').textContent=name;
@@ -1001,11 +1061,8 @@ async function selectUniv(name){
   render();updateChatCnt();
 }
 
-function changeUniv(){
-  closeReg();closeDet();closeChat();
-  document.getElementById('univ-scr').style.display='flex';
-  setRegion('seoul');
-}
+// 학교는 수원대학교로 고정 (학교 변경 불가)
+function changeUniv(){}
 
 // ── 데이터 (Supabase) ──
 async function initData(){
@@ -1015,7 +1072,7 @@ async function initData(){
     var seeds=SAMPLE.map(function(p){
       return {type:p.type,title:p.title,category:p.category,location:p.location,
               date:p.date,author:p.author,desc:p.desc,status:p.status,
-              likes:[],views:p.views,img:null,coords:null,univ:ST.univ};
+              likes:[],views:p.views,img:null,coords:p.coords||null,univ:ST.univ};
     });
     var ins=await sb.from('posts').insert(seeds).select();
     ST.posts=ins.data||[];
@@ -1174,7 +1231,7 @@ async function openDet(id){
       +(p.desc?'<div class="det-desc">'+p.desc+'</div>':'')
       +'<div class="ibox loc">📍 '+locLbl+': <strong>'+p.location+'</strong></div>'
       +'<div class="ibox dt">📅 날짜: <strong>'+fd(p.date)+'</strong></div>'
-      +(p.coords?'<div class="det-map-wrap"><div class="det-map-addr">📍 '+p.coords.addr+'</div><div id="det-map"></div></div>':'')
+      +(p.coords?'<div class="det-map-wrap"><div class="det-map-addr">📍 '+esc(p.coords.addr)+(p.coords.detail?'<br>🏢 '+esc(p.coords.detail):'')+'</div><div id="det-map"></div></div>':'')
       +'<div class="det-actions">'+actBtns+'</div>'
     +'</div>';
   document.getElementById('det-ov').classList.add('on');
@@ -1354,6 +1411,9 @@ function openEditPost(id){
   }else{resetPzone();}
   document.querySelector('.sheet-title').textContent='게시물 수정';
   document.querySelector('.sbtn').textContent='수정 완료';
+  closeRegMap();
+  if(p.coords)openRegMap(p.coords);
+  syncMapReq();
   closeDet();
   document.getElementById('reg-ov').classList.add('on');
   document.querySelector('.fab-wrap').style.display='none';
@@ -1459,44 +1519,124 @@ async function sendMsg(){
 
 // ── 등록 ──
 // ── 지도 ──
-var _regMap=null, _regMarker=null, _detMap=null;
-function toggleMapSection(on){
-  var sec=document.getElementById('map-section');
-  sec.style.display=on?'block':'none';
-  if(on){
-    document.getElementById('map-addr-inp').value='';
-    document.getElementById('map-addr-label').textContent='';
-    ST.mapCoords=null;
-    setTimeout(function(){
-      if(_regMap){_regMap.remove();_regMap=null;_regMarker=null;}
-      _regMap=L.map('reg-map',{zoomControl:true}).setView([37.5665,126.9780],13);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19}).addTo(_regMap);
-      _regMap.on('click',function(e){placeRegMarker(e.latlng.lat,e.latlng.lng,'직접 선택한 위치');});
-    },80);
-  }else{
-    ST.mapCoords=null;
+var SCHOOL='수원대학교';
+var CAMPUS={lat:37.2100,lng:126.9758};
+var NEAR_BOUNDS=L.latLngBounds([37.16,126.91],[37.26,127.04]); // 수원대 중심 반경 약 5km
+var TILE_URL='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+var _regMap=null, _regMarker=null, _detMap=null, _allMap=null, _geoSeq=0;
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function newNearMap(id,opts){
+  var m=L.map(id,Object.assign({zoomControl:true,maxBounds:NEAR_BOUNDS,maxBoundsViscosity:1,minZoom:12},opts||{}));
+  L.tileLayer(TILE_URL,{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(m);
+  return m;
+}
+function toggleMapSection(on){on?openRegMap():closeRegMap();}
+function openRegMap(preset){
+  document.getElementById('fmap').checked=true;
+  document.getElementById('map-section').style.display='block';
+  document.getElementById('map-addr-inp').value='';
+  document.getElementById('map-addr-label').textContent='';
+  document.getElementById('map-detail').value=(preset&&preset.detail)||'';
+  ST.mapCoords=preset?{lat:preset.lat,lng:preset.lng,addr:preset.addr}:null;
+  setTimeout(function(){
     if(_regMap){_regMap.remove();_regMap=null;_regMarker=null;}
-  }
+    _regMap=newNearMap('reg-map').setView(preset?[preset.lat,preset.lng]:[CAMPUS.lat,CAMPUS.lng],preset?16:15);
+    _regMap.on('click',function(e){setPin(e.latlng.lat,e.latlng.lng);});
+    if(preset)placeRegMarker(preset.lat,preset.lng,preset.addr);
+    _regMap.invalidateSize();
+  },80);
+}
+function closeRegMap(){
+  document.getElementById('fmap').checked=false;
+  document.getElementById('map-section').style.display='none';
+  document.getElementById('map-detail').value='';
+  ST.mapCoords=null;
+  if(_regMap){_regMap.remove();_regMap=null;_regMarker=null;}
+}
+// 습득물은 핀 필수, 분실물은 선택
+function syncMapReq(){
+  var found=ST.regType==='found';
+  document.getElementById('fmap').disabled=found;
+  document.getElementById('fmap-txt').textContent=found?'🗺️ 주운 위치를 지도에 핀으로 찍어주세요 (필수)':'🗺️ 지도에서 위치 표시 (선택)';
+  if(found&&!document.getElementById('fmap').checked)openRegMap();
 }
 function searchMapAddr(){
   var q=document.getElementById('map-addr-inp').value.trim();
   if(!q){toast('주소를 입력해주세요');return;}
-  var url='https://nominatim.openstreetmap.org/search?q='+encodeURIComponent(q)+'&format=json&limit=1&accept-language=ko';
+  var url='https://nominatim.openstreetmap.org/search?q='+encodeURIComponent(q)+'&format=json&limit=1&accept-language=ko'
+    +'&viewbox=126.91,37.26,127.04,37.16&bounded=1';
   fetch(url).then(function(r){return r.json();}).then(function(data){
-    if(!data||!data.length){toast('주소를 찾을 수 없습니다');return;}
-    var lat=parseFloat(data[0].lat),lng=parseFloat(data[0].lon);
-    var addr=data[0].display_name.split(',').slice(0,3).join(', ');
-    placeRegMarker(lat,lng,addr);
+    if(!data||!data.length){toast('수원대 주변에서 주소를 찾을 수 없습니다');return;}
+    setPin(parseFloat(data[0].lat),parseFloat(data[0].lon),data[0].display_name.split(',').slice(0,3).join(', '));
   }).catch(function(){toast('검색 중 오류가 발생했습니다');});
+}
+function useMyLocation(){
+  if(!navigator.geolocation){toast('이 기기에서는 위치 기능을 쓸 수 없어요');return;}
+  toast('현재 위치를 확인하는 중...');
+  navigator.geolocation.getCurrentPosition(function(pos){
+    setPin(pos.coords.latitude,pos.coords.longitude);
+  },function(){toast('위치 권한을 허용해주세요');},{enableHighAccuracy:true,timeout:10000});
+}
+// 핀 설정: 수원대 주변 범위 확인 → 마커 → (주소 없으면) 역지오코딩
+function setPin(lat,lng,addr){
+  if(!_regMap)return;
+  if(!NEAR_BOUNDS.contains([lat,lng])){toast('수원대 주변(약 5km) 안에서만 핀을 찍을 수 있어요');return;}
+  placeRegMarker(lat,lng,addr||'선택한 위치');
+  _regMap.setView([lat,lng],Math.max(_regMap.getZoom(),16));
+  if(addr)return;
+  var seq=++_geoSeq;
+  fetch('https://nominatim.openstreetmap.org/reverse?lat='+lat+'&lon='+lng+'&format=json&zoom=18&accept-language=ko')
+    .then(function(r){return r.json();}).then(function(d){
+      if(seq!==_geoSeq||!d||!d.display_name||!ST.mapCoords)return;
+      var a=d.display_name.split(',').slice(0,3).join(', ');
+      placeRegMarker(lat,lng,a);
+    }).catch(function(){});
 }
 function placeRegMarker(lat,lng,addr){
   if(!_regMap)return;
   if(_regMarker) _regMarker.remove();
-  _regMarker=L.marker([lat,lng]).addTo(_regMap).bindPopup(addr).openPopup();
-  _regMap.setView([lat,lng],16);
+  _regMarker=L.marker([lat,lng],{draggable:true}).addTo(_regMap).bindPopup(esc(addr));
+  _regMarker.on('dragend',function(){
+    var ll=_regMarker.getLatLng();
+    if(!NEAR_BOUNDS.contains(ll)){
+      toast('수원대 주변(약 5km) 안에서만 핀을 찍을 수 있어요');
+      if(ST.mapCoords)_regMarker.setLatLng([ST.mapCoords.lat,ST.mapCoords.lng]);
+      return;
+    }
+    setPin(ll.lat,ll.lng);
+  });
   ST.mapCoords={lat:lat,lng:lng,addr:addr};
   document.getElementById('map-addr-label').textContent='📍 '+addr;
 }
+// ── 전체 게시물 지도 (수원대 주변만) ──
+function openAllMap(){
+  document.getElementById('map-ov').classList.add('on');
+  document.querySelector('.fab-wrap').style.display='none';
+  var pts=ST.posts.filter(function(p){
+    return p.type==='found'&&p.coords&&p.status!=='resolved'&&NEAR_BOUNDS.contains([p.coords.lat,p.coords.lng]);
+  });
+  document.getElementById('all-map-legend').textContent=
+    '📦 진행 중인 습득물 핀 '+pts.length+'개 (지도에 보이는 핀 수와 같아요)';
+  setTimeout(function(){
+    if(_allMap){_allMap.remove();_allMap=null;}
+    _allMap=newNearMap('all-map').setView([CAMPUS.lat,CAMPUS.lng],14);
+    L.marker([CAMPUS.lat,CAMPUS.lng],{icon:L.divIcon({className:'',html:'<div class="pin-ico" style="background:#E8A33D">🏫</div>',iconSize:[34,34],iconAnchor:[17,17]})})
+      .addTo(_allMap).bindPopup('수원대학교');
+    pts.forEach(function(p){
+      var icon=L.divIcon({className:'',html:'<div class="pin-ico pin-found">📦</div>',iconSize:[34,34],iconAnchor:[17,17]});
+      L.marker([p.coords.lat,p.coords.lng],{icon:icon}).addTo(_allMap).bindPopup(
+        '<b>'+esc(p.title)+'</b><br>📍 '+esc(p.location)+(p.coords.detail?'<br>🏢 '+esc(p.coords.detail):'')
+        +'<br><button class="pop-btn" onclick="openDetFromMap('+Number(p.id)+')">자세히 보기</button>');
+    });
+    _allMap.invalidateSize();
+  },80);
+}
+function closeAllMap(){
+  document.getElementById('map-ov').classList.remove('on');
+  if(_allMap){_allMap.remove();_allMap=null;}
+  document.querySelector('.fab-wrap').style.display='';
+}
+function openDetFromMap(id){closeAllMap();openDet(id);}
 function initDetMap(lat,lng){
   if(_detMap){_detMap.remove();_detMap=null;}
   var el=document.getElementById('det-map');
@@ -1517,9 +1657,7 @@ function openReg(){
   document.getElementById('floc').placeholder='예: 3층 복도, 도서관';
   document.getElementById('tc-lost').classList.add('on');
   document.getElementById('tc-found').classList.remove('on');
-  document.getElementById('fmap').checked=false;
-  document.getElementById('map-section').style.display='none';
-  if(_regMap){_regMap.remove();_regMap=null;_regMarker=null;}
+  closeRegMap();syncMapReq();
   resetPzone();
   document.querySelector('.sheet-title').textContent='분실물 / 습득물 등록';
   document.querySelector('.sbtn').textContent='등록하기';
@@ -1536,6 +1674,7 @@ function setType(t){
   document.getElementById('tc-found').classList.toggle('on',t==='found');
   document.getElementById('loc-lbl').innerHTML=(t==='lost'?'분실 위치':'습득 위치')+' <span class="req">*</span>';
   document.getElementById('floc').placeholder=t==='lost'?'예: 3층 복도, 도서관':'예: 공학관 1층 로비';
+  syncMapReq();
 }
 function resetPzone(){
   document.getElementById('pzw').innerHTML=
@@ -1563,9 +1702,11 @@ async function submitPost(){
   if(!name){toast('물품명을 입력해주세요');return;}
   if(!catRaw){toast('카테고리를 선택해주세요');return;}
   if(!loc){toast('위치를 입력해주세요');return;}
+  if(ST.regType==='found'&&!ST.mapCoords){toast('주운 위치를 지도에 핀으로 찍어주세요');return;}
+  var coords=ST.mapCoords?Object.assign({},ST.mapCoords,{detail:document.getElementById('map-detail').value.trim()}):null;
   if(!date){toast('날짜를 선택해주세요');return;}
   if(ST.editId){
-    var upd={type:ST.regType,title:name,category:catRaw,location:loc,date:date,desc:desc,coords:ST.mapCoords||null};
+    var upd={type:ST.regType,title:name,category:catRaw,location:loc,date:date,desc:desc,coords:coords};
     if(ST.photoUrl!==undefined)upd.img=ST.photoUrl;
     var res=await sb.from('posts').update(upd).eq('id',ST.editId);
     if(res.error){toast('수정 중 오류가 발생했습니다');return;}
@@ -1577,7 +1718,7 @@ async function submitPost(){
     var np={type:ST.regType,title:name,category:catRaw,location:loc,date:date,
       author:ST.me,desc:desc||(ST.regType==='lost'?'분실':'습득')+' 장소: '+loc,
       status:'active',likes:[],views:0,img:ST.photoUrl||null,
-      coords:ST.mapCoords||null,univ:ST.univ};
+      coords:coords,univ:ST.univ};
     var ins=await sb.from('posts').insert(np).select().single();
     if(ins.error){toast('등록 중 오류가 발생했습니다');return;}
     ST.posts.unshift(ins.data);
@@ -1594,7 +1735,8 @@ function toast(msg){
 
 // ── 초기화 ──
 (function(){
-  var _session=getSession();
+  var _session=DEMO?{nickname:'데모사용자'}:getSession();
+  if(DEMO)document.title='찾았대 (데모)';
   if(_session){
     afterAuth(_session.nickname);
   } else {
