@@ -1430,12 +1430,7 @@ function subscribeChat(postId){
       function(payload){
         var m=payload.new;
         if(m.from_user===ST.me)return;
-        if(!ST.chats[postId])ST.chats[postId]=[];
-        ST.chats[postId].push({from:m.from_user,text:m.msg_text,time:m.msg_time,id:m.id});
-        renderChat(postId);
-        var msgs=document.getElementById('chat-msgs');
-        if(msgs)msgs.scrollTop=msgs.scrollHeight;
-        updateChatCnt();
+        addChatMsg(postId,{from:m.from_user,text:m.msg_text,time:m.msg_time,id:m.id});
       })
     .subscribe();
 }
@@ -1452,11 +1447,7 @@ async function doChat(id){
   if(!ST.chats[id]){
     var res=await sb.from('chat_messages').select('*').eq('post_id',id).order('created_at');
     var msgs=res.data||[];
-    if(!msgs.length){
-      ST.chats[id]=[{from:p.author,text:'안녕하세요! 분실물 관련해서 연락드려요 😊',time:nt()}];
-    } else {
-      ST.chats[id]=msgs.map(function(m){return{from:m.from_user,text:m.msg_text,time:m.msg_time,id:m.id};});
-    }
+    ST.chats[id]=msgs.map(function(m){return{from:m.from_user,text:m.msg_text,time:m.msg_time,id:m.id};});
     trackChat(id);
   }
   renderChat(id);
@@ -1511,13 +1502,46 @@ async function sendMsg(){
   await sb.from('chat_messages').insert({post_id:id,from_user:ST.me,msg_text:txt,msg_time:time});
   var p=ST.posts.find(function(x){return x.id===id;});
   if(p&&SAMPLE_AUTHORS.indexOf(p.author)>-1){
-    var rs=['확인했습니다! 연락처 알려드릴게요 😊','네, 맞아요! 언제 오실 수 있나요?','학생처에 맡겨뒀어요. 주중 방문해 주세요!','아, 정말요? 감사합니다! 🙏','잠깐만요, 지금 확인 중이에요 👀'];
+    var rt;
+    var script=SCRIPTED_REPLIES[p.title];
+    if(script){
+      // 정해 둔 답을 순서대로: 내가 보낸 n번째 메시지에 n번째 답 (다 쓰면 답하지 않음)
+      var n=ST.chats[id].filter(function(m){return m.from===ST.me;}).length;
+      rt=script[n-1];
+    }else{
+      var rs=['확인했습니다! 연락처 알려드릴게요 😊','네, 맞아요! 언제 오실 수 있나요?','학생처에 맡겨뒀어요. 주중 방문해 주세요!','아, 정말요? 감사합니다! 🙏','잠깐만요, 지금 확인 중이에요 👀'];
+      rt=rs[Math.floor(Math.random()*rs.length)];
+    }
+    if(!rt)return;
     setTimeout(async function(){
-      var rt=rs[Math.floor(Math.random()*rs.length)];
       var rtime=nt();
-      await sb.from('chat_messages').insert({post_id:id,from_user:p.author,msg_text:rt,msg_time:rtime});
+      var ins=await sb.from('chat_messages').insert({post_id:id,from_user:p.author,msg_text:rt,msg_time:rtime}).select().single();
+      // 실시간 수신이 없는 데모 모드에서도 답이 보이도록 직접 추가 (실시간으로 먼저 들어온 경우는 건너뜀)
+      addChatMsg(id,{from:p.author,text:rt,time:rtime,id:ins.data&&ins.data.id});
     },1100);
   }
+}
+
+// 샘플 게시물별로 정해 둔 자동 답장 (게시물 제목 → 순서대로 보낼 답)
+var SCRIPTED_REPLIES={
+  '바나나 인형 키링 습득':[
+    '안녕하세요 현재 제가 보관하고 있습니다. 직접 드릴까요 아니면 학생회관에 있는 학생회관 분실물 센터에 맡겨놓을까요?',
+    '네 알겠습니다. 제가 일정이 있어서 오후3시 이후에 맡겨놓도록 하겠습니다'
+  ]
+};
+
+function addChatMsg(postId,msg){
+  if(!ST.chats[postId])ST.chats[postId]=[];
+  if(msg.id!=null&&ST.chats[postId].some(function(m){return m.id===msg.id;}))return;
+  ST.chats[postId].push(msg);
+  updateChatCnt();
+  var scr=document.getElementById('chat-scr');
+  if(scr.classList.contains('on')&&parseInt(scr.dataset.pid)===postId){
+    renderChat(postId);
+    var msgs=document.getElementById('chat-msgs');
+    if(msgs)msgs.scrollTop=msgs.scrollHeight;
+  }
+  if(document.getElementById('chatlist-scr').classList.contains('on'))renderChatList();
 }
 
 // ── 등록 ──
