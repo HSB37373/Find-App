@@ -268,6 +268,45 @@
     .spick-opt.cur{color:var(--gold);}
     .author-link:hover{text-decoration:underline;}
 
+    /* ── 매너온도 ── */
+    .temp-chip{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:10px;background:#fff;
+               border:1.5px solid currentColor;font-size:11px;font-weight:800;vertical-align:middle;white-space:nowrap;}
+    .manner{background:#fff;border-radius:14px;padding:12px 14px 11px;margin:14px auto 0;max-width:320px;text-align:left;}
+    .mn-top{display:flex;justify-content:space-between;align-items:baseline;}
+    .mn-lbl{font-size:12px;font-weight:700;color:var(--sub);}
+    .mn-val{font-size:20px;font-weight:900;}
+    .mn-bar{height:8px;background:#EFE6DA;border-radius:4px;overflow:hidden;margin:7px 0 7px;}
+    .mn-fill{height:100%;border-radius:4px;}
+    .mn-sub{font-size:11px;color:var(--sub);}
+    .mn-tier{font-weight:800;color:var(--text);}
+    .mn-list{background:#fff;padding:6px 16px 12px;}
+    .mn-row{display:flex;justify-content:space-between;padding:8px 0;font-size:13px;color:var(--text);border-bottom:1px solid var(--gline);}
+    .mn-row:last-child{border-bottom:none;}
+    .mn-row b{color:var(--navy);}
+    .mn-row.bad b{color:#e74c3c;}
+    .mn-cmt{padding:9px 0;border-bottom:1px solid var(--gline);font-size:13px;color:#555;line-height:1.5;}
+    .mn-cmt:last-child{border-bottom:none;}
+    .mn-cmt-by{font-size:11px;color:var(--sub);margin-bottom:2px;}
+    .mn-empty{padding:14px 0;text-align:center;font-size:13px;color:#bbb;}
+    .mn-note{font-size:11px;color:var(--sub);padding:6px 0 0;}
+    .ibox.helper{background:#e8fff2;color:#1a6b38;}
+    .rev-cta{width:100%;padding:13px;margin-bottom:8px;border-radius:12px;border:2px solid var(--gold);
+             background:#FFF8EC;color:#9b5d00;font-size:14px;font-weight:800;cursor:pointer;font-family:inherit;}
+    .hp-row{display:flex;gap:8px;padding:12px 24px 4px;}
+    .hp-empty{padding:12px 24px 0;font-size:13px;color:#bbb;}
+    .hp-skip{padding:14px 24px 0;font-size:13px;color:var(--sub);text-align:center;cursor:pointer;text-decoration:underline;}
+    #rev-ov{z-index:3100;}
+    .rev-side{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+    .rev-side-btn{padding:16px 8px;border-radius:14px;border:2px solid var(--gline);background:#fff;
+                  font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;color:var(--sub);}
+    .rev-side-btn .te{font-size:28px;margin-bottom:4px;}
+    .rev-side-btn.on.good{border-color:#1a8c42;background:#e8fff2;color:#1a8c42;}
+    .rev-side-btn.on.bad{border-color:#e74c3c;background:#fff0f0;color:#e74c3c;}
+    .rev-tags{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+    .rev-tag{padding:12px 14px;border-radius:10px;border:1.5px solid var(--gline);background:#fff;text-align:left;
+             font-size:14px;cursor:pointer;font-family:inherit;color:var(--text);}
+    .rev-tag.on{border-color:var(--navy);background:#FDF5EC;font-weight:700;}
+
     /* ── 채팅 목록 ── */
     .chatlist-scr{position:fixed;inset:0;max-width:430px;margin:0 auto;
                   background:var(--gbg);display:none;flex-direction:column;z-index:1500;}
@@ -674,6 +713,33 @@
   </div>
 </div>
 
+<!-- 해결 도우미 선택 (매너온도) -->
+<div class="spick-ov" id="helper-ov" onclick="if(event.target===this)closeHelperPicker()">
+  <div class="spick-sheet">
+    <div class="spick-handle"></div>
+    <div class="spick-title">🤝 누구 덕분에 해결됐나요?</div>
+    <div id="helper-list"></div>
+    <div class="hp-row">
+      <input class="fi" id="helper-inp" placeholder="닉네임 직접 입력" maxlength="20"
+             onkeydown="if(event.key==='Enter')confirmHelperInput()">
+      <button class="map-search-btn" onclick="confirmHelperInput()">선택</button>
+    </div>
+    <div class="hp-skip" onclick="resolveWith(ST.helperPickId,null)">상대 없이 해결됨으로 바꾸기 (평가 안 함)</div>
+  </div>
+</div>
+
+<!-- 매너 평가 -->
+<div class="overlay" id="rev-ov" onclick="if(event.target===this)closeReview()">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-head">
+      <span class="sheet-title">🌡️ 매너 평가</span>
+      <button class="sheet-close" onclick="closeReview()">×</button>
+    </div>
+    <div class="sheet-body" id="rev-body"></div>
+  </div>
+</div>
+
 <!-- 상세 모달 -->
 <div class="overlay" id="det-ov" onclick="if(event.target===this)closeDet()">
   <div class="sheet" style="max-height:94vh">
@@ -706,7 +772,7 @@
     <div class="chat-prof-btn" id="chat-prof-btn" onclick="openProfileFromChat()">
       <div class="chat-av" id="chat-av">👤</div>
       <div>
-        <div class="chat-nm" id="chat-nm"></div>
+        <div class="chat-nm"><span id="chat-nm"></span><span id="chat-temp"></span></div>
         <div class="chat-sub" id="chat-sub"></div>
         <div class="chat-prof-hint">프로필 보기 ›</div>
       </div>
@@ -762,6 +828,7 @@
     <div class="prof-hd-section">
       <div class="prof-av-circle" id="prof-av"></div>
       <div class="prof-nm" id="prof-nm"></div>
+      <div class="manner" id="prof-manner"></div>
       <div class="prof-stats-row">
         <div class="prof-stat"><div class="prof-stat-n" id="prof-total">0</div><div class="prof-stat-l">전체 게시물</div></div>
         <div class="prof-stat"><div class="prof-stat-n" id="prof-lost">0</div><div class="prof-stat-l">분실물</div></div>
@@ -769,6 +836,8 @@
         <div class="prof-stat"><div class="prof-stat-n gr" id="prof-resolved">0</div><div class="prof-stat-l">해결됨</div></div>
       </div>
     </div>
+    <div class="prof-section-title">🌡️ 받은 매너 평가</div>
+    <div class="mn-list" id="prof-reviews"></div>
     <div class="prof-section-title">📋 게시물 목록</div>
     <div class="prof-feed" id="prof-feed"></div>
   </div>
@@ -783,7 +852,7 @@ var SUPABASE_ANON = 'your-anon-key-here';
 // 데모 모드(?demo=1): 로그인·Supabase 없이 메모리 DB로 화면만 확인 (새로고침하면 초기화)
 var DEMO = /[?&]demo=1\b/.test(location.search);
 function makeDemoSb(){
-  var db={users:[],posts:[],chat_messages:[]}, seq=1;
+  var db={users:[],posts:[],chat_messages:[],reviews:[]}, seq=1;
   function Q(t){this.t=t;this.op='select';this.f=[];this.ord=null;this.want=false;this.one=false;}
   Q.prototype.select=function(){if(this.op!=='select')this.want=true;return this;};
   Q.prototype.insert=function(r){this.op='insert';this.rows=[].concat(r);return this;};
@@ -842,6 +911,7 @@ var sb = DEMO ? makeDemoSb() : supabase.createClient(SUPABASE_URL, SUPABASE_ANON
     img        text,
     coords     jsonb,
     univ       text not null,
+    resolved_with text,          -- 해결을 도와준 상대 닉네임 (매너온도)
     created_at timestamptz default now()
   );
 
@@ -854,9 +924,27 @@ var sb = DEMO ? makeDemoSb() : supabase.createClient(SUPABASE_URL, SUPABASE_ANON
     created_at timestamptz default now()
   );
 
+  -- 매너 평가: 해결된 게시물에서 서로 남기는 평가. 매너온도는 이 표로 계산 (따로 저장하지 않음)
+  create table reviews (
+    id         bigint generated always as identity primary key,
+    post_id    bigint,
+    from_user  text not null,
+    to_user    text not null,
+    good_tags  text[] default '{}',
+    bad_tags   text[] default '{}',
+    comment    text,
+    returned   boolean default false,   -- to_user 가 물건을 찾아준 사람인지
+    created_at timestamptz default now(),
+    unique (post_id, from_user, to_user)
+  );
+
   alter table users         disable row level security;
   alter table posts         disable row level security;
   alter table chat_messages disable row level security;
+  alter table reviews       disable row level security;
+
+  -- 이미 posts 테이블을 만든 경우에는 컬럼만 추가:
+  --   alter table posts add column resolved_with text;
 
   -- Realtime 활성화:
   -- Dashboard › Database › Replication › Source 탭에서 chat_messages 테이블 토글 ON
@@ -926,17 +1014,33 @@ function doLogout(){
 }
 
 var CE={'전자기기':'📱','가방/지갑':'👜','의류':'👕','문구류':'✏️','스포츠용품':'⚽','기타':'📦'};
-var ST={posts:[],me:'',tab:'all',sf:'active',cf:'',q:'',regType:'lost',photoUrl:null,chats:{},univ:'',editId:null,statusPickId:null,mapCoords:null};
+var ST={posts:[],me:'',tab:'all',sf:'active',cf:'',q:'',regType:'lost',photoUrl:null,chats:{},univ:'',editId:null,statusPickId:null,mapCoords:null,
+        reviews:[],helperPickId:null,rev:null};
 var _viewedPosts=new Set();
 var _chatChannel=null;
 var SAMPLE_AUTHORS=['kim_sw','inchang_helper','park_2023','lee_campus','choi_yun','shin_helper','jung_h'];
+// 해결된 샘플 게시물(후드)을 찾아준 사람 — 데모에서는 데모사용자가 직접 평가 흐름을 볼 수 있게 본인으로
+var SAMPLE_HELPER=DEMO?'데모사용자':'shin_helper';
+var SAMPLE_REVIEWS=[
+  {from:'choi_yun',to:SAMPLE_HELPER,post:'파란색 나이키 후드 분실',returned:true,
+   good:['답장이 빨라요','물건을 깨끗하게 보관해줬어요','친절하고 매너가 좋아요'],comment:'라커룸에 두고 간 후드 찾아주셔서 정말 감사해요!'},
+  {from:'kim_sw',to:'inchang_helper',returned:true,good:['답장이 빨라요','약속 시간을 잘 지켜요','친절하고 매너가 좋아요'],comment:'도서관 앞에서 바로 건네주셨어요 👍'},
+  {from:'park_2023',to:'inchang_helper',returned:true,good:['약속 시간을 잘 지켜요','물건을 깨끗하게 보관해줬어요']},
+  {from:'lee_campus',to:'inchang_helper',returned:true,good:['답장이 빨라요','약속 시간을 잘 지켜요','물건을 깨끗하게 보관해줬어요','위치를 정확히 알려줬어요'],comment:'공학관 키링 주인이에요. 감사합니다!'},
+  {from:'jung_h',to:'inchang_helper',returned:true,good:['친절하고 매너가 좋아요','답장이 빨라요']},
+  {from:'kim_sw',to:'shin_helper',returned:true,good:['위치를 정확히 알려줬어요','답장이 빨라요']},
+  {from:'park_2023',to:'shin_helper',returned:true,good:['친절하고 매너가 좋아요','약속 시간을 잘 지켜요'],comment:'학생증 찾아주셔서 감사해요 🙏'},
+  {from:'inchang_helper',to:'lee_campus',good:['답장이 빨라요','친절하고 매너가 좋아요']},
+  {from:'inchang_helper',to:'kim_sw',good:['약속 시간을 잘 지켜요']},
+  {from:'shin_helper',to:'jung_h',bad:['약속을 지키지 않았어요']},
+];
 
 var SAMPLE=[
   {type:'lost',title:'검정 에어팟 케이스 분실',category:'전자기기',location:'중앙도서관 3층 열람실',date:'2026-06-10',author:'kim_sw',desc:'자리 옮기다 잃어버렸어요. 흰색 스티커가 붙은 검정 에어팟 케이스입니다.',status:'active',likes:[],views:47,img:'images/airpods-case.jpg',coords:null},
   {type:'found',title:'바나나 인형 키링 습득',category:'기타',location:'공학관 엘리베이터 앞',date:'2026-05-11',author:'inchang_helper',desc:'공학관 1층 엘리베이터 앞에서 발견했습니다. 노란 얼굴에 하얀 눈썹이 특징입니다.',status:'active',likes:[],views:310,img:'images/banana-keyring.jpg',coords:{lat:37.2112,lng:126.9742,addr:'수원대학교 공학관',detail:'1층 엘리베이터 앞'}},
   {type:'lost',title:'학생증 분실 (홍길동)',category:'가방/지갑',location:'학생식당 1층',date:'2026-06-08',author:'park_2023',desc:'점심 먹고 학생증이 없어졌어요. 발견하시면 연락 주세요.',status:'active',likes:[],views:22,img:'images/student-id.jpg',coords:null},
   {type:'found',title:'검정 우산 습득',category:'기타',location:'본관 1층 우산꽂이 옆',date:'2026-06-12',author:'lee_campus',desc:'본관 1층 입구 검정 우산. 손잡이에 노란 고무줄이 묶여 있어요.',status:'active',likes:[],views:88,img:'images/umbrella.jpg',coords:{lat:37.2098,lng:126.9770,addr:'수원대학교 본관',detail:'1층 우산꽂이 옆'}},
-  {type:'lost',title:'파란색 나이키 후드 분실',category:'의류',location:'체육관 라커룸',date:'2026-06-05',author:'choi_yun',desc:'파란색 나이키 후드 왼쪽 소매 안쪽에 볼펜 자국 있어요.',status:'resolved',likes:[],views:15,img:null,coords:null},
+  {type:'lost',title:'파란색 나이키 후드 분실',category:'의류',location:'체육관 라커룸',date:'2026-06-05',author:'choi_yun',desc:'파란색 나이키 후드 왼쪽 소매 안쪽에 볼펜 자국 있어요.',status:'resolved',likes:[],views:15,img:null,coords:null,resolved_with:SAMPLE_HELPER},
   {type:'found',title:'갤럭시 이어버즈 베이지색 습득',category:'전자기기',location:'소프트웨어관 302호',date:'2026-06-13',author:'shin_helper',desc:'의자 아래에서 갤럭시 이어버즈 베이지색 케이스를 발견했습니다.',status:'active',likes:[],views:134,img:'images/galaxy-buds.jpg',coords:{lat:37.2086,lng:126.9778,addr:'수원대학교 소프트웨어관',detail:'302호'}},
   {type:'lost',title:'연두색 텀블러 분실',category:'기타',location:'스타벅스 교내점',date:'2026-06-14',author:'jung_h',desc:'테이블에 연두색 텀블러를 두고 왔습니다. 안쪽에 흠집이 있어요.',status:'active',likes:[],views:31,img:'images/tumbler.jpg',coords:null},
 ];
@@ -1075,14 +1179,188 @@ async function initData(){
     var seeds=SAMPLE.map(function(p){
       return {type:p.type,title:p.title,category:p.category,location:p.location,
               date:p.date,author:p.author,desc:p.desc,status:p.status,
-              likes:[],views:p.views,img:p.img||null,coords:p.coords||null,univ:ST.univ};
+              likes:[],views:p.views,img:p.img||null,coords:p.coords||null,univ:ST.univ,
+              resolved_with:p.resolved_with||null};
     });
     var ins=await sb.from('posts').insert(seeds).select();
     ST.posts=ins.data||[];
+    await seedReviews();
   } else {
     ST.posts=res.data;
   }
+  await loadReviews();
   await loadMyChats();
+}
+
+// ── 매너온도 ──
+// 처음 36.5°C, 받은 평가(reviews)로만 계산. 좋은 항목 +0.1, 아쉬운 항목 −0.3, 물건을 찾아줬고 아쉬운 점이 없으면 +0.5
+var MANNER={base:36.5,good:0.1,bad:0.3,returned:0.5,min:0,max:99};
+var GOOD_TAGS=['답장이 빨라요','약속 시간을 잘 지켜요','물건을 깨끗하게 보관해줬어요','위치를 정확히 알려줬어요','친절하고 매너가 좋아요'];
+var BAD_TAGS=['연락이 끊겼어요','약속을 지키지 않았어요','불친절했어요','물건 상태가 설명과 달랐어요'];
+// 온도 단계별 칭호 (36.5°C 미만은 칭호 없음)
+var TIERS=[[80,'🌋','찾았대 용광로'],[65,'☀️','걸어다니는 햇살'],[55,'🌡️','인간 온풍기'],[48,'🔥','캠퍼스 난로'],
+           [42,'🧤','손난로 같은 사람'],[38,'☕','따뜻한 선배'],[36.5,'🌱','갓 입학한 새내기']];
+
+async function loadReviews(){
+  var res=await sb.from('reviews').select('*').order('id',{ascending:false});
+  ST.reviews=res.error?[]:(res.data||[]); // reviews 테이블이 아직 없어도 앱은 그대로 동작
+}
+async function seedReviews(){
+  var rows=SAMPLE_REVIEWS.map(function(r){
+    var p=r.post&&ST.posts.find(function(x){return x.title===r.post;});
+    return {post_id:p?p.id:null,from_user:r.from,to_user:r.to,good_tags:r.good||[],bad_tags:r.bad||[],
+            comment:r.comment||null,returned:!!r.returned};
+  });
+  await sb.from('reviews').insert(rows);
+}
+function mannerOf(nick){
+  var rs=ST.reviews.filter(function(r){return r.to_user===nick;});
+  var t=MANNER.base,finds=0,good={},bad={};
+  rs.forEach(function(r){
+    var g=Array.isArray(r.good_tags)?r.good_tags:[], b=Array.isArray(r.bad_tags)?r.bad_tags:[];
+    t+=g.length*MANNER.good-b.length*MANNER.bad;
+    if(r.returned&&!b.length){t+=MANNER.returned;finds++;}
+    g.forEach(function(x){good[x]=(good[x]||0)+1;});
+    b.forEach(function(x){bad[x]=(bad[x]||0)+1;});
+  });
+  t=Math.round(Math.min(MANNER.max,Math.max(MANNER.min,t))*10)/10;
+  return {temp:t,count:rs.length,finds:finds,good:good,bad:bad,reviews:rs};
+}
+function tempLook(t){
+  if(t<30)  return {c:'#3B6FD4',f:'😥'};
+  if(t<36.5)return {c:'#3A8FC9',f:'🙂'};
+  if(t<42)  return {c:'#2E9E6B',f:'😊'};
+  if(t<55)  return {c:'#C9820F',f:'😄'};
+  if(t<65)  return {c:'#E0682A',f:'😆'};
+  return {c:'#E2483D',f:'🔥'};
+}
+function tierOf(t){for(var i=0;i<TIERS.length;i++)if(t>=TIERS[i][0])return TIERS[i];return null;}
+function tempChip(nick){
+  var m=mannerOf(nick);
+  return '<span class="temp-chip" style="color:'+tempLook(m.temp).c+'">🌡️ '+m.temp.toFixed(1)+'°</span>';
+}
+function hasReviewed(pid,from,to){
+  return ST.reviews.some(function(r){return r.post_id===pid&&r.from_user===from&&r.to_user===to;});
+}
+// 해결된 거래에서 내가 아직 평가하지 않은 상대 (없으면 null)
+function pendingReviewTarget(p){
+  if(p.status!=='resolved'||!p.resolved_with)return null;
+  var to=p.author===ST.me?p.resolved_with:(p.resolved_with===ST.me?p.author:null);
+  return to&&!hasReviewed(p.id,ST.me,to)?to:null;
+}
+function renderManner(nick){
+  var m=mannerOf(nick),lk=tempLook(m.temp),tier=tierOf(m.temp),mine=nick===ST.me;
+  document.getElementById('prof-manner').innerHTML=
+    '<div class="mn-top"><span class="mn-lbl">매너온도</span>'
+      +'<span class="mn-val" style="color:'+lk.c+'">'+m.temp.toFixed(1)+'°C '+lk.f+'</span></div>'
+    +'<div class="mn-bar"><div class="mn-fill" style="width:'+(m.temp/MANNER.max*100)+'%;background:'+lk.c+'"></div></div>'
+    +'<div class="mn-sub">'+(tier?'<span class="mn-tier">'+tier[1]+' '+tier[2]+'</span> · ':'')
+      +'찾아준 물건 '+m.finds+'개 · 받은 평가 '+m.count+'개</div>';
+  var rows=Object.keys(m.good).sort(function(a,b){return m.good[b]-m.good[a];}).map(function(k){
+    return '<div class="mn-row"><span>👍 '+esc(k)+'</span><b>'+m.good[k]+'</b></div>';
+  });
+  // 아쉬운 평가 항목과 그 후기는 본인에게만 보여줌
+  if(mine)rows=rows.concat(Object.keys(m.bad).map(function(k){
+    return '<div class="mn-row bad"><span>👎 '+esc(k)+'</span><b>'+m.bad[k]+'</b></div>';
+  }));
+  var cmts=m.reviews.filter(function(r){
+    return r.comment&&(mine||!(Array.isArray(r.bad_tags)&&r.bad_tags.length));
+  }).slice(0,3).map(function(r){
+    return '<div class="mn-cmt"><div class="mn-cmt-by">@'+esc(r.from_user)+'</div>'+esc(r.comment)+'</div>';
+  });
+  document.getElementById('prof-reviews').innerHTML=
+    (rows.length||cmts.length?rows.join('')+cmts.join(''):'<div class="mn-empty">아직 받은 매너 평가가 없어요</div>')
+    +'<div class="mn-note">처음 온도는 36.5°C예요. 물건을 주고받은 뒤 받은 평가로 오르거나 내려가요.'
+      +(mine&&Object.keys(m.bad).length?' 👎 항목은 나에게만 보여요.':'')+'</div>';
+}
+
+// 해결됨으로 바꿀 때: 도와준 사람 고르기 → 매너 평가
+async function openHelperPicker(id){
+  ST.helperPickId=id;
+  var p=ST.posts.find(function(x){return x.id===id;});if(!p)return;
+  document.getElementById('helper-inp').value='';
+  var res=await sb.from('chat_messages').select('from_user').eq('post_id',id);
+  var seen={},nms=[];
+  (res.data||[]).forEach(function(m){
+    if(m.from_user!==p.author&&!seen[m.from_user]){seen[m.from_user]=1;nms.push(m.from_user);}
+  });
+  document.getElementById('helper-list').innerHTML=nms.length
+    ?nms.map(function(n){
+        return '<div class="spick-opt" data-nm="'+esc(n)+'" onclick="resolveWith(ST.helperPickId,this.dataset.nm)">💬 @'+esc(n)+tempChip(n)+'</div>';
+      }).join('')
+    :'<div class="hp-empty">이 글에서 채팅한 사람이 없어요. 닉네임을 직접 입력해 주세요.</div>';
+  document.getElementById('helper-ov').classList.add('on');
+}
+function closeHelperPicker(){document.getElementById('helper-ov').classList.remove('on');}
+async function confirmHelperInput(){
+  var nm=document.getElementById('helper-inp').value.trim().replace(/^@/,'');
+  if(!nm){toast('닉네임을 입력해주세요');return;}
+  if(nm===ST.me){toast('본인은 고를 수 없어요');return;}
+  var ok=SAMPLE_AUTHORS.indexOf(nm)>-1;
+  if(!ok){var r=await sb.from('users').select('id').eq('nickname',nm).maybeSingle();ok=!!r.data;}
+  if(!ok){toast('가입하지 않은 닉네임이에요');return;}
+  resolveWith(ST.helperPickId,nm);
+}
+async function resolveWith(id,nick){
+  closeHelperPicker();
+  var p=ST.posts.find(function(x){return x.id===id;});if(!p)return;
+  p.status='resolved';p.resolved_with=nick||null;
+  await sb.from('posts').update({status:'resolved',resolved_with:p.resolved_with}).eq('id',id);
+  await openDet(id);
+  toast('해결됨으로 변경됐습니다 ✅');
+  if(nick&&!hasReviewed(id,ST.me,nick))openReview(id,nick);
+}
+
+function openReview(pid,to){
+  ST.rev={pid:pid,to:to,side:null,tags:[],cmt:''};
+  renderReview();
+  document.getElementById('rev-ov').classList.add('on');
+}
+function closeReview(){document.getElementById('rev-ov').classList.remove('on');ST.rev=null;}
+function keepRevCmt(){var el=document.getElementById('rev-cmt');if(el&&ST.rev)ST.rev.cmt=el.value;}
+function setRevSide(s){keepRevCmt();if(ST.rev.side!==s){ST.rev.side=s;ST.rev.tags=[];}renderReview();}
+function toggleRevTag(i){
+  keepRevCmt();
+  var t=(ST.rev.side==='good'?GOOD_TAGS:BAD_TAGS)[i],k=ST.rev.tags.indexOf(t);
+  if(k>-1)ST.rev.tags.splice(k,1); else ST.rev.tags.push(t);
+  renderReview();
+}
+function renderReview(){
+  var R=ST.rev,tags=R.side==='good'?GOOD_TAGS:R.side==='bad'?BAD_TAGS:[];
+  document.getElementById('rev-body').innerHTML=
+    '<div class="fl" style="font-size:15px;margin-bottom:12px">@'+esc(R.to)+' 님과의 거래는 어땠나요?</div>'
+    +'<div class="rev-side">'
+      +'<button class="rev-side-btn good'+(R.side==='good'?' on':'')+'" onclick="setRevSide(\'good\')"><div class="te">😊</div>좋았어요</button>'
+      +'<button class="rev-side-btn bad'+(R.side==='bad'?' on':'')+'" onclick="setRevSide(\'bad\')"><div class="te">😞</div>아쉬웠어요</button>'
+    +'</div>'
+    +(R.side
+      ?'<div class="fl">'+(R.side==='good'?'어떤 점이 좋았나요?':'어떤 점이 아쉬웠나요?')
+          +' <span class="req">*</span><span style="font-size:11px;font-weight:400;color:var(--sub)">여러 개 고를 수 있어요</span></div>'
+        +'<div class="rev-tags">'+tags.map(function(t,i){
+            var on=R.tags.indexOf(t)>-1;
+            return '<button class="rev-tag'+(on?' on':'')+'" onclick="toggleRevTag('+i+')">'+(on?'☑️ ':'⬜ ')+t+'</button>';
+          }).join('')+'</div>'
+        +'<div class="fg"><div class="fl">한 줄 후기 <span style="font-size:11px;font-weight:400;color:var(--sub)">(선택)</span></div>'
+          +'<textarea class="fi" id="rev-cmt" rows="2" maxlength="100" placeholder="고마운 마음이나 아쉬웠던 점을 남겨주세요">'+esc(R.cmt)+'</textarea></div>'
+        +'<button class="sbtn" onclick="submitReview()">평가 보내기</button>'
+      :'');
+}
+async function submitReview(){
+  var R=ST.rev;if(!R)return;
+  if(!R.tags.length){toast('항목을 하나 이상 골라주세요');return;}
+  var p=ST.posts.find(function(x){return x.id===R.pid;});if(!p)return;
+  if(hasReviewed(p.id,ST.me,R.to)){closeReview();toast('이미 평가를 남겼어요');return;}
+  var finder=p.type==='lost'?p.resolved_with:p.author; // 분실물이면 도와준 사람, 습득물이면 글쓴이가 찾아준 사람
+  var cmt=document.getElementById('rev-cmt').value.trim();
+  var row={post_id:p.id,from_user:ST.me,to_user:R.to,
+           good_tags:R.side==='good'?R.tags:[],bad_tags:R.side==='bad'?R.tags:[],
+           comment:cmt||null,returned:R.to===finder};
+  var ins=await sb.from('reviews').insert(row).select().single();
+  if(ins.error){toast('평가를 저장하지 못했어요');return;}
+  ST.reviews.unshift(ins.data);
+  closeReview();
+  toast('@'+R.to+' 님에게 매너 평가를 보냈어요 🌡️');
+  if(document.getElementById('det-ov').classList.contains('on'))openDet(p.id);
 }
 
 async function loadMyChats(){
@@ -1224,17 +1502,22 @@ async function openDet(id){
       +'<button class="act-btn" onclick="openStatusPicker('+id+')"><span class="act-ico">📋</span>상태변경</button>'
       +'<button class="act-btn act-del" onclick="deletePost('+id+')"><span class="act-ico">🗑</span>삭제</button>'
     :likeBtn+'<button class="act-chat-btn" onclick="doChat('+id+')">💬 채팅하기</button>';
+  var revTo=pendingReviewTarget(p);
   document.getElementById('det-body').innerHTML=
     '<div class="det-img">'+imgH+(p.img?'':ce)+'</div>'
     +'<div class="det-body">'
       +'<div class="badges"><span class="badge '+(p.type==='lost'?'b-lost':'b-found')+'">'+(p.type==='lost'?'분실물':'습득물')+'</span>'
         +'<span class="badge b-cat">'+ce+' '+p.category+'</span>'+chip(p)+'</div>'
       +'<div class="det-title">'+p.title+'</div>'
-      +'<div class="det-meta">👤 <span class="author-link" onclick="openProfile(\''+p.author+'\')">@'+p.author+'</span> &nbsp;|&nbsp; 📅 '+fd(p.date)+' &nbsp;|&nbsp; 👁 '+p.views+'회</div>'
+      +'<div class="det-meta">👤 <span class="author-link" onclick="openProfile(\''+p.author+'\')">@'+p.author+'</span>'+tempChip(p.author)+' &nbsp;|&nbsp; 📅 '+fd(p.date)+' &nbsp;|&nbsp; 👁 '+p.views+'회</div>'
       +(p.desc?'<div class="det-desc">'+p.desc+'</div>':'')
       +'<div class="ibox loc">📍 '+locLbl+': <strong>'+p.location+'</strong></div>'
       +'<div class="ibox dt">📅 날짜: <strong>'+fd(p.date)+'</strong></div>'
+      +(p.status==='resolved'&&p.resolved_with
+        ?'<div class="ibox helper">🤝 <span class="author-link" data-nm="'+esc(p.resolved_with)+'" onclick="openProfile(this.dataset.nm)">@'+esc(p.resolved_with)+'</span>'
+          +tempChip(p.resolved_with)+'&nbsp;님과 해결됐어요</div>':'')
       +(p.coords?'<div class="det-map-wrap"><div class="det-map-addr">📍 '+esc(p.coords.addr)+(p.coords.detail?'<br>🏢 '+esc(p.coords.detail):'')+'</div><div id="det-map"></div></div>':'')
+      +(revTo?'<div class="det-actions" style="border-top:none;padding-top:0"><button class="rev-cta" data-nm="'+esc(revTo)+'" onclick="openReview('+id+',this.dataset.nm)">⭐ @'+esc(revTo)+' 님에게 매너 평가 남기기</button></div>':'')
       +'<div class="det-actions">'+actBtns+'</div>'
     +'</div>';
   document.getElementById('det-ov').classList.add('on');
@@ -1251,7 +1534,7 @@ function openMenu(){
   var s=ST.me||'';
   document.getElementById('menu-av').textContent=s.charAt(0).toUpperCase();
   document.getElementById('menu-nm').textContent=s;
-  document.getElementById('menu-univ').textContent='📍 '+(ST.univ||'');
+  document.getElementById('menu-univ').textContent='📍 '+(ST.univ||'')+' · 🌡️ 매너온도 '+mannerOf(s).temp.toFixed(1)+'°C';
   document.getElementById('menu-ov').classList.add('on');
   document.querySelector('.fab-wrap').style.display='none';
 }
@@ -1326,6 +1609,11 @@ function openProfile(author){
   document.getElementById('prof-lost').textContent=posts.filter(function(p){return p.type==='lost'&&p.status!=='resolved';}).length;
   document.getElementById('prof-found').textContent=posts.filter(function(p){return p.type==='found'&&p.status!=='resolved';}).length;
   document.getElementById('prof-resolved').textContent=posts.filter(function(p){return p.status==='resolved';}).length;
+  renderManner(author);
+  // 다른 사람이 남긴 새 평가 반영
+  loadReviews().then(function(){
+    if(document.getElementById('prof-nm').textContent===author)renderManner(author);
+  });
   var el=document.getElementById('prof-feed');
   if(!posts.length){
     el.innerHTML='<div class="empty"><div class="empty-i">📭</div><div>게시물이 없습니다</div></div>';
@@ -1388,10 +1676,11 @@ async function pickStatus(status){
   var id=ST.statusPickId;
   var p=ST.posts.find(function(x){return x.id===id;});
   if(!p||p.status===status)return;
-  p.status=status;
-  await sb.from('posts').update({status:status}).eq('id',id);
+  if(status==='resolved'){openHelperPicker(id);return;}
+  p.status=status;p.resolved_with=null;
+  await sb.from('posts').update({status:status,resolved_with:null}).eq('id',id);
   openDet(id);
-  toast(status==='resolved'?'해결됨으로 변경됐습니다 ✅':'진행 중으로 변경됐습니다 🔍');
+  toast('진행 중으로 변경됐습니다 🔍');
 }
 function openEditPost(id){
   var p=ST.posts.find(function(x){return x.id===id;});if(!p)return;
@@ -1446,6 +1735,7 @@ async function doChat(id){
   closeDet();
   document.querySelector('.fab-wrap').style.display='none';
   document.getElementById('chat-nm').textContent='@'+p.author;
+  document.getElementById('chat-temp').innerHTML=tempChip(p.author);
   document.getElementById('chat-sub').textContent='"'+p.title+'"';
   document.getElementById('chat-av').textContent=p.type==='lost'?'😢':'🎉';
   document.getElementById('chat-scr').dataset.pid=id;
