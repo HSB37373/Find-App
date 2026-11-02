@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+python-multipart
+pillow
+torch
+transformers==4.46.3
+huggingface-hub<1.0
+tokenizers<0.21
