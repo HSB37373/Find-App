@@ -23,8 +23,9 @@
     .hd{background:var(--navy);padding:13px 16px;position:sticky;top:0;z-index:10;}
     .hd-row{display:flex;justify-content:space-between;align-items:center;}
     .hd-logo{display:flex;gap:8px;align-items:center;}
-    .hd-icon{width:34px;height:34px;background:var(--gold);border-radius:10px;
+    .hd-icon{width:34px;height:34px;background:#fff;overflow:hidden;border-radius:10px;
              display:flex;align-items:center;justify-content:center;font-size:18px;}
+    .hd-icon img,.auth-logo img,.usel-logo img{width:100%;height:100%;object-fit:contain;display:block;}
     .hd-title{font-size:19px;font-weight:800;color:#fff;}
     .hd-sub{font-size:10px;color:rgba(255,255,255,.5);}
     .hd-right{display:flex;align-items:center;gap:10px;}
@@ -170,15 +171,17 @@
             font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;}
     .ai-hint{background:#f4f2ff;border:1px solid #d0c8f0;border-radius:10px;
              padding:10px 13px;font-size:12px;color:#5a4fa0;margin-bottom:12px;}
-    .pzone{border:2px dashed #c8d0e8;border-radius:14px;padding:28px 16px;
+    .pzone{border:2px dashed #c8d0e8;border-radius:14px;padding:0 16px;box-sizing:border-box;
+           width:100%;height:160px;display:flex;flex-direction:column;align-items:center;justify-content:center;
            text-align:center;cursor:pointer;position:relative;}
     .pzone:hover{border-color:var(--navy);}
     .pzone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
     .pzone-i{font-size:32px;margin-bottom:8px;}
     .pzone-t{font-size:14px;color:var(--sub);font-weight:600;}
     .pzone-s{font-size:11px;color:#aaa;margin-top:3px;}
-    .prev-wrap{position:relative;border-radius:12px;overflow:hidden;}
-    .prev-wrap img{width:100%;max-height:200px;object-fit:cover;display:block;}
+    .prev-wrap{position:relative;border:2px dashed #c8d0e8;border-radius:14px;box-sizing:border-box;
+               width:100%;height:160px;overflow:hidden;}
+    .prev-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
     .prev-rm{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.5);
              color:#fff;border:none;border-radius:50%;width:28px;height:28px;font-size:16px;cursor:pointer;}
     .fi{width:100%;padding:12px 13px;border:1.5px solid var(--gline);
@@ -354,7 +357,7 @@
     .auth-card{max-width:380px;width:90%;background:#fff;border-radius:24px;
                overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.18);}
     .auth-hd{background:var(--navy);padding:36px 24px 26px;text-align:center;}
-    .auth-logo{width:58px;height:58px;background:var(--gold);border-radius:18px;
+    .auth-logo{width:58px;height:58px;background:#fff;overflow:hidden;border-radius:18px;
                display:flex;align-items:center;justify-content:center;font-size:28px;
                margin:0 auto 12px;}
     .auth-hd-title{font-size:24px;font-weight:900;color:#fff;}
@@ -386,7 +389,7 @@
                 display:flex;flex-direction:column;
                 box-shadow:0 0 30px rgba(0,0,0,.2);height:100%;}
     .usel-hd{background:var(--navy);padding:44px 20px 28px;text-align:center;flex-shrink:0;}
-    .usel-logo{width:64px;height:64px;background:var(--gold);border-radius:20px;
+    .usel-logo{width:64px;height:64px;background:#fff;overflow:hidden;border-radius:20px;
                display:flex;align-items:center;justify-content:center;font-size:32px;
                margin:0 auto 14px;}
     .usel-title{font-size:28px;font-weight:900;color:#fff;letter-spacing:-.5px;}
@@ -421,7 +424,7 @@
 <div id="auth-scr">
   <div class="auth-card">
     <div class="auth-hd">
-      <div class="auth-logo">🔍</div>
+      <div class="auth-logo"><img src="logo-centered.png" alt="수원대학교 로고"></div>
       <div class="auth-hd-title">찾았대</div>
       <div class="auth-hd-sub">대학교 분실물 통합 플랫폼</div>
     </div>
@@ -483,7 +486,7 @@
 <div id="univ-scr">
   <div class="usel-inner">
     <div class="usel-hd">
-      <div class="usel-logo">🔍</div>
+      <div class="usel-logo"><img src="logo-centered.png" alt="수원대학교 로고"></div>
       <div class="usel-title">찾았대</div>
       <div class="usel-tagline">학교를 선택하면 해당 캠퍼스의<br>분실물 게시판으로 이동해요</div>
     </div>
@@ -504,7 +507,7 @@
   <div class="hd">
     <div class="hd-row">
       <div class="hd-logo">
-        <div class="hd-icon">🔍</div>
+        <div class="hd-icon"><img src="logo-centered.png" alt="수원대학교 로고"></div>
         <div><div class="hd-title">찾았대</div><div class="hd-sub" id="univ-nm"></div></div>
       </div>
       <div class="hd-right">
@@ -621,7 +624,7 @@
           <option value="기타">📦 기타</option>
         </select>
       </div>
-      <div class="fg">
+      <div class="fg" style="display:none">
         <div class="fl" id="loc-lbl">분실 위치 <span class="req">*</span></div>
         <input class="fi" id="floc" type="text" placeholder="예: 3층 복도, 도서관" maxlength="50"
                oninput="document.getElementById('flc').textContent=this.value.length">
@@ -929,13 +932,13 @@ var _chatChannel=null;
 var SAMPLE_AUTHORS=['kim_sw','inchang_helper','park_2023','lee_campus','choi_yun','shin_helper','jung_h'];
 
 var SAMPLE=[
-  {type:'lost',title:'검정 에어팟 케이스 분실',category:'전자기기',location:'중앙도서관 3층 열람실',date:'2026-06-10',author:'kim_sw',desc:'자리 옮기다 잃어버렸어요. 흰색 스티커가 붙은 검정 에어팟 케이스입니다.',status:'active',likes:[],views:47,img:null,coords:null},
-  {type:'found',title:'바나나 인형 키링 습득',category:'기타',location:'공학관 엘리베이터 앞',date:'2026-05-11',author:'inchang_helper',desc:'공학관 1층 엘리베이터 앞에서 발견했습니다. 노란 얼굴에 하얀 눈썹이 특징입니다.',status:'active',likes:[],views:310,img:null,coords:{lat:37.2112,lng:126.9742,addr:'수원대학교 공학관',detail:'1층 엘리베이터 앞'}},
-  {type:'lost',title:'학생증 분실 (홍길동)',category:'가방/지갑',location:'학생식당 1층',date:'2026-06-08',author:'park_2023',desc:'점심 먹고 학생증이 없어졌어요. 발견하시면 연락 주세요.',status:'active',likes:[],views:22,img:null,coords:null},
-  {type:'found',title:'검정 우산 습득',category:'기타',location:'본관 1층 우산꽂이 옆',date:'2026-06-12',author:'lee_campus',desc:'본관 1층 입구 검정 우산. 손잡이에 노란 고무줄이 묶여 있어요.',status:'active',likes:[],views:88,img:null,coords:{lat:37.2098,lng:126.9770,addr:'수원대학교 본관',detail:'1층 우산꽂이 옆'}},
+  {type:'lost',title:'검정 에어팟 케이스 분실',category:'전자기기',location:'중앙도서관 3층 열람실',date:'2026-06-10',author:'kim_sw',desc:'자리 옮기다 잃어버렸어요. 흰색 스티커가 붙은 검정 에어팟 케이스입니다.',status:'active',likes:[],views:47,img:'images/airpods-case.jpg',coords:null},
+  {type:'found',title:'바나나 인형 키링 습득',category:'기타',location:'공학관 엘리베이터 앞',date:'2026-05-11',author:'inchang_helper',desc:'공학관 1층 엘리베이터 앞에서 발견했습니다. 노란 얼굴에 하얀 눈썹이 특징입니다.',status:'active',likes:[],views:310,img:'images/banana-keyring.jpg',coords:{lat:37.2112,lng:126.9742,addr:'수원대학교 공학관',detail:'1층 엘리베이터 앞'}},
+  {type:'lost',title:'학생증 분실 (홍길동)',category:'가방/지갑',location:'학생식당 1층',date:'2026-06-08',author:'park_2023',desc:'점심 먹고 학생증이 없어졌어요. 발견하시면 연락 주세요.',status:'active',likes:[],views:22,img:'images/student-id.jpg',coords:null},
+  {type:'found',title:'검정 우산 습득',category:'기타',location:'본관 1층 우산꽂이 옆',date:'2026-06-12',author:'lee_campus',desc:'본관 1층 입구 검정 우산. 손잡이에 노란 고무줄이 묶여 있어요.',status:'active',likes:[],views:88,img:'images/umbrella.jpg',coords:{lat:37.2098,lng:126.9770,addr:'수원대학교 본관',detail:'1층 우산꽂이 옆'}},
   {type:'lost',title:'파란색 나이키 후드 분실',category:'의류',location:'체육관 라커룸',date:'2026-06-05',author:'choi_yun',desc:'파란색 나이키 후드 왼쪽 소매 안쪽에 볼펜 자국 있어요.',status:'resolved',likes:[],views:15,img:null,coords:null},
-  {type:'found',title:'갤럭시 이어버즈 베이지색 습득',category:'전자기기',location:'소프트웨어관 302호',date:'2026-06-13',author:'shin_helper',desc:'의자 아래에서 갤럭시 이어버즈 베이지색 케이스를 발견했습니다.',status:'active',likes:[],views:134,img:null,coords:{lat:37.2086,lng:126.9778,addr:'수원대학교 소프트웨어관',detail:'302호'}},
-  {type:'lost',title:'연두색 텀블러 분실',category:'기타',location:'스타벅스 교내점',date:'2026-06-14',author:'jung_h',desc:'테이블에 연두색 텀블러를 두고 왔습니다. 안쪽에 흠집이 있어요.',status:'active',likes:[],views:31,img:null,coords:null},
+  {type:'found',title:'갤럭시 이어버즈 베이지색 습득',category:'전자기기',location:'소프트웨어관 302호',date:'2026-06-13',author:'shin_helper',desc:'의자 아래에서 갤럭시 이어버즈 베이지색 케이스를 발견했습니다.',status:'active',likes:[],views:134,img:'images/galaxy-buds.jpg',coords:{lat:37.2086,lng:126.9778,addr:'수원대학교 소프트웨어관',detail:'302호'}},
+  {type:'lost',title:'연두색 텀블러 분실',category:'기타',location:'스타벅스 교내점',date:'2026-06-14',author:'jung_h',desc:'테이블에 연두색 텀블러를 두고 왔습니다. 안쪽에 흠집이 있어요.',status:'active',likes:[],views:31,img:'images/tumbler.jpg',coords:null},
 ];
 
 // ── 대학 목록 ──
@@ -1072,7 +1075,7 @@ async function initData(){
     var seeds=SAMPLE.map(function(p){
       return {type:p.type,title:p.title,category:p.category,location:p.location,
               date:p.date,author:p.author,desc:p.desc,status:p.status,
-              likes:[],views:p.views,img:null,coords:p.coords||null,univ:ST.univ};
+              likes:[],views:p.views,img:p.img||null,coords:p.coords||null,univ:ST.univ};
     });
     var ins=await sb.from('posts').insert(seeds).select();
     ST.posts=ins.data||[];
@@ -1521,6 +1524,7 @@ async function sendMsg(){
 // ── 지도 ──
 var SCHOOL='수원대학교';
 var CAMPUS={lat:37.2100,lng:126.9758};
+var CAMPUS_PIN={lat:37.2089357,lng:126.9779142}; // 학생회관 (OpenStreetMap)
 var NEAR_BOUNDS=L.latLngBounds([37.16,126.91],[37.26,127.04]); // 수원대 중심 반경 약 5km
 var TILE_URL='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 var _regMap=null, _regMarker=null, _detMap=null, _allMap=null, _geoSeq=0;
@@ -1620,8 +1624,8 @@ function openAllMap(){
   setTimeout(function(){
     if(_allMap){_allMap.remove();_allMap=null;}
     _allMap=newNearMap('all-map').setView([CAMPUS.lat,CAMPUS.lng],14);
-    L.marker([CAMPUS.lat,CAMPUS.lng],{icon:L.divIcon({className:'',html:'<div class="pin-ico" style="background:#E8A33D">🏫</div>',iconSize:[34,34],iconAnchor:[17,17]})})
-      .addTo(_allMap).bindPopup('수원대학교');
+    L.marker([CAMPUS_PIN.lat,CAMPUS_PIN.lng],{icon:L.divIcon({className:'',html:'<div class="pin-ico" style="background:#E8A33D">🏫</div>',iconSize:[34,34],iconAnchor:[17,17]})})
+      .addTo(_allMap).bindPopup('수원대학교 (학생회관)');
     pts.forEach(function(p){
       var icon=L.divIcon({className:'',html:'<div class="pin-ico pin-found">📦</div>',iconSize:[34,34],iconAnchor:[17,17]});
       L.marker([p.coords.lat,p.coords.lng],{icon:icon}).addTo(_allMap).bindPopup(
@@ -1696,14 +1700,14 @@ function handlePhoto(inp){
 async function submitPost(){
   var name=document.getElementById('fn').value.trim();
   var catRaw=document.getElementById('fcat').value;
-  var loc=document.getElementById('floc').value.trim();
+  var loc='';
   var date=document.getElementById('fdate').value;
   var desc=document.getElementById('fdesc').value.trim();
   if(!name){toast('물품명을 입력해주세요');return;}
   if(!catRaw){toast('카테고리를 선택해주세요');return;}
-  if(!loc){toast('위치를 입력해주세요');return;}
   if(ST.regType==='found'&&!ST.mapCoords){toast('주운 위치를 지도에 핀으로 찍어주세요');return;}
   var coords=ST.mapCoords?Object.assign({},ST.mapCoords,{detail:document.getElementById('map-detail').value.trim()}):null;
+  loc=(coords&&(coords.detail||coords.addr))||'위치 미입력';
   if(!date){toast('날짜를 선택해주세요');return;}
   if(ST.editId){
     var upd={type:ST.regType,title:name,category:catRaw,location:loc,date:date,desc:desc,coords:coords};
@@ -1716,7 +1720,7 @@ async function submitPost(){
     toast('게시물이 수정됐습니다 ✅');
   }else{
     var np={type:ST.regType,title:name,category:catRaw,location:loc,date:date,
-      author:ST.me,desc:desc||(ST.regType==='lost'?'분실':'습득')+' 장소: '+loc,
+      author:ST.me,desc:desc||(ST.regType==='lost'?'분실':'습득'),
       status:'active',likes:[],views:0,img:ST.photoUrl||null,
       coords:coords,univ:ST.univ};
     var ins=await sb.from('posts').insert(np).select().single();
