@@ -114,7 +114,7 @@
     .b-done{background:#e4fff0;color:#1a8c42;font-size:10px;padding:2px 7px;border-radius:10px;}
     .card-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px;}
     .card-meta{font-size:11px;color:var(--sub);margin-bottom:6px;}
-    .card-desc{font-size:12px;color:#888;line-height:1.5;
+    .card-desc{font-size:12px;color:#888;line-height:1.5;white-space:pre-line;
                display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
     .card-foot{display:flex;align-items:center;padding:9px 13px;
                border-top:1px solid var(--gline);margin-top:10px;gap:12px;}
@@ -228,7 +228,7 @@
     .det-body{padding:18px;}
     .det-title{font-size:21px;font-weight:800;color:var(--text);margin:10px 0 6px;}
     .det-meta{font-size:12px;color:var(--sub);margin-bottom:14px;}
-    .det-desc{font-size:14px;line-height:1.75;color:#444;
+    .det-desc{font-size:14px;line-height:1.75;color:#444;white-space:pre-line;
               background:var(--gbg);border-radius:10px;padding:14px 15px;margin-bottom:12px;}
     .ibox{display:flex;align-items:center;gap:8px;padding:11px 13px;
           border-radius:10px;font-size:13px;margin-bottom:8px;}
@@ -602,6 +602,7 @@
             <input type="file" accept="image/*" id="pinp" onchange="handlePhoto(this)">
           </label>
         </div>
+        <div id="ai-status" style="display:none;font-size:12px;margin-top:8px;color:#5b4fcf"></div>
       </div>
       <div class="fg">
         <div class="fl">물품명 <span class="req">*</span></div>
@@ -611,7 +612,7 @@
       </div>
       <div class="fg">
         <div class="fl">카테고리 <span class="req">*</span></div>
-        <select class="fi" id="fcat">
+        <select class="fi" id="fcat" onchange="this.dataset.ai=''">
           <option value="">선택하세요</option>
           <option value="전자기기">📱 전자기기</option>
           <option value="가방/지갑">👜 가방/지갑</option>
@@ -1669,14 +1670,22 @@ function closeReg(){
   document.querySelector('.fab-wrap').style.display='';
 }
 function setType(t){
+  var changed=ST.regType!==t;
   ST.regType=t;
   document.getElementById('tc-lost').classList.toggle('on',t==='lost');
   document.getElementById('tc-found').classList.toggle('on',t==='found');
   document.getElementById('loc-lbl').innerHTML=(t==='lost'?'분실 위치':'습득 위치')+' <span class="req">*</span>';
   document.getElementById('floc').placeholder=t==='lost'?'예: 3층 복도, 도서관':'예: 공학관 1층 로비';
   syncMapReq();
+  // 사진을 올린 뒤 유형을 바꾸면 AI 초안을 지우고 새 유형으로 다시 분석한다
+  if(changed&&_aiFile){
+    aiClear('fn','fnc');aiClear('fdesc','fdc');ST.aiFound=null;
+    analyzePhoto(_aiFile);
+  }
 }
 function resetPzone(){
+  _aiSeq++;setAiStatus('');_aiFile=null;ST.aiFound=null;
+  var _fc=document.getElementById('fcat');if(_fc)_fc.dataset.ai='';
   document.getElementById('pzw').innerHTML=
     '<label class="pzone"><div class="pzone-i">☁️</div>'
     +'<div class="pzone-t">사진을 올려주세요</div><div class="pzone-s">클릭해서 추가</div>'
@@ -1692,6 +1701,97 @@ function handlePhoto(inp){
       +'<button class="prev-rm" onclick="ST.photoUrl=null;resetPzone()">×</button></div>';
   };
   reader.readAsDataURL(file);
+  _aiFile=file;
+  ST.aiTime=timeBand(new Date()); // 시간대 = 사진을 등록한 시각 기준
+  analyzePhoto(file);
+}
+// ── AI 자동완성 ──
+// 사진 → 서버(api/analyze) → 습득물: 카테고리·물품명·설명 초안 / 분실물: 카테고리만.
+// 서버가 없으면(정적 호스팅 등) 조용히 건너뜀. 주소는 상대경로여야 함(공개 주소의 /<아이디> 접두어는 서버에 전달되지 않음).
+var _aiSeq=0,_aiFile=null;
+var FOUND_PLACE='학생회관 분실물센터';
+function setAiStatus(msg){
+  var el=document.getElementById('ai-status');if(!el)return;
+  el.style.display=msg?'block':'none';el.textContent=msg||'';
+}
+// 칸이 비어 있거나 직전 AI 값 그대로일 때만 채운다 (사용자가 고친 내용은 덮어쓰지 않음)
+function aiFill(id,cntId,val){
+  var el=document.getElementById(id);if(!el||!val)return false;
+  if(el.value&&el.value!==el.dataset.aiVal)return false;
+  el.value=val;el.dataset.aiVal=val;
+  var c=document.getElementById(cntId);if(c)c.textContent=val.length;
+  return true;
+}
+function aiClear(id,cntId){
+  var el=document.getElementById(id);if(!el)return;
+  if(el.value&&el.value===el.dataset.aiVal){el.value='';var c=document.getElementById(cntId);if(c)c.textContent='0';}
+  el.dataset.aiVal='';
+}
+function timeBand(d){
+  var h=d.getHours();
+  return h<6?'새벽':h<11?'오전':h<14?'점심':h<18?'오후':h<22?'저녁':'밤';
+}
+function korDate(v){
+  var p=(v||'').split('-');if(p.length<3)return '';
+  return (+p[1])+'월 '+(+p[2])+'일';
+}
+function eulReul(w){
+  var c=w.charCodeAt(w.length-1);
+  return (c>=0xAC00&&c<=0xD7A3&&(c-0xAC00)%28)?'을':'를';
+}
+// 습득물 설명: [날짜] [시간대] [장소]에서 [색상] [물품명]을 주웠습니다. / [대략적인 특징] / 전달·보관 방법 / 본인 확인 안내
+function composeFound(){
+  var a=ST.aiFound;if(!a)return '';
+  var when=[korDate(document.getElementById('fdate').value),ST.aiTime].filter(Boolean).join(' ');
+  var loc=document.getElementById('floc').value.trim();
+  var head=loc?(when?when+' ':'')+loc+'에서 ':(when?when+'에 ':'');
+  var lines=[head+a.thing+eulReul(a.thing)+' 주웠습니다.'];
+  if(a.feature)lines.push(a.feature);
+  lines.push('직접 만나서 드리거나 '+FOUND_PLACE+'에 맡겨 두겠습니다.');
+  lines.push('연락주실 때 분실물 본인 확인을 위해 물건의 특징을 설명해주세요!');
+  return lines.join('\n').slice(0,200);
+}
+// 장소·날짜를 나중에 입력해도 (사용자가 설명을 고치지 않았다면) 초안을 다시 맞춘다
+function refreshFoundDesc(){
+  if(ST.regType==='found'&&ST.aiFound)aiFill('fdesc','fdc',composeFound());
+}
+document.getElementById('floc').addEventListener('input',refreshFoundDesc);
+document.getElementById('fdate').addEventListener('change',refreshFoundDesc);
+async function analyzePhoto(file){
+  var seq=++_aiSeq;
+  var kind=ST.regType;
+  setAiStatus(kind==='found'?'🤖 AI가 사진을 보고 글을 쓰는 중...':'🤖 AI가 카테고리를 분류하는 중...');
+  try{
+    var fd=new FormData();
+    fd.append('file',file);
+    fd.append('kind',kind);
+    var res=await fetch('api/analyze',{method:'POST',body:fd});
+    if(res.status===429){if(seq===_aiSeq)setAiStatus('요청이 많아 잠시 후 다시 시도해주세요');return;}
+    if(!res.ok)throw new Error(res.status);
+    var r=await res.json();
+    if(seq!==_aiSeq||kind!==ST.regType)return; // 그 사이 사진·유형을 바꿨으면 무시
+    var pct=Math.round(r.confidence*100);
+    var sel=document.getElementById('fcat');
+    var sure=r.source==='workers-ai'||r.confidence>=0.5;
+    if(sure&&(!sel.value||sel.dataset.ai==='1')){sel.value=r.category;sel.dataset.ai='1';}
+    var filled=false;
+    if(kind==='found'&&r.thing){
+      ST.aiFound={thing:r.thing,feature:r.feature||''};
+      filled=aiFill('fn','fnc',r.name);
+      filled=aiFill('fdesc','fdc',composeFound())||filled;
+    }
+    if(r.agree===false){
+      setAiStatus('🤔 AI 판단이 엇갈려요 ('+r.category+' / '+r.clip_category+'). 카테고리와 물품명을 확인해주세요');
+    }else if(!sure){
+      setAiStatus('🤔 AI가 확신하지 못했어요 (가장 비슷: '+r.category+' '+pct+'%). 카테고리는 직접 골라주세요');
+    }else if(kind==='found'){
+      setAiStatus('✨ AI 추천: '+r.category+(filled?' · 물품명·설명 초안을 채웠어요':'')+' — 자유롭게 고쳐주세요');
+    }else{
+      setAiStatus('✨ AI 추천 카테고리: '+r.category+' ('+pct+'%) — 다른 걸로 바꿀 수 있어요');
+    }
+  }catch(e){
+    if(seq===_aiSeq)setAiStatus('');
+  }
 }
 async function submitPost(){
   var name=document.getElementById('fn').value.trim();
