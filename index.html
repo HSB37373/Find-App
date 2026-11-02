@@ -1926,6 +1926,7 @@ function placeRegMarker(lat,lng,addr){
   });
   ST.mapCoords={lat:lat,lng:lng,addr:addr};
   document.getElementById('map-addr-label').textContent='📍 '+addr;
+  refreshFoundDesc();
 }
 // ── 전체 게시물 지도 (수원대 주변만) ──
 function openAllMap(){
@@ -2061,7 +2062,7 @@ function eulReul(w){
 function composeFound(){
   var a=ST.aiFound;if(!a)return '';
   var when=[korDate(document.getElementById('fdate').value),ST.aiTime].filter(Boolean).join(' ');
-  var loc=document.getElementById('floc').value.trim();
+  var loc=foundPlace();
   var head=loc?(when?when+' ':'')+loc+'에서 ':(when?when+'에 ':'');
   var lines=[head+a.thing+eulReul(a.thing)+' 주웠습니다.'];
   if(a.feature)lines.push(a.feature);
@@ -2069,11 +2070,20 @@ function composeFound(){
   lines.push('연락주실 때 분실물 본인 확인을 위해 물건의 특징을 설명해주세요!');
   return lines.join('\n').slice(0,200);
 }
+// [장소] = 지도 핀의 상세 위치 → 없으면 핀 주소의 첫 부분(예: 수원대학교 공학관) → 없으면 위치 입력란
+function foundPlace(){
+  var d=document.getElementById('map-detail');d=d?d.value.trim():'';
+  if(d)return d;
+  var a=((ST.mapCoords&&ST.mapCoords.addr)||'').split(',')[0].trim();
+  if(a&&!/선택한 위치|데모 위치/.test(a))return a;
+  var f=document.getElementById('floc');return f?f.value.trim():'';
+}
 // 장소·날짜를 나중에 입력해도 (사용자가 설명을 고치지 않았다면) 초안을 다시 맞춘다
 function refreshFoundDesc(){
   if(ST.regType==='found'&&ST.aiFound)aiFill('fdesc','fdc',composeFound());
 }
 document.getElementById('floc').addEventListener('input',refreshFoundDesc);
+document.getElementById('map-detail').addEventListener('input',refreshFoundDesc);
 document.getElementById('fdate').addEventListener('change',refreshFoundDesc);
 async function analyzePhoto(file){
   var seq=++_aiSeq;

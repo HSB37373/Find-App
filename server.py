@@ -29,7 +29,8 @@ from fastapi.responses import FileResponse
 from PIL import Image, UnidentifiedImageError
 from transformers import CLIPModel, CLIPProcessor
 
-BASE = Path(__file__).parent
+BASE = Path(__file__).resolve().parent
+STATIC_EXT = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg", ".ico"}  # 앱이 쓰는 이미지만 내보낸다
 MODEL_ID = "openai/clip-vit-base-patch32"
 MAX_BYTES = 8 * 1024 * 1024  # 업로드 사진 최대 8MB
 RATE_LIMIT, RATE_WINDOW = 20, 60  # IP당 60초에 20회
@@ -226,3 +227,13 @@ def analyze(request: Request, file: UploadFile = File(...), kind: str = Form("fo
             out["agree"] = not (conf >= 0.8 and clip_cat != ai["category"])
     out.update(thing=thing, feature=feature, name=f"{thing} 습득")
     return out
+
+
+@app.get("/{path:path}")
+def static_file(path: str):
+    """로고·샘플 사진 같은 이미지 파일만 내보낸다 (server.py, .git, 문서 등은 404). 반드시 맨 마지막 라우트."""
+    p = (BASE / path).resolve()
+    if (p.suffix.lower() not in STATIC_EXT or BASE not in p.parents or not p.is_file()
+            or any(part.startswith(".") for part in p.relative_to(BASE).parts)):
+        raise HTTPException(404)
+    return FileResponse(p)
