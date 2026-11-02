@@ -304,6 +304,125 @@
                     display:flex;align-items:center;justify-content:center;
                     font-size:28px;font-weight:900;color:#fff;margin:0 auto 12px;}
     .prof-nm{font-size:19px;font-weight:800;color:#fff;}
+    /* ── 티어 · 친구 시스템 ── */
+    .t1{--c1:#cfd5dc;--c2:#7d8794;--core:#4a525c;--bg:#eef0f3;--tx:#566070;}
+    .t2{--c1:#8ddca8;--c2:#2f9e5b;--core:#1d5c38;--bg:#e5f6ec;--tx:#1f7a46;}
+    .t3{--c1:#f5d778;--c2:#c9971f;--core:#6b4f0e;--bg:#fdf3d6;--tx:#8a6510;}
+    .t4{--c1:#c3a8f5;--c2:#7a4bd1;--core:#3d2373;--bg:#efe8fb;--tx:#5b34a8;}
+    .t5{--c1:#ffd54a;--c2:#e8590c;--core:#7a2f05;--bg:#fff0dc;--tx:#b8480a;}
+    /* 작은 배지 */
+    .tb{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:800;line-height:1;
+        padding:2px 7px 2px 2px;border-radius:10px;background:var(--bg);color:var(--tx);
+        border:1px solid var(--c1);vertical-align:1px;margin-left:4px;white-space:nowrap;}
+    .tb i{width:15px;height:15px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;
+          font-style:normal;font-size:9px;background:linear-gradient(145deg,var(--c1),var(--c2));}
+    .tb.full{font-size:11px;padding:3px 9px 3px 3px;margin-left:0;}
+    .tb.full i{width:18px;height:18px;font-size:11px;}
+    /* 엠블럼 (육각 방패) */
+    .te{position:relative;width:var(--s);height:calc(var(--s)*1.1);flex-shrink:0;
+        filter:drop-shadow(0 4px 9px rgba(0,0,0,.28));}
+    .te-hex,.te-core{position:absolute;clip-path:polygon(50% 0,95% 24%,95% 76%,50% 100%,5% 76%,5% 24%);}
+    .te-hex{inset:0;background:linear-gradient(145deg,var(--c1),var(--c2));}
+    .te-core{inset:8%;background:radial-gradient(circle at 35% 25%,rgba(255,255,255,.22),transparent 55%),var(--core);
+             display:flex;align-items:center;justify-content:center;font-size:calc(var(--s)*.42);}
+    .te.sm{--s:30px;} .te.md{--s:64px;} .te.lg{--s:116px;}
+    .te.t5 .te-hex{background:linear-gradient(145deg,#fff1a8,#ffc83d 45%,#e8590c);}
+    .te-wrap{display:flex;flex-direction:column;align-items:center;gap:6px;}
+    .te-pips{display:flex;gap:4px;}
+    .te-pips b{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.28);}
+    .te-pips b.on{background:linear-gradient(145deg,var(--c1),var(--c2));box-shadow:0 0 0 1px rgba(255,255,255,.5);}
+    /* XP 바 */
+    .xp-bar{height:9px;background:rgba(0,0,0,.1);border-radius:6px;overflow:hidden;}
+    .fp-hero .xp-bar,.tp-box .xp-bar{background:rgba(255,255,255,.2);}
+    .xp-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,var(--c1),var(--c2));transition:width .5s;}
+    .xp-sub{display:flex;justify-content:space-between;gap:8px;font-size:11px;margin-top:5px;color:var(--sub);}
+    .fp-hero .xp-sub,.tp-box .xp-sub{color:rgba(255,255,255,.7);}
+    .xp-max{font-size:12px;font-weight:800;text-align:center;margin-top:7px;color:#ffd54a;}
+    /* 작성자 프로필 상단 티어 박스 */
+    .tp-box{margin:14px auto 0;max-width:300px;text-align:center;}
+    .tp-nm{font-size:16px;font-weight:900;color:#fff;margin-top:8px;}
+    .tp-ttl{font-size:12px;color:rgba(255,255,255,.7);margin:2px 0 10px;}
+    /* 감사 카드 시트 */
+    .th-row{margin-top:10px;}
+    .th-open{width:100%;padding:11px;border-radius:12px;border:1.5px solid var(--gline);background:#fff;
+             font-size:13px;font-weight:700;color:var(--navy);cursor:pointer;font-family:inherit;}
+    .th-open.done{color:#aaa;cursor:default;background:var(--gbg);}
+    .th-ov{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;z-index:3500;}
+    .th-ov.on{display:block;}
+    .th-sheet{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;
+              background:#fff;border-radius:22px 22px 0 0;padding:0 18px calc(22px + env(safe-area-inset-bottom,0px));
+              max-height:92vh;overflow-y:auto;}
+    .th-title{text-align:center;font-size:16px;font-weight:800;color:var(--text);padding:6px 0 4px;}
+    .th-desc{text-align:center;font-size:12px;color:var(--sub);margin-bottom:12px;}
+    .th-who{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:12px;}
+    .th-chip{padding:7px 14px;border-radius:20px;border:1.5px solid var(--gline);background:#fff;
+             font-size:13px;font-weight:700;color:var(--sub);cursor:pointer;font-family:inherit;}
+    .th-chip.on{background:var(--navy);color:#fff;border-color:var(--navy);}
+    .th-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;}
+    .th-card{padding:14px 4px;border-radius:14px;border:2px solid var(--gline);background:#fff;
+             text-align:center;font-size:12px;font-weight:700;color:var(--sub);cursor:pointer;font-family:inherit;}
+    .th-card span{display:block;font-size:26px;margin-bottom:4px;}
+    .th-card.on{border-color:var(--gold);background:#FFF4E0;color:#9b5d00;}
+    .th-note{font-size:11px;color:#aaa;text-align:center;line-height:1.5;margin-bottom:14px;}
+    /* 친구 / 친구 프로필 화면 */
+    body.fr-open .fab-wrap{display:none!important;}
+    .fr-scr{position:fixed;inset:0;max-width:430px;margin:0 auto;background:var(--gbg);
+            display:none;flex-direction:column;z-index:2400;}
+    .fr-scr.on{display:flex;}
+    #fprof-scr{z-index:2450;}
+    .fr-body{flex:1;overflow-y:auto;padding:12px 12px calc(24px + env(safe-area-inset-bottom,0px));-webkit-overflow-scrolling:touch;}
+    .fr-note{background:#FFF7E6;border:1px solid #F0DDB8;color:#8a6510;border-radius:10px;
+             padding:9px 12px;font-size:12px;line-height:1.5;margin-bottom:12px;}
+    .fr-sec{font-size:12px;font-weight:800;color:var(--sub);margin:14px 2px 8px;display:flex;justify-content:space-between;}
+    .fr-search{background:#fff;border:1.5px solid var(--gline);border-radius:24px;padding:0 13px;margin-bottom:10px;}
+    .fr-search input{width:100%;border:none;background:transparent;padding:10px 0;font-size:13px;outline:none;font-family:inherit;}
+    .fr-card{display:flex;gap:12px;align-items:center;background:#fff;border-radius:16px;padding:12px;
+             margin-bottom:10px;box-shadow:0 2px 12px rgba(0,0,0,.07);cursor:pointer;border:2px solid transparent;}
+    .fr-card:active{border-color:var(--c1);}
+    .fr-card.me{border-color:var(--gold);background:linear-gradient(135deg,#fffaf0,#fff);}
+    .fr-av-wrap{position:relative;flex-shrink:0;}
+    .fr-av{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+           font-size:28px;background:var(--bg);border:3px solid var(--c1);}
+    .fr-av-wrap .te{position:absolute;right:-8px;bottom:-8px;}
+    .fr-info{flex:1;min-width:0;}
+    .fr-nm{font-size:15px;font-weight:800;color:var(--text);display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+    .fr-tag{font-size:10px;font-weight:700;padding:2px 7px;border-radius:8px;background:#f0f2f8;color:#667;}
+    .fr-tag.me{background:var(--gold);color:#fff;}
+    .fr-ttl{font-size:11px;color:var(--sub);margin:4px 0 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .fr-xpl{display:flex;align-items:center;gap:8px;}
+    .fr-xpl .xp-bar{flex:1;height:7px;}
+    .fr-xpl span{font-size:11px;font-weight:800;color:var(--tx);white-space:nowrap;}
+    .fr-meta{font-size:11px;color:#999;margin-top:5px;}
+    .fr-arr{color:#ccc;font-size:22px;}
+    .fr-empty{text-align:center;color:var(--sub);padding:40px 10px;font-size:13px;}
+    /* 친구 상세 */
+    .fp-hero{background:var(--navy);padding:22px 18px 24px;text-align:center;color:#fff;}
+    .fp-av{width:68px;height:68px;border-radius:50%;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;
+           font-size:34px;background:var(--bg);border:3px solid var(--c1);}
+    .fp-nm{font-size:20px;font-weight:900;}
+    .fp-tags{display:flex;gap:6px;justify-content:center;margin-top:6px;}
+    .fp-emb{margin:18px 0 10px;display:flex;justify-content:center;}
+    .fp-tier{font-size:20px;font-weight:900;color:var(--c1);}
+    .fp-ttl{font-size:12px;color:rgba(255,255,255,.75);margin-top:3px;}
+    .fp-xp{max-width:300px;margin:16px auto 0;text-align:left;}
+    .fp-xp-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;}
+    .fp-xp-top b{font-size:22px;font-weight:900;}
+    .fp-xp-top span{font-size:11px;color:rgba(255,255,255,.65);}
+    .fp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px;}
+    .fp-st{background:#fff;border-radius:14px;padding:12px 4px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.06);}
+    .fp-st b{display:block;font-size:20px;font-weight:900;color:var(--text);}
+    .fp-st span{font-size:11px;color:var(--sub);}
+    .fp-sec{padding:0 12px;margin-bottom:12px;}
+    .fp-sec h4{font-size:12px;font-weight:800;color:var(--sub);margin:4px 2px 8px;}
+    .fp-bio{background:#fff;border-radius:14px;padding:13px 14px;font-size:13px;line-height:1.6;color:#555;box-shadow:0 2px 10px rgba(0,0,0,.05);}
+    .fp-act{display:flex;gap:10px;align-items:center;background:#fff;border-radius:12px;padding:10px 12px;margin-bottom:6px;font-size:13px;color:#444;}
+    .fp-act-t{font-size:11px;color:#aaa;width:42px;flex-shrink:0;}
+    .fp-act-x{flex:1;min-width:0;}
+    .fp-act-p{font-size:12px;font-weight:800;color:#2f9e5b;white-space:nowrap;}
+    .fp-btn{display:block;width:calc(100% - 24px);margin:6px 12px;padding:14px;border-radius:12px;font-size:14px;font-weight:800;
+            cursor:pointer;font-family:inherit;border:none;background:var(--navy);color:#fff;}
+    .fp-btn.ghost{background:#fff;color:var(--navy);border:1.5px solid var(--gline);font-weight:700;}
+    @media(max-width:360px){.te.lg{--s:100px;}.fp-grid{gap:6px;padding:10px;}}
     .prof-stats-row{display:flex;justify-content:center;gap:0;margin-top:16px;}
     .prof-stat{flex:1;text-align:center;border-right:1px solid rgba(255,255,255,.15);}
     .prof-stat:last-child{border-right:none;}
@@ -511,6 +630,7 @@
         <div><div class="hd-title">찾았대</div><div class="hd-sub" id="univ-nm"></div></div>
       </div>
       <div class="hd-right">
+        <button class="hd-chat-btn" onclick="openFriends()" aria-label="친구">👥</button>
         <button class="hd-chat-btn" onclick="openChatList()">
           💬<span class="chat-cnt" id="chat-cnt"></span>
         </button>
@@ -730,11 +850,17 @@
       <div>
         <div class="menu-user-name" id="menu-nm"></div>
         <div class="menu-user-univ" id="menu-univ"></div>
+        <div id="menu-tier" style="margin-top:5px"></div>
       </div>
     </div>
     <div class="menu-item" onclick="closeMenu();openProfile(ST.me)">
       <div class="menu-item-icon">👤</div>
       <div class="menu-item-label">내 프로필</div>
+      <span class="menu-item-arr">›</span>
+    </div>
+    <div class="menu-item" onclick="closeMenu();openFriends()">
+      <div class="menu-item-icon">👥</div>
+      <div class="menu-item-label">친구</div>
       <span class="menu-item-arr">›</span>
     </div>
     <div class="menu-footer">
@@ -762,6 +888,7 @@
     <div class="prof-hd-section">
       <div class="prof-av-circle" id="prof-av"></div>
       <div class="prof-nm" id="prof-nm"></div>
+      <div class="tp-box" id="prof-tier"></div>
       <div class="prof-stats-row">
         <div class="prof-stat"><div class="prof-stat-n" id="prof-total">0</div><div class="prof-stat-l">전체 게시물</div></div>
         <div class="prof-stat"><div class="prof-stat-n" id="prof-lost">0</div><div class="prof-stat-l">분실물</div></div>
@@ -772,6 +899,44 @@
     <div class="prof-section-title">📋 게시물 목록</div>
     <div class="prof-feed" id="prof-feed"></div>
   </div>
+</div>
+
+<!-- 반환 완료 · 감사 카드 시트 (데모) -->
+<div class="th-ov" id="th-ov" onclick="if(event.target===this)closeThanks()">
+  <div class="th-sheet">
+    <div class="spick-handle"></div>
+    <div class="th-title">🎁 반환 완료 · 감사 카드</div>
+    <div class="th-desc" id="th-desc"></div>
+    <div class="th-who" id="th-who"></div>
+    <div class="th-cards" id="th-cards"></div>
+    <div class="th-note">🧪 데모: 상대도 반환 완료를 확인하고 카드를 보낸 것으로 가정해요.<br>실제 서비스에서는 양쪽이 모두 확인해야 XP가 지급돼요.</div>
+    <button class="sbtn" onclick="submitThanks()">반환 완료 확인하고 카드 보내기</button>
+  </div>
+</div>
+
+<!-- 친구 목록 -->
+<div class="fr-scr" id="friends-scr">
+  <div class="chat-hd">
+    <button class="chat-back" onclick="backFr()">←</button>
+    <div style="flex:1"><div class="chat-nm">👥 친구</div></div>
+  </div>
+  <div class="fr-body">
+    <div class="fr-note" id="fr-note"></div>
+    <div class="fr-sec"><span>내 프로필</span></div>
+    <div id="fr-me"></div>
+    <div class="fr-sec"><span>내 친구</span><span id="fr-cnt"></span></div>
+    <div class="fr-search"><input id="fr-q" placeholder="🔍 친구 검색 (닉네임·티어·칭호)" oninput="frSearch(this.value)" maxlength="20"></div>
+    <div id="fr-list"></div>
+  </div>
+</div>
+
+<!-- 친구 상세 프로필 -->
+<div class="fr-scr" id="fprof-scr">
+  <div class="chat-hd">
+    <button class="chat-back" onclick="backFr()">←</button>
+    <div style="flex:1"><div class="chat-nm" id="fp-title">프로필</div></div>
+  </div>
+  <div class="fr-body" id="fp-body" style="padding:0 0 calc(24px + env(safe-area-inset-bottom,0px))"></div>
 </div>
 
 <script>
@@ -1079,10 +1244,22 @@ async function initData(){
     });
     var ins=await sb.from('posts').insert(seeds).select();
     ST.posts=ins.data||[];
+    if(DEMO)await seedDemoChat();
   } else {
     ST.posts=res.data;
   }
   await loadMyChats();
+}
+
+// 데모 전용: 해결된 샘플 게시물에 내 채팅 기록을 미리 넣어 매너 평가 흐름을 바로 확인할 수 있게 함
+async function seedDemoChat(){
+  var rp=ST.posts.find(function(x){return x.status==='resolved'&&SAMPLE_AUTHORS.indexOf(x.author)>-1;});
+  if(!rp)return;
+  await sb.from('chat_messages').insert([
+    {post_id:rp.id,from_user:ST.me,msg_text:'후드 제가 주운 것 같아요! 어디로 가져다 드릴까요?',msg_time:'10:02'},
+    {post_id:rp.id,from_user:rp.author,msg_text:'감사해요! 학생처에 맡겨주세요 🙏',msg_time:'10:05'}
+  ]);
+  trackChat(rp.id);
 }
 
 async function loadMyChats(){
@@ -1148,7 +1325,7 @@ function render(){
       +'<div class="card-body">'
         +'<div class="badges"><span class="badge '+tc+'">'+tl+'</span><span class="badge b-cat">'+ce+' '+p.category+'</span>'+chip(p)+'</div>'
         +'<div class="card-title">'+p.title+'</div>'
-        +'<div class="card-meta"><span class="author-link" onclick="event.stopPropagation();openProfile(\''+p.author+'\')">@'+p.author+'</span> · 📍'+p.location+' · '+fd(p.date)+'</div>'
+        +'<div class="card-meta"><span class="author-link" onclick="event.stopPropagation();openProfile(\''+p.author+'\')">@'+p.author+'</span>'+tierBadge(p.author)+' · 📍'+p.location+' · '+fd(p.date)+'</div>'
         +'<div class="card-desc">'+(p.desc||'')+'</div>'
       +'</div>'
       +'<div class="card-foot">'
@@ -1230,11 +1407,12 @@ async function openDet(id){
       +'<div class="badges"><span class="badge '+(p.type==='lost'?'b-lost':'b-found')+'">'+(p.type==='lost'?'분실물':'습득물')+'</span>'
         +'<span class="badge b-cat">'+ce+' '+p.category+'</span>'+chip(p)+'</div>'
       +'<div class="det-title">'+p.title+'</div>'
-      +'<div class="det-meta">👤 <span class="author-link" onclick="openProfile(\''+p.author+'\')">@'+p.author+'</span> &nbsp;|&nbsp; 📅 '+fd(p.date)+' &nbsp;|&nbsp; 👁 '+p.views+'회</div>'
+      +'<div class="det-meta">👤 <span class="author-link" onclick="openProfile(\''+p.author+'\')">@'+p.author+'</span>'+tierBadge(p.author)+' &nbsp;|&nbsp; 📅 '+fd(p.date)+' &nbsp;|&nbsp; 👁 '+p.views+'회</div>'
       +(p.desc?'<div class="det-desc">'+p.desc+'</div>':'')
       +'<div class="ibox loc">📍 '+locLbl+': <strong>'+p.location+'</strong></div>'
       +'<div class="ibox dt">📅 날짜: <strong>'+fd(p.date)+'</strong></div>'
       +(p.coords?'<div class="det-map-wrap"><div class="det-map-addr">📍 '+esc(p.coords.addr)+(p.coords.detail?'<br>🏢 '+esc(p.coords.detail):'')+'</div><div id="det-map"></div></div>':'')
+      +thanksRowHtml(p)
       +'<div class="det-actions">'+actBtns+'</div>'
     +'</div>';
   document.getElementById('det-ov').classList.add('on');
@@ -1252,6 +1430,7 @@ function openMenu(){
   document.getElementById('menu-av').textContent=s.charAt(0).toUpperCase();
   document.getElementById('menu-nm').textContent=s;
   document.getElementById('menu-univ').textContent='📍 '+(ST.univ||'');
+  document.getElementById('menu-tier').innerHTML=tierBadge(s,true);
   document.getElementById('menu-ov').classList.add('on');
   document.querySelector('.fab-wrap').style.display='none';
 }
@@ -1312,6 +1491,300 @@ function updateChatCnt(){
   if(el){el.textContent=cnt;el.classList.toggle('on',cnt>0);}
 }
 
+// ── 티어 · XP · 친구 (데모) ──────────────────────────────────────────
+// 모든 데이터는 브라우저 메모리(친구 5명만 localStorage 테스트 키)에만 저장 — Supabase에는 쓰지 않음.
+// 실서비스 설계 메모:
+//  · XP는 서버(RPC/트리거)에서만 지급 — 클라이언트가 직접 XP를 쓰지 못하게 RLS로 막기
+//  · 반환 완료는 게시물 작성자와 상대 "양쪽"이 모두 확인했을 때만 인정 (returns 테이블, 양쪽 confirmed_at)
+//  · (post_id, 두 사용자) 조합당 1회만 지급(unique 제약) + 본인 게시물/자기 자신 대상 금지 + 일일 지급 상한
+//  · 신고/이의 제기 시 XP 회수 가능하도록 xp_events 원장(ledger)을 남기고 합산
+var TIERS=[
+  {n:'단서 새싹',s:'새싹',ic:'🌱',min:0,max:99,ttl:'첫 단서를 막 발견한 새내기'},
+  {n:'흔적 추적자',s:'추적자',ic:'🔍',min:100,max:299,ttl:'작은 흔적도 놓치지 않는 눈'},
+  {n:'캠퍼스 길잡이',s:'길잡이',ic:'🧭',min:300,max:599,ttl:'캠퍼스 구석구석을 아는 안내자'},
+  {n:'분실물 수호자',s:'수호자',ic:'🛡️',min:600,max:999,ttl:'주인을 끝까지 지켜주는 든든한 방패'},
+  {n:'전설의 파인더',s:'파인더',ic:'👑',min:1000,max:null,ttl:'모두가 아는 전설의 분실물 해결사'}
+];
+var XP_REWARD={ret:50,card:20,post:10};
+var SAMPLE_XP={kim_sw:120,inchang_helper:420,park_2023:40,lee_campus:700,choi_yun:85,shin_helper:1120,jung_h:260};
+var PROF={};          // 닉네임 → 프로필(메모리)
+var FRIENDS=[];       // 가상 친구 5명 (데모 전용)
+var THANKS=[];        // 보낸 감사 카드 기록 (중복 방지)
+var TH_CARDS=[{k:'thanks',e:'🙏',t:'고마워요'},{k:'star',e:'⭐',t:'최고예요'},{k:'found',e:'🎉',t:'덕분에 찾았어요'}];
+var TH={pid:null,cands:[],to:null,card:null};
+var FR_Q='';
+
+function tierIdx(xp){for(var i=TIERS.length-1;i>=0;i--){if(xp>=TIERS[i].min)return i;}return 0;}
+function xpInfo(xp){
+  var i=tierIdx(xp),t=TIERS[i],nx=TIERS[i+1]||null;
+  return{i:i,t:t,nx:nx,pct:nx?Math.round((xp-t.min)/(nx.min-t.min)*100):100,left:nx?nx.min-xp:0};
+}
+function fmtXp(n){return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
+function profOf(nick){
+  if(!PROF[nick]){
+    var me=(nick===ST.me);
+    PROF[nick]={nick:nick,xp:me?(DEMO?215:0):(SAMPLE_XP[nick]||0),avatar:me?'🦉':null,returns:me&&DEMO?3:0,cards:me&&DEMO?4:0,
+      bio:me?'분실물은 내가 찾아줄게! 🔍':'',me:me,virtual:false,
+      acts:me&&DEMO?[{t:'어제',x:'"학생증" 반환 완료',xp:50},{t:'3일 전',x:'감사 카드를 받았어요 💌',xp:20},{t:'지난주',x:'"체크카드" 게시물 등록',xp:10}]:[]};
+  }
+  return PROF[nick];
+}
+// 엠블럼 (size: sm | md | lg)
+function emblem(i,size,pips){
+  var t=TIERS[i],p='';
+  if(pips){p='<div class="te-pips">';for(var k=0;k<5;k++)p+='<b'+(k<=i?' class="on"':'')+'></b>';p+='</div>';}
+  var e='<div class="te '+size+' t'+(i+1)+'"><div class="te-hex"></div><div class="te-core">'+t.ic+'</div></div>';
+  return pips?'<div class="te-wrap t'+(i+1)+'">'+e+p+'</div>':e;
+}
+// 닉네임 옆 작은 배지
+function tierBadge(nick,full){
+  var i=tierIdx(profOf(nick).xp),t=TIERS[i];
+  return'<span class="tb t'+(i+1)+(full?' full':'')+'" title="'+esc(t.n)+'"><i>'+t.ic+'</i>'+esc(full?t.n:t.s)+'</span>';
+}
+function xpBarHtml(xp){
+  var f=xpInfo(xp);
+  if(!f.nx)return'<div class="xp-bar"><div class="xp-fill" style="width:100%"></div></div><div class="xp-max">👑 최대 티어예요! 더 오를 곳이 없어요</div>';
+  return'<div class="xp-bar"><div class="xp-fill" style="width:'+Math.max(4,f.pct)+'%"></div></div>'
+    +'<div class="xp-sub"><span>'+esc(f.t.n)+' · '+f.pct+'%</span><span>'+esc(f.nx.n)+'까지 '+fmtXp(f.left)+' XP</span></div>';
+}
+// 작성자 프로필(profile-scr) 상단 박스
+function renderTierBox(nick){
+  var p=profOf(nick),f=xpInfo(p.xp);
+  document.getElementById('prof-tier').innerHTML=
+    '<div class="t'+(f.i+1)+'">'+emblem(f.i,'md',true)
+    +'<div class="tp-nm">'+esc(f.t.n)+'</div><div class="tp-ttl">'+esc(f.t.ttl)+'</div>'
+    +'<div class="fp-xp-top" style="color:#fff"><b style="font-size:18px">'+fmtXp(p.xp)+' XP</b></div>'+xpBarHtml(p.xp)+'</div>';
+}
+// XP 지급 (데모) — 승급하면 true
+function awardXp(nick,amount,text,kind){
+  var p=profOf(nick),before=tierIdx(p.xp);
+  p.xp+=amount;
+  if(kind==='ret')p.returns++;
+  if(kind==='card')p.cards++;
+  p.acts.unshift({t:'방금',x:text,xp:amount});
+  if(p.acts.length>8)p.acts.length=8;
+  return tierIdx(p.xp)>before;
+}
+function upMsg(nick){var t=TIERS[tierIdx(profOf(nick).xp)];return'🎉 티어 승급! '+t.ic+' '+t.n;}
+
+// ── 가상 친구 5명 (닉네임은 최초 1회 무작위 생성 후 저장) ──
+var FR_ADJ=['고요한','엉뚱한','느긋한','든든한','수줍은','씩씩한','다정한','부지런한','졸린','꼼꼼한','용감한','포근한'];
+var FR_NOUN=[['고양이','🐱'],['다람쥐','🐿️'],['여우','🦊'],['수달','🦦'],['부엉이','🦉'],['판다','🐼'],['토끼','🐰'],['고래','🐳'],['펭귄','🐧'],['오리','🦆'],['곰','🐻'],['햄스터','🐹']];
+var FR_ITEM=['검정 우산','에어팟 케이스','학생증','텀블러','보조배터리','후드집업','노트북 충전기','체크카드','안경','열쇠'];
+var FR_BIO=[
+  ['아직 배우는 중이에요. 잘 부탁해요! 🌱','처음 써봐요, 천천히 찾아볼게요','일단 시작! 오늘도 한 걸음'],
+  ['잃어버린 건 꼭 돌려주고 싶어요','눈썰미 하나는 자신 있어요 🔍','작은 단서도 놓치지 않아요'],
+  ['공대 건물은 눈 감고도 다녀요','도서관·학식·체육관 순회 중 🧭','캠퍼스 지름길은 제가 알아요'],
+  ['주인 찾아줄 때까지 포기 안 해요','분실물 센터 단골이에요 🛡️','돌려주는 순간이 제일 뿌듯해요'],
+  ['전설은 시작도 하기 전에 정해졌다 👑','찾았대의 터줏대감입니다','못 찾는 물건은 없어요, 아직은요']
+];
+var FR_RANGE=[[25,90],[110,290],[310,590],[610,990],[1010,1500]];
+function frPick(a){return a[Math.floor(Math.random()*a.length)];}
+function frShuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function makeFriends(){
+  var order=frShuffle([0,1,2,3,4]),used={},out=[];
+  var taken=[ST.me].concat(Object.keys(SAMPLE_XP));
+  order.forEach(function(ti,idx){
+    var nick,noun,guard=0;
+    do{noun=frPick(FR_NOUN);nick=frPick(FR_ADJ)+noun[0];guard++;}while((used[nick]||taken.indexOf(nick)>-1)&&guard<80);
+    used[nick]=1;
+    var r=FR_RANGE[ti],target=r[0]+Math.floor(Math.random()*(r[1]-r[0]+1));
+    var ret=Math.floor(target*0.55/XP_REWARD.ret);
+    var cards=Math.floor((target-ret*XP_REWARD.ret)*0.5/XP_REWARD.card);
+    var posts=Math.floor((target-ret*XP_REWARD.ret-cards*XP_REWARD.card)/XP_REWARD.post);
+    var xp=ret*XP_REWARD.ret+cards*XP_REWARD.card+posts*XP_REWARD.post;
+    var when=['오늘','어제','2일 전','4일 전','지난주'],items=frShuffle(FR_ITEM),acts=[];
+    for(var k=0;k<Math.min(ret,2);k++)acts.push({x:'"'+items[k]+'" 반환 완료',xp:XP_REWARD.ret});
+    if(cards>0)acts.push({x:'감사 카드를 받았어요 💌',xp:XP_REWARD.card});
+    if(posts>0)acts.push({x:'"'+items[3]+'" 게시물 등록',xp:XP_REWARD.post});
+    if(!acts.length)acts.push({x:'찾았대에 가입했어요 🌱',xp:0});
+    acts=acts.slice(0,4).map(function(a,n){return{t:when[n],x:a.x,xp:a.xp};});
+    out.push({id:'f'+idx,nick:nick,avatar:noun[1],xp:xp,returns:ret,cards:cards,bio:frPick(FR_BIO[ti]),acts:acts});
+  });
+  return out;
+}
+function frValid(a){
+  if(!Array.isArray(a)||a.length!==5)return false;
+  var seen={},nicks={};
+  for(var i=0;i<5;i++){
+    var f=a[i];
+    if(!f||typeof f.nick!=='string'||typeof f.xp!=='number'||!Array.isArray(f.acts))return false;
+    var t=tierIdx(f.xp);if(seen[t]||nicks[f.nick])return false;
+    seen[t]=1;nicks[f.nick]=1;
+  }
+  return true;
+}
+function loadFriends(){
+  var KEY='cjd2_demo_friends_v1',list=null;
+  try{var raw=localStorage.getItem(KEY);if(raw){var a=JSON.parse(raw);if(frValid(a))list=a;}}catch(e){}
+  if(!list){
+    list=makeFriends();
+    try{localStorage.setItem(KEY,JSON.stringify(list));}catch(e){}
+  }
+  FRIENDS=list.map(function(f,i){return{id:'f'+i,nick:f.nick,avatar:f.avatar,xp:f.xp,returns:f.returns,cards:f.cards,bio:f.bio,acts:f.acts,virtual:true,me:false};});
+  FRIENDS.forEach(function(f){PROF[f.nick]=f;});
+}
+
+// ── 친구 화면 ──
+function frCardHtml(p,key){
+  var f=xpInfo(p.xp);
+  return'<div class="fr-card t'+(f.i+1)+(p.me?' me':'')+'" onclick="openFriend(\''+key+'\')">'
+    +'<div class="fr-av-wrap"><div class="fr-av">'+esc(p.avatar||'🙂')+'</div>'+emblem(f.i,'sm',false)+'</div>'
+    +'<div class="fr-info">'
+      +'<div class="fr-nm">'+esc(p.nick)+(p.me?'<span class="fr-tag me">내 프로필</span>':'<span class="fr-tag">가상 친구</span>')+'</div>'
+      +'<div class="fr-ttl">'+tierBadge(p.nick,true)+' '+esc(f.t.ttl)+'</div>'
+      +'<div class="fr-xpl"><div class="xp-bar"><div class="xp-fill" style="width:'+Math.max(4,f.pct)+'%"></div></div><span>'+fmtXp(p.xp)+' XP</span></div>'
+      +'<div class="fr-meta">📦 반환 '+p.returns+' · 💌 카드 '+p.cards+'</div>'
+    +'</div><div class="fr-arr">›</div></div>';
+}
+function renderFriends(){
+  document.getElementById('fr-note').textContent=DEMO
+    ?'🧪 데모용 가상 친구예요. 실제 사용자 데이터가 아니고 DB에도 저장되지 않아요.'
+    :'👥 친구 기능은 준비 중이에요. 가상 친구는 데모 모드(주소 끝에 ?demo=1)에서 볼 수 있어요.';
+  document.getElementById('fr-me').innerHTML=frCardHtml(profOf(ST.me),'me');
+  var q=FR_Q.trim().toLowerCase();
+  var list=FRIENDS.filter(function(f){
+    if(!q)return true;
+    var t=TIERS[tierIdx(f.xp)];
+    return(f.nick+t.n+t.s+t.ttl+f.bio).toLowerCase().indexOf(q)>-1;
+  }).sort(function(a,b){return b.xp-a.xp;});
+  document.getElementById('fr-cnt').textContent=FRIENDS.length?(q?list.length+' / ':'')+FRIENDS.length+'명':'';
+  document.getElementById('fr-list').innerHTML=list.length
+    ?list.map(function(f){return frCardHtml(f,f.id);}).join('')
+    :'<div class="fr-empty">'+(FRIENDS.length?'검색 결과가 없어요 🔍':'아직 친구가 없어요')+'</div>';
+}
+function frSearch(v){FR_Q=v;renderFriends();}
+function openFriends(){
+  if(DEMO&&!FRIENDS.length)loadFriends();
+  FR_Q='';document.getElementById('fr-q').value='';
+  renderFriends();
+  document.getElementById('friends-scr').classList.add('on');
+  document.body.classList.add('fr-open');
+  frPush('friends');
+}
+function fprofHtml(p){
+  var f=xpInfo(p.xp),c='t'+(f.i+1);
+  var tags=(p.me?'<span class="fr-tag me">내 프로필</span>':'')+(p.virtual?'<span class="fr-tag">🧪 가상 프로필</span>':'');
+  var acts=p.acts.length?p.acts.map(function(a){
+    return'<div class="fp-act"><div class="fp-act-t">'+esc(a.t)+'</div><div class="fp-act-x">'+esc(a.x)+'</div>'
+      +(a.xp?'<div class="fp-act-p">+'+a.xp+' XP</div>':'')+'</div>';}).join('')
+    :'<div class="fr-empty">아직 활동 기록이 없어요</div>';
+  return'<div class="'+c+'"><div class="fp-hero">'
+      +'<div class="fp-av">'+esc(p.avatar||'🙂')+'</div><div class="fp-nm">'+esc(p.nick)+'</div><div class="fp-tags">'+tags+'</div>'
+      +'<div class="fp-emb">'+emblem(f.i,'lg',true)+'</div>'
+      +'<div class="fp-tier">'+esc(f.t.n)+'</div><div class="fp-ttl">'+esc(f.t.ttl)+'</div>'
+      +'<div class="fp-xp"><div class="fp-xp-top"><b>'+fmtXp(p.xp)+' XP</b><span>'+f.t.min+(f.t.max!==null?'–'+f.t.max:'+')+' XP 구간</span></div>'+xpBarHtml(p.xp)+'</div>'
+    +'</div></div>'
+    +'<div class="fp-grid"><div class="fp-st"><b>'+p.returns+'</b><span>📦 반환 완료</span></div>'
+      +'<div class="fp-st"><b>'+p.cards+'</b><span>💌 감사 카드</span></div>'
+      +'<div class="fp-st"><b>'+(f.i+1)+'/5</b><span>🏅 티어</span></div></div>'
+    +'<div class="fp-sec"><h4>한 줄 소개</h4><div class="fp-bio">'+esc(p.bio||'아직 소개가 없어요')+'</div></div>'
+    +'<div class="fp-sec"><h4>최근 활동</h4>'+acts+'</div>'
+    +(p.me&&DEMO?'<button class="fp-btn" onclick="simReturn()">🧪 데모: 반환 완료 시뮬레이션 (+50 XP)</button>':'')
+    +'<button class="fp-btn ghost" onclick="backFr()">← 친구 목록으로</button>';
+}
+var FP_KEY='me';
+function openFriend(key){
+  var p=key==='me'?profOf(ST.me):FRIENDS.filter(function(f){return f.id===key;})[0];
+  if(!p)return;
+  FP_KEY=key;
+  document.getElementById('fp-title').textContent=p.me?'내 프로필':'친구 프로필';
+  document.getElementById('fp-body').innerHTML=fprofHtml(p);
+  document.getElementById('fp-body').scrollTop=0;
+  document.getElementById('fprof-scr').classList.add('on');
+  document.body.classList.add('fr-open');
+  frPush('fprof');
+}
+function simReturn(){
+  var it=frPick(FR_ITEM);
+  var up=awardXp(ST.me,XP_REWARD.ret,'"'+it+'" 반환 완료 (데모)','ret');
+  openFriend('me');renderFriends();
+  toast(up?upMsg(ST.me):'+'+XP_REWARD.ret+' XP 반환 완료! 📦');
+}
+// 모바일 뒤로가기(history) 연동
+function frPush(s){try{history.pushState({scr:s},'');}catch(e){}}
+function frCloseTop(){
+  var fp=document.getElementById('fprof-scr'),fr=document.getElementById('friends-scr');
+  if(fp.classList.contains('on')){fp.classList.remove('on');renderFriends();if(fr.classList.contains('on'))return;}
+  else if(fr.classList.contains('on')){fr.classList.remove('on');}
+  if(!fp.classList.contains('on')&&!fr.classList.contains('on')){
+    document.body.classList.remove('fr-open');
+    render();
+  }
+}
+function backFr(){
+  if(history.state&&history.state.scr){history.back();}else{frCloseTop();}
+}
+window.addEventListener('popstate',function(){frCloseTop();});
+
+// ── 반환 완료 · 감사 카드 (데모) ──
+function thanksRowHtml(p){
+  if(!DEMO||p.status!=='resolved')return'';
+  var mine=p.author===ST.me;
+  if(!mine){
+    var chatted=(ST.chats[p.id]||[]).some(function(m){return m.from===ST.me;});
+    if(!chatted)return'';
+    var done=THANKS.some(function(r){return r.post_id===p.id&&r.from===ST.me&&r.to===p.author;});
+    if(done)return'<div class="th-row"><button class="th-open done" disabled>✅ 반환 완료 · 감사 카드 전송됨</button></div>';
+  }
+  return'<div class="th-row"><button class="th-open" onclick="openThanks('+p.id+')">🎁 반환 완료 · 감사 카드 보내기</button></div>';
+}
+async function thanksCandidates(p){
+  var names=[];
+  if(p.author===ST.me){
+    var r=await sb.from('chat_messages').select('*').eq('post_id',p.id);
+    (r.data||[]).forEach(function(m){
+      if(m.from_user!==ST.me&&m.from_user!==p.author&&names.indexOf(m.from_user)<0)names.push(m.from_user);
+    });
+  }else if((ST.chats[p.id]||[]).some(function(m){return m.from===ST.me;})){
+    names=[p.author];
+  }
+  return names.filter(function(n){
+    return n!==ST.me&&!THANKS.some(function(r){return r.post_id===p.id&&r.from===ST.me&&r.to===n;});
+  });
+}
+async function openThanks(id,auto){
+  if(!DEMO)return;
+  var p=ST.posts.find(function(x){return x.id===id;});
+  if(!p||p.status!=='resolved')return;
+  var cands=await thanksCandidates(p);
+  if(!cands.length){
+    if(!auto)toast('카드를 보낼 상대가 없어요 (이 게시물에서 채팅한 분만 가능해요)');
+    return;
+  }
+  TH={pid:id,cands:cands,to:cands[0],card:null};
+  renderThanks();
+  document.getElementById('th-ov').classList.add('on');
+}
+function closeThanks(){document.getElementById('th-ov').classList.remove('on');}
+function renderThanks(){
+  var p=ST.posts.find(function(x){return x.id===TH.pid;});
+  document.getElementById('th-desc').textContent='"'+(p?p.title:'')+'" 물건은 잘 돌려받았나요?';
+  document.getElementById('th-who').innerHTML=TH.cands.map(function(n,i){
+    return'<button class="th-chip'+(n===TH.to?' on':'')+'" onclick="thWho('+i+')">@'+esc(n)+'</button>';
+  }).join('');
+  document.getElementById('th-cards').innerHTML=TH_CARDS.map(function(c,i){
+    return'<button class="th-card'+(TH.card===c.k?' on':'')+'" onclick="thCard('+i+')"><span>'+c.e+'</span>'+esc(c.t)+'</button>';
+  }).join('');
+}
+function thWho(i){TH.to=TH.cands[i];renderThanks();}
+function thCard(i){TH.card=TH_CARDS[i].k;renderThanks();}
+function submitThanks(){
+  if(!TH.card){toast('감사 카드를 선택해주세요');return;}
+  if(THANKS.some(function(r){return r.post_id===TH.pid&&r.from===ST.me&&r.to===TH.to;}))return;
+  var p=ST.posts.find(function(x){return x.id===TH.pid;}),pid=TH.pid,to=TH.to;
+  THANKS.push({post_id:pid,from:ST.me,to:to,card:TH.card});
+  var label='"'+(p?p.title:'')+'"';
+  // 데모: 상대도 반환 완료를 확인하고 감사 카드를 보냈다고 가정 → 양쪽 지급
+  var up=awardXp(ST.me,XP_REWARD.ret,label+' 반환 완료','ret');
+  up=awardXp(ST.me,XP_REWARD.card,'@'+to+'님에게 감사 카드를 받았어요 💌','card')||up;
+  awardXp(to,XP_REWARD.ret,label+' 반환 완료','ret');
+  awardXp(to,XP_REWARD.card,'@'+ST.me+'님에게 감사 카드를 받았어요 💌','card');
+  closeThanks();
+  toast(up?upMsg(ST.me):'반환 완료! +'+(XP_REWARD.ret+XP_REWARD.card)+' XP 🎁');
+  openDet(pid);
+}
+
 function openProfileFromChat(){
   var nm=document.getElementById('chat-nm').textContent.replace('@','');
   if(nm) openProfile(nm);
@@ -1322,6 +1795,7 @@ function openProfile(author){
   var ch=author.charAt(0).toUpperCase();
   document.getElementById('prof-av').textContent=ch;
   document.getElementById('prof-nm').textContent=author;
+  renderTierBox(author);
   document.getElementById('prof-total').textContent=posts.length;
   document.getElementById('prof-lost').textContent=posts.filter(function(p){return p.type==='lost'&&p.status!=='resolved';}).length;
   document.getElementById('prof-found').textContent=posts.filter(function(p){return p.type==='found'&&p.status!=='resolved';}).length;
@@ -1392,6 +1866,7 @@ async function pickStatus(status){
   await sb.from('posts').update({status:status}).eq('id',id);
   openDet(id);
   toast(status==='resolved'?'해결됨으로 변경됐습니다 ✅':'진행 중으로 변경됐습니다 🔍');
+  if(status==='resolved')openThanks(id,true);
 }
 function openEditPost(id){
   var p=ST.posts.find(function(x){return x.id===id;});if(!p)return;
@@ -1726,8 +2201,9 @@ async function submitPost(){
     var ins=await sb.from('posts').insert(np).select().single();
     if(ins.error){toast('등록 중 오류가 발생했습니다');return;}
     ST.posts.unshift(ins.data);
+    var xpUp=DEMO?awardXp(ST.me,XP_REWARD.post,'"'+name+'" 게시물 등록','post'):false;
     closeReg();render();
-    toast('게시물이 등록되었습니다 ✅');
+    toast(xpUp?upMsg(ST.me):(DEMO?'게시물이 등록되었습니다 ✅ +'+XP_REWARD.post+' XP':'게시물이 등록되었습니다 ✅'));
   }
 }
 
@@ -1739,7 +2215,7 @@ function toast(msg){
 
 // ── 초기화 ──
 (function(){
-  var _session=DEMO?{nickname:'데모사용자'}:getSession();
+  var _session=DEMO?{nickname:'원석'}:getSession();
   if(DEMO)document.title='찾았대 (데모)';
   if(_session){
     afterAuth(_session.nickname);
