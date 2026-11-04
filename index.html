@@ -103,7 +103,9 @@
     .card-img{width:100%;height:180px;background:linear-gradient(135deg,#EDE3D5,#D9C9B5);
               display:flex;align-items:center;justify-content:center;font-size:54px;
               position:relative;overflow:hidden;}
-    .card-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+    .ph,.ph-bg{position:absolute;inset:0;width:100%;height:100%;display:block;}
+    .ph{object-fit:contain;}
+    .ph-bg{object-fit:cover;filter:blur(16px) brightness(.92);transform:scale(1.15);}
     .card-body{padding:12px 13px 0;}
     .badges{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:7px;}
     .badge{display:inline-block;padding:3px 8px;border-radius:5px;font-size:11px;font-weight:700;}
@@ -115,7 +117,7 @@
     .b-done{background:#e4fff0;color:#1a8c42;font-size:10px;padding:2px 7px;border-radius:10px;}
     .card-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px;}
     .card-meta{font-size:11px;color:var(--sub);margin-bottom:6px;}
-    .card-desc{font-size:12px;color:#888;line-height:1.5;
+    .card-desc{font-size:12px;color:#888;line-height:1.5;white-space:pre-line;
                display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
     .card-foot{display:flex;align-items:center;padding:9px 13px;
                border-top:1px solid var(--gline);margin-top:10px;gap:12px;}
@@ -181,7 +183,6 @@
     .pzone-s{font-size:11px;color:#aaa;margin-top:3px;}
     .prev-wrap{position:relative;border:2px dashed #c8d0e8;border-radius:14px;box-sizing:border-box;
                width:100%;height:160px;overflow:hidden;}
-    .prev-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
     .prev-rm{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.5);
              color:#fff;border:none;border-radius:50%;width:28px;height:28px;font-size:16px;cursor:pointer;}
     .fi{width:100%;padding:12px 13px;border:1.5px solid var(--gline);
@@ -227,11 +228,11 @@
     .det-img{width:100%;height:220px;background:linear-gradient(135deg,#EDE3D5,#D9C9B5);
              display:flex;align-items:center;justify-content:center;font-size:70px;
              position:relative;overflow:hidden;}
-    .det-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+    .det-img.has-ph{height:320px;}
     .det-body{padding:18px;}
     .det-title{font-size:21px;font-weight:800;color:var(--text);margin:10px 0 6px;}
     .det-meta{font-size:12px;color:var(--sub);margin-bottom:14px;}
-    .det-desc{font-size:14px;line-height:1.75;color:#444;
+    .det-desc{font-size:14px;line-height:1.75;color:#444;white-space:pre-line;
               background:var(--gbg);border-radius:10px;padding:14px 15px;margin-bottom:12px;}
     .ibox{display:flex;align-items:center;gap:8px;padding:11px 13px;
           border-radius:10px;font-size:13px;margin-bottom:8px;}
@@ -267,6 +268,45 @@
     .spick-opt:active{background:var(--gbg);}
     .spick-opt.cur{color:var(--gold);}
     .author-link:hover{text-decoration:underline;}
+
+    /* ── 매너온도 ── */
+    .temp-chip{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:10px;background:#fff;
+               border:1.5px solid currentColor;font-size:11px;font-weight:800;vertical-align:middle;white-space:nowrap;}
+    .manner{background:#fff;border-radius:14px;padding:12px 14px 11px;margin:14px auto 0;max-width:320px;text-align:left;}
+    .mn-top{display:flex;justify-content:space-between;align-items:baseline;}
+    .mn-lbl{font-size:12px;font-weight:700;color:var(--sub);}
+    .mn-val{font-size:20px;font-weight:900;}
+    .mn-bar{height:8px;background:#EFE6DA;border-radius:4px;overflow:hidden;margin:7px 0 7px;}
+    .mn-fill{height:100%;border-radius:4px;}
+    .mn-sub{font-size:11px;color:var(--sub);}
+    .mn-tier{font-weight:800;color:var(--text);}
+    .mn-list{background:#fff;padding:6px 16px 12px;}
+    .mn-row{display:flex;justify-content:space-between;padding:8px 0;font-size:13px;color:var(--text);border-bottom:1px solid var(--gline);}
+    .mn-row:last-child{border-bottom:none;}
+    .mn-row b{color:var(--navy);}
+    .mn-row.bad b{color:#e74c3c;}
+    .mn-cmt{padding:9px 0;border-bottom:1px solid var(--gline);font-size:13px;color:#555;line-height:1.5;}
+    .mn-cmt:last-child{border-bottom:none;}
+    .mn-cmt-by{font-size:11px;color:var(--sub);margin-bottom:2px;}
+    .mn-empty{padding:14px 0;text-align:center;font-size:13px;color:#bbb;}
+    .mn-note{font-size:11px;color:var(--sub);padding:6px 0 0;}
+    .ibox.helper{background:#e8fff2;color:#1a6b38;}
+    .rev-cta{width:100%;padding:13px;margin-bottom:8px;border-radius:12px;border:2px solid var(--gold);
+             background:#FFF8EC;color:#9b5d00;font-size:14px;font-weight:800;cursor:pointer;font-family:inherit;}
+    .hp-row{display:flex;gap:8px;padding:12px 24px 4px;}
+    .hp-empty{padding:12px 24px 0;font-size:13px;color:#bbb;}
+    .hp-skip{padding:14px 24px 0;font-size:13px;color:var(--sub);text-align:center;cursor:pointer;text-decoration:underline;}
+    #rev-ov{z-index:3100;}
+    .rev-side{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+    .rev-side-btn{padding:16px 8px;border-radius:14px;border:2px solid var(--gline);background:#fff;
+                  font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;color:var(--sub);}
+    .rev-side-btn .te{font-size:28px;margin-bottom:4px;}
+    .rev-side-btn.on.good{border-color:#1a8c42;background:#e8fff2;color:#1a8c42;}
+    .rev-side-btn.on.bad{border-color:#e74c3c;background:#fff0f0;color:#e74c3c;}
+    .rev-tags{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+    .rev-tag{padding:12px 14px;border-radius:10px;border:1.5px solid var(--gline);background:#fff;text-align:left;
+             font-size:14px;cursor:pointer;font-family:inherit;color:var(--text);}
+    .rev-tag.on{border-color:var(--navy);background:#FDF5EC;font-weight:700;}
 
     /* ── 채팅 목록 ── */
     .chatlist-scr{position:fixed;inset:0;max-width:430px;margin:0 auto;
@@ -304,7 +344,7 @@
                     display:flex;align-items:center;justify-content:center;
                     font-size:28px;font-weight:900;color:#fff;margin:0 auto 12px;}
     .prof-nm{font-size:19px;font-weight:800;color:#fff;}
-    /* ── 티어 · 친구 시스템 ── */
+    /* ── 게임형 티어 (원석 0644c27에서 티어 부분만, 엠블럼 클래스 .te→.xte) ── */
     .t1{--c1:#cfd5dc;--c2:#7d8794;--core:#4a525c;--bg:#eef0f3;--tx:#566070;}
     .t2{--c1:#8ddca8;--c2:#2f9e5b;--core:#1d5c38;--bg:#e5f6ec;--tx:#1f7a46;}
     .t3{--c1:#f5d778;--c2:#c9971f;--core:#6b4f0e;--bg:#fdf3d6;--tx:#8a6510;}
@@ -319,24 +359,24 @@
     .tb.full{font-size:11px;padding:3px 9px 3px 3px;margin-left:0;}
     .tb.full i{width:18px;height:18px;font-size:11px;}
     /* 엠블럼 (육각 방패) */
-    .te{position:relative;width:var(--s);height:calc(var(--s)*1.1);flex-shrink:0;
+    .xte{position:relative;width:var(--s);height:calc(var(--s)*1.1);flex-shrink:0;
         filter:drop-shadow(0 4px 9px rgba(0,0,0,.28));}
-    .te-hex,.te-core{position:absolute;clip-path:polygon(50% 0,95% 24%,95% 76%,50% 100%,5% 76%,5% 24%);}
-    .te-hex{inset:0;background:linear-gradient(145deg,var(--c1),var(--c2));}
-    .te-core{inset:8%;background:radial-gradient(circle at 35% 25%,rgba(255,255,255,.22),transparent 55%),var(--core);
+    .xte-hex,.xte-core{position:absolute;clip-path:polygon(50% 0,95% 24%,95% 76%,50% 100%,5% 76%,5% 24%);}
+    .xte-hex{inset:0;background:linear-gradient(145deg,var(--c1),var(--c2));}
+    .xte-core{inset:8%;background:radial-gradient(circle at 35% 25%,rgba(255,255,255,.22),transparent 55%),var(--core);
              display:flex;align-items:center;justify-content:center;font-size:calc(var(--s)*.42);}
-    .te.sm{--s:30px;} .te.md{--s:64px;} .te.lg{--s:116px;}
-    .te.t5 .te-hex{background:linear-gradient(145deg,#fff1a8,#ffc83d 45%,#e8590c);}
-    .te-wrap{display:flex;flex-direction:column;align-items:center;gap:6px;}
-    .te-pips{display:flex;gap:4px;}
-    .te-pips b{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.28);}
-    .te-pips b.on{background:linear-gradient(145deg,var(--c1),var(--c2));box-shadow:0 0 0 1px rgba(255,255,255,.5);}
+    .xte.sm{--s:30px;} .xte.md{--s:64px;} .xte.lg{--s:116px;}
+    .xte.t5 .xte-hex{background:linear-gradient(145deg,#fff1a8,#ffc83d 45%,#e8590c);}
+    .xte-wrap{display:flex;flex-direction:column;align-items:center;gap:6px;}
+    .xte-pips{display:flex;gap:4px;}
+    .xte-pips b{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.28);}
+    .xte-pips b.on{background:linear-gradient(145deg,var(--c1),var(--c2));box-shadow:0 0 0 1px rgba(255,255,255,.5);}
     /* XP 바 */
     .xp-bar{height:9px;background:rgba(0,0,0,.1);border-radius:6px;overflow:hidden;}
-    .fp-hero .xp-bar,.tp-box .xp-bar{background:rgba(255,255,255,.2);}
+    .tp-box .xp-bar{background:rgba(255,255,255,.2);}
     .xp-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,var(--c1),var(--c2));transition:width .5s;}
     .xp-sub{display:flex;justify-content:space-between;gap:8px;font-size:11px;margin-top:5px;color:var(--sub);}
-    .fp-hero .xp-sub,.tp-box .xp-sub{color:rgba(255,255,255,.7);}
+    .tp-box .xp-sub{color:rgba(255,255,255,.7);}
     .xp-max{font-size:12px;font-weight:800;text-align:center;margin-top:7px;color:#ffd54a;}
     /* 작성자 프로필 상단 티어 박스 */
     .tp-box{margin:14px auto 0;max-width:300px;text-align:center;}
@@ -364,65 +404,24 @@
     .th-card span{display:block;font-size:26px;margin-bottom:4px;}
     .th-card.on{border-color:var(--gold);background:#FFF4E0;color:#9b5d00;}
     .th-note{font-size:11px;color:#aaa;text-align:center;line-height:1.5;margin-bottom:14px;}
-    /* 친구 / 친구 프로필 화면 */
-    body.fr-open .fab-wrap{display:none!important;}
-    .fr-scr{position:fixed;inset:0;max-width:430px;margin:0 auto;background:var(--gbg);
-            display:none;flex-direction:column;z-index:2400;}
-    .fr-scr.on{display:flex;}
-    #fprof-scr{z-index:2450;}
-    .fr-body{flex:1;overflow-y:auto;padding:12px 12px calc(24px + env(safe-area-inset-bottom,0px));-webkit-overflow-scrolling:touch;}
-    .fr-note{background:#FFF7E6;border:1px solid #F0DDB8;color:#8a6510;border-radius:10px;
-             padding:9px 12px;font-size:12px;line-height:1.5;margin-bottom:12px;}
-    .fr-sec{font-size:12px;font-weight:800;color:var(--sub);margin:14px 2px 8px;display:flex;justify-content:space-between;}
-    .fr-search{background:#fff;border:1.5px solid var(--gline);border-radius:24px;padding:0 13px;margin-bottom:10px;}
-    .fr-search input{width:100%;border:none;background:transparent;padding:10px 0;font-size:13px;outline:none;font-family:inherit;}
-    .fr-card{display:flex;gap:12px;align-items:center;background:#fff;border-radius:16px;padding:12px;
-             margin-bottom:10px;box-shadow:0 2px 12px rgba(0,0,0,.07);cursor:pointer;border:2px solid transparent;}
-    .fr-card:active{border-color:var(--c1);}
-    .fr-card.me{border-color:var(--gold);background:linear-gradient(135deg,#fffaf0,#fff);}
-    .fr-av-wrap{position:relative;flex-shrink:0;}
-    .fr-av{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-           font-size:28px;background:var(--bg);border:3px solid var(--c1);}
-    .fr-av-wrap .te{position:absolute;right:-8px;bottom:-8px;}
-    .fr-info{flex:1;min-width:0;}
-    .fr-nm{font-size:15px;font-weight:800;color:var(--text);display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
-    .fr-tag{font-size:10px;font-weight:700;padding:2px 7px;border-radius:8px;background:#f0f2f8;color:#667;}
-    .fr-tag.me{background:var(--gold);color:#fff;}
-    .fr-ttl{font-size:11px;color:var(--sub);margin:4px 0 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-    .fr-xpl{display:flex;align-items:center;gap:8px;}
-    .fr-xpl .xp-bar{flex:1;height:7px;}
-    .fr-xpl span{font-size:11px;font-weight:800;color:var(--tx);white-space:nowrap;}
-    .fr-meta{font-size:11px;color:#999;margin-top:5px;}
-    .fr-arr{color:#ccc;font-size:22px;}
-    .fr-empty{text-align:center;color:var(--sub);padding:40px 10px;font-size:13px;}
-    /* 친구 상세 */
-    .fp-hero{background:var(--navy);padding:22px 18px 24px;text-align:center;color:#fff;}
-    .fp-av{width:68px;height:68px;border-radius:50%;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;
-           font-size:34px;background:var(--bg);border:3px solid var(--c1);}
-    .fp-nm{font-size:20px;font-weight:900;}
-    .fp-tags{display:flex;gap:6px;justify-content:center;margin-top:6px;}
-    .fp-emb{margin:18px 0 10px;display:flex;justify-content:center;}
-    .fp-tier{font-size:20px;font-weight:900;color:var(--c1);}
-    .fp-ttl{font-size:12px;color:rgba(255,255,255,.75);margin-top:3px;}
-    .fp-xp{max-width:300px;margin:16px auto 0;text-align:left;}
     .fp-xp-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;}
     .fp-xp-top b{font-size:22px;font-weight:900;}
-    .fp-xp-top span{font-size:11px;color:rgba(255,255,255,.65);}
-    .fp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px;}
-    .fp-st{background:#fff;border-radius:14px;padding:12px 4px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.06);}
-    .fp-st b{display:block;font-size:20px;font-weight:900;color:var(--text);}
-    .fp-st span{font-size:11px;color:var(--sub);}
-    .fp-sec{padding:0 12px;margin-bottom:12px;}
-    .fp-sec h4{font-size:12px;font-weight:800;color:var(--sub);margin:4px 2px 8px;}
-    .fp-bio{background:#fff;border-radius:14px;padding:13px 14px;font-size:13px;line-height:1.6;color:#555;box-shadow:0 2px 10px rgba(0,0,0,.05);}
-    .fp-act{display:flex;gap:10px;align-items:center;background:#fff;border-radius:12px;padding:10px 12px;margin-bottom:6px;font-size:13px;color:#444;}
-    .fp-act-t{font-size:11px;color:#aaa;width:42px;flex-shrink:0;}
-    .fp-act-x{flex:1;min-width:0;}
-    .fp-act-p{font-size:12px;font-weight:800;color:#2f9e5b;white-space:nowrap;}
-    .fp-btn{display:block;width:calc(100% - 24px);margin:6px 12px;padding:14px;border-radius:12px;font-size:14px;font-weight:800;
-            cursor:pointer;font-family:inherit;border:none;background:var(--navy);color:#fff;}
-    .fp-btn.ghost{background:#fff;color:var(--navy);border:1.5px solid var(--gline);font-weight:700;}
-    @media(max-width:360px){.te.lg{--s:100px;}.fp-grid{gap:6px;padding:10px;}}
+    /* 내 프로필 티어 목록 */
+    .tl-how{font-size:11px;color:var(--sub);margin:8px 16px 10px;}
+    .tl-list{padding:0 12px;}
+    .tl-row{display:flex;align-items:center;gap:12px;background:#fff;border-radius:14px;padding:10px 12px;margin-bottom:8px;
+            box-shadow:0 2px 10px rgba(0,0,0,.05);border:2px solid transparent;}
+    .tl-row.cur{border-color:var(--c2);background:var(--bg);}
+    .tl-row.lock{opacity:.55;}
+    .tl-info{flex:1;min-width:0;}
+    .tl-nm{font-size:14px;font-weight:800;color:var(--tx);}
+    .tl-ttl{font-size:11px;color:var(--sub);margin-top:2px;}
+    .tl-right{text-align:right;flex-shrink:0;}
+    .tl-rng{font-size:11px;color:var(--sub);}
+    .tl-st{display:inline-block;margin-top:3px;font-size:10px;font-weight:800;padding:2px 7px;border-radius:8px;}
+    .tl-st.done{background:#e5f6ec;color:#1f7a46;}
+    .tl-st.cur{background:var(--c2);color:#fff;}
+    .tl-st.lock{background:#f0f2f8;color:#778;}
     .prof-stats-row{display:flex;justify-content:center;gap:0;margin-top:16px;}
     .prof-stat{flex:1;text-align:center;border-right:1px solid rgba(255,255,255,.15);}
     .prof-stat:last-child{border-right:none;}
@@ -630,7 +629,6 @@
         <div><div class="hd-title">찾았대</div><div class="hd-sub" id="univ-nm"></div></div>
       </div>
       <div class="hd-right">
-        <button class="hd-chat-btn" onclick="openFriends()" aria-label="친구">👥</button>
         <button class="hd-chat-btn" onclick="openChatList()">
           💬<span class="chat-cnt" id="chat-cnt"></span>
         </button>
@@ -661,6 +659,7 @@
           <option value="">모든 카테고리</option>
           <option value="전자기기">📱 전자기기</option>
           <option value="가방/지갑">👜 가방/지갑</option>
+          <option value="카드/신분증">💳 카드/신분증</option>
           <option value="의류">👕 의류</option>
           <option value="문구류">✏️ 문구류</option>
           <option value="스포츠용품">⚽ 스포츠용품</option>
@@ -725,6 +724,7 @@
             <input type="file" accept="image/*" id="pinp" onchange="handlePhoto(this)">
           </label>
         </div>
+        <div id="ai-status" style="display:none;font-size:12px;margin-top:8px;color:#5b4fcf"></div>
       </div>
       <div class="fg">
         <div class="fl">물품명 <span class="req">*</span></div>
@@ -734,10 +734,11 @@
       </div>
       <div class="fg">
         <div class="fl">카테고리 <span class="req">*</span></div>
-        <select class="fi" id="fcat">
+        <select class="fi" id="fcat" onchange="this.dataset.ai=''">
           <option value="">선택하세요</option>
           <option value="전자기기">📱 전자기기</option>
           <option value="가방/지갑">👜 가방/지갑</option>
+          <option value="카드/신분증">💳 카드/신분증</option>
           <option value="의류">👕 의류</option>
           <option value="문구류">✏️ 문구류</option>
           <option value="스포츠용품">⚽ 스포츠용품</option>
@@ -794,6 +795,33 @@
   </div>
 </div>
 
+<!-- 해결 도우미 선택 (매너온도) -->
+<div class="spick-ov" id="helper-ov" onclick="if(event.target===this)closeHelperPicker()">
+  <div class="spick-sheet">
+    <div class="spick-handle"></div>
+    <div class="spick-title">🤝 누구 덕분에 해결됐나요?</div>
+    <div id="helper-list"></div>
+    <div class="hp-row">
+      <input class="fi" id="helper-inp" placeholder="닉네임 직접 입력" maxlength="20"
+             onkeydown="if(event.key==='Enter')confirmHelperInput()">
+      <button class="map-search-btn" onclick="confirmHelperInput()">선택</button>
+    </div>
+    <div class="hp-skip" onclick="resolveWith(ST.helperPickId,null)">상대 없이 해결됨으로 바꾸기 (평가 안 함)</div>
+  </div>
+</div>
+
+<!-- 매너 평가 -->
+<div class="overlay" id="rev-ov" onclick="if(event.target===this)closeReview()">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-head">
+      <span class="sheet-title">🌡️ 매너 평가</span>
+      <button class="sheet-close" onclick="closeReview()">×</button>
+    </div>
+    <div class="sheet-body" id="rev-body"></div>
+  </div>
+</div>
+
 <!-- 상세 모달 -->
 <div class="overlay" id="det-ov" onclick="if(event.target===this)closeDet()">
   <div class="sheet" style="max-height:94vh">
@@ -826,7 +854,7 @@
     <div class="chat-prof-btn" id="chat-prof-btn" onclick="openProfileFromChat()">
       <div class="chat-av" id="chat-av">👤</div>
       <div>
-        <div class="chat-nm" id="chat-nm"></div>
+        <div class="chat-nm"><span id="chat-nm"></span><span id="chat-temp"></span></div>
         <div class="chat-sub" id="chat-sub"></div>
         <div class="chat-prof-hint">프로필 보기 ›</div>
       </div>
@@ -858,11 +886,6 @@
       <div class="menu-item-label">내 프로필</div>
       <span class="menu-item-arr">›</span>
     </div>
-    <div class="menu-item" onclick="closeMenu();openFriends()">
-      <div class="menu-item-icon">👥</div>
-      <div class="menu-item-label">친구</div>
-      <span class="menu-item-arr">›</span>
-    </div>
     <div class="menu-footer">
       <button class="menu-logout-btn" onclick="doLogout()">로그아웃</button>
     </div>
@@ -889,6 +912,7 @@
       <div class="prof-av-circle" id="prof-av"></div>
       <div class="prof-nm" id="prof-nm"></div>
       <div class="tp-box" id="prof-tier"></div>
+      <div class="manner" id="prof-manner"></div>
       <div class="prof-stats-row">
         <div class="prof-stat"><div class="prof-stat-n" id="prof-total">0</div><div class="prof-stat-l">전체 게시물</div></div>
         <div class="prof-stat"><div class="prof-stat-n" id="prof-lost">0</div><div class="prof-stat-l">분실물</div></div>
@@ -896,6 +920,13 @@
         <div class="prof-stat"><div class="prof-stat-n gr" id="prof-resolved">0</div><div class="prof-stat-l">해결됨</div></div>
       </div>
     </div>
+    <div id="prof-tiers-wrap" hidden>
+      <div class="prof-section-title">🏅 티어 목록</div>
+      <div class="tl-how">게시물 등록 +10 XP · 반환 완료 +50 XP · 감사 카드 +20 XP</div>
+      <div class="tl-list" id="prof-tiers"></div>
+    </div>
+    <div class="prof-section-title">🌡️ 받은 매너 평가</div>
+    <div class="mn-list" id="prof-reviews"></div>
     <div class="prof-section-title">📋 게시물 목록</div>
     <div class="prof-feed" id="prof-feed"></div>
   </div>
@@ -914,31 +945,6 @@
   </div>
 </div>
 
-<!-- 친구 목록 -->
-<div class="fr-scr" id="friends-scr">
-  <div class="chat-hd">
-    <button class="chat-back" onclick="backFr()">←</button>
-    <div style="flex:1"><div class="chat-nm">👥 친구</div></div>
-  </div>
-  <div class="fr-body">
-    <div class="fr-note" id="fr-note"></div>
-    <div class="fr-sec"><span>내 프로필</span></div>
-    <div id="fr-me"></div>
-    <div class="fr-sec"><span>내 친구</span><span id="fr-cnt"></span></div>
-    <div class="fr-search"><input id="fr-q" placeholder="🔍 친구 검색 (닉네임·티어·칭호)" oninput="frSearch(this.value)" maxlength="20"></div>
-    <div id="fr-list"></div>
-  </div>
-</div>
-
-<!-- 친구 상세 프로필 -->
-<div class="fr-scr" id="fprof-scr">
-  <div class="chat-hd">
-    <button class="chat-back" onclick="backFr()">←</button>
-    <div style="flex:1"><div class="chat-nm" id="fp-title">프로필</div></div>
-  </div>
-  <div class="fr-body" id="fp-body" style="padding:0 0 calc(24px + env(safe-area-inset-bottom,0px))"></div>
-</div>
-
 <script>
 // ══════════════════════════════════════════════════════════
 // Supabase 설정 — 아래 두 값을 본인 프로젝트 값으로 교체하세요
@@ -948,7 +954,7 @@ var SUPABASE_ANON = 'your-anon-key-here';
 // 데모 모드(?demo=1): 로그인·Supabase 없이 메모리 DB로 화면만 확인 (새로고침하면 초기화)
 var DEMO = /[?&]demo=1\b/.test(location.search);
 function makeDemoSb(){
-  var db={users:[],posts:[],chat_messages:[]}, seq=1;
+  var db={users:[],posts:[],chat_messages:[],reviews:[]}, seq=1;
   function Q(t){this.t=t;this.op='select';this.f=[];this.ord=null;this.want=false;this.one=false;}
   Q.prototype.select=function(){if(this.op!=='select')this.want=true;return this;};
   Q.prototype.insert=function(r){this.op='insert';this.rows=[].concat(r);return this;};
@@ -1007,6 +1013,7 @@ var sb = DEMO ? makeDemoSb() : supabase.createClient(SUPABASE_URL, SUPABASE_ANON
     img        text,
     coords     jsonb,
     univ       text not null,
+    resolved_with text,          -- 해결을 도와준 상대 닉네임 (매너온도)
     created_at timestamptz default now()
   );
 
@@ -1019,9 +1026,27 @@ var sb = DEMO ? makeDemoSb() : supabase.createClient(SUPABASE_URL, SUPABASE_ANON
     created_at timestamptz default now()
   );
 
+  -- 매너 평가: 해결된 게시물에서 서로 남기는 평가. 매너온도는 이 표로 계산 (따로 저장하지 않음)
+  create table reviews (
+    id         bigint generated always as identity primary key,
+    post_id    bigint,
+    from_user  text not null,
+    to_user    text not null,
+    good_tags  text[] default '{}',
+    bad_tags   text[] default '{}',
+    comment    text,
+    returned   boolean default false,   -- to_user 가 물건을 찾아준 사람인지
+    created_at timestamptz default now(),
+    unique (post_id, from_user, to_user)
+  );
+
   alter table users         disable row level security;
   alter table posts         disable row level security;
   alter table chat_messages disable row level security;
+  alter table reviews       disable row level security;
+
+  -- 이미 posts 테이블을 만든 경우에는 컬럼만 추가:
+  --   alter table posts add column resolved_with text;
 
   -- Realtime 활성화:
   -- Dashboard › Database › Replication › Source 탭에서 chat_messages 테이블 토글 ON
@@ -1090,20 +1115,36 @@ function doLogout(){
   document.getElementById('li-pw').value='';
 }
 
-var CE={'전자기기':'📱','가방/지갑':'👜','의류':'👕','문구류':'✏️','스포츠용품':'⚽','기타':'📦'};
-var ST={posts:[],me:'',tab:'all',sf:'active',cf:'',q:'',regType:'lost',photoUrl:null,chats:{},univ:'',editId:null,statusPickId:null,mapCoords:null};
+var CE={'전자기기':'📱','가방/지갑':'👜','카드/신분증':'💳','의류':'👕','문구류':'✏️','스포츠용품':'⚽','기타':'📦'};
+var ST={posts:[],me:'',tab:'all',sf:'active',cf:'',q:'',regType:'lost',photoUrl:null,chats:{},univ:'',editId:null,statusPickId:null,mapCoords:null,
+        reviews:[],helperPickId:null,rev:null};
 var _viewedPosts=new Set();
 var _chatChannel=null;
 var SAMPLE_AUTHORS=['kim_sw','inchang_helper','park_2023','lee_campus','choi_yun','shin_helper','jung_h'];
+// 해결된 샘플 게시물(후드)을 찾아준 사람 — 데모에서는 데모사용자가 직접 평가 흐름을 볼 수 있게 본인으로
+var SAMPLE_HELPER=DEMO?'데모사용자':'shin_helper';
+var SAMPLE_REVIEWS=[
+  {from:'choi_yun',to:SAMPLE_HELPER,post:'파란색 나이키 후드 분실',returned:true,
+   good:['답장이 빨라요','물건을 깨끗하게 보관해줬어요','친절하고 매너가 좋아요'],comment:'라커룸에 두고 간 후드 찾아주셔서 정말 감사해요!'},
+  {from:'kim_sw',to:'inchang_helper',returned:true,good:['답장이 빨라요','약속 시간을 잘 지켜요','친절하고 매너가 좋아요'],comment:'도서관 앞에서 바로 건네주셨어요 👍'},
+  {from:'park_2023',to:'inchang_helper',returned:true,good:['약속 시간을 잘 지켜요','물건을 깨끗하게 보관해줬어요']},
+  {from:'lee_campus',to:'inchang_helper',returned:true,good:['답장이 빨라요','약속 시간을 잘 지켜요','물건을 깨끗하게 보관해줬어요','위치를 정확히 알려줬어요'],comment:'공학관 키링 주인이에요. 감사합니다!'},
+  {from:'jung_h',to:'inchang_helper',returned:true,good:['친절하고 매너가 좋아요','답장이 빨라요']},
+  {from:'kim_sw',to:'shin_helper',returned:true,good:['위치를 정확히 알려줬어요','답장이 빨라요']},
+  {from:'park_2023',to:'shin_helper',returned:true,good:['친절하고 매너가 좋아요','약속 시간을 잘 지켜요'],comment:'학생증 찾아주셔서 감사해요 🙏'},
+  {from:'inchang_helper',to:'lee_campus',good:['답장이 빨라요','친절하고 매너가 좋아요']},
+  {from:'inchang_helper',to:'kim_sw',good:['약속 시간을 잘 지켜요']},
+  {from:'shin_helper',to:'jung_h',bad:['약속을 지키지 않았어요']},
+];
 
 var SAMPLE=[
   {type:'lost',title:'검정 에어팟 케이스 분실',category:'전자기기',location:'중앙도서관 3층 열람실',date:'2026-06-10',author:'kim_sw',desc:'자리 옮기다 잃어버렸어요. 흰색 스티커가 붙은 검정 에어팟 케이스입니다.',status:'active',likes:[],views:47,img:'images/airpods-case.jpg',coords:null},
   {type:'found',title:'바나나 인형 키링 습득',category:'기타',location:'공학관 엘리베이터 앞',date:'2026-05-11',author:'inchang_helper',desc:'공학관 1층 엘리베이터 앞에서 발견했습니다. 노란 얼굴에 하얀 눈썹이 특징입니다.',status:'active',likes:[],views:310,img:'images/banana-keyring.jpg',coords:{lat:37.2112,lng:126.9742,addr:'수원대학교 공학관',detail:'1층 엘리베이터 앞'}},
-  {type:'lost',title:'학생증 분실 (홍길동)',category:'가방/지갑',location:'학생식당 1층',date:'2026-06-08',author:'park_2023',desc:'점심 먹고 학생증이 없어졌어요. 발견하시면 연락 주세요.',status:'active',likes:[],views:22,img:'images/student-id.jpg',coords:null},
+  {type:'lost',title:'학생증 분실 (홍길동)',category:'카드/신분증',location:'학생식당 1층',date:'2026-06-08',author:'park_2023',desc:'점심 먹고 학생증이 없어졌어요. 발견하시면 연락 주세요.',status:'active',likes:[],views:22,img:'images/student-id.jpg',coords:null},
   {type:'found',title:'검정 우산 습득',category:'기타',location:'본관 1층 우산꽂이 옆',date:'2026-06-12',author:'lee_campus',desc:'본관 1층 입구 검정 우산. 손잡이에 노란 고무줄이 묶여 있어요.',status:'active',likes:[],views:88,img:'images/umbrella.jpg',coords:{lat:37.2098,lng:126.9770,addr:'수원대학교 본관',detail:'1층 우산꽂이 옆'}},
-  {type:'lost',title:'파란색 나이키 후드 분실',category:'의류',location:'체육관 라커룸',date:'2026-06-05',author:'choi_yun',desc:'파란색 나이키 후드 왼쪽 소매 안쪽에 볼펜 자국 있어요.',status:'resolved',likes:[],views:15,img:null,coords:null},
-  {type:'found',title:'갤럭시 이어버즈 베이지색 습득',category:'전자기기',location:'소프트웨어관 302호',date:'2026-06-13',author:'shin_helper',desc:'의자 아래에서 갤럭시 이어버즈 베이지색 케이스를 발견했습니다.',status:'active',likes:[],views:134,img:'images/galaxy-buds.jpg',coords:{lat:37.2086,lng:126.9778,addr:'수원대학교 소프트웨어관',detail:'302호'}},
-  {type:'lost',title:'연두색 텀블러 분실',category:'기타',location:'스타벅스 교내점',date:'2026-06-14',author:'jung_h',desc:'테이블에 연두색 텀블러를 두고 왔습니다. 안쪽에 흠집이 있어요.',status:'active',likes:[],views:31,img:'images/tumbler.jpg',coords:null},
+  {type:'lost',title:'파란색 나이키 후드 분실',category:'의류',location:'체육관 라커룸',date:'2026-06-05',author:'choi_yun',desc:'파란색 나이키 후드 왼쪽 소매 안쪽에 볼펜 자국 있어요.',status:'resolved',likes:[],views:15,img:null,coords:null,resolved_with:SAMPLE_HELPER},
+  {type:'found',title:'갤럭시 버즈',category:'전자기기',location:'소프트웨어관 302호',date:'2026-06-13',author:'shin_helper',desc:'의자 아래에서 갤럭시 이어버즈 베이지색 케이스를 발견했습니다.',status:'active',likes:[],views:134,img:'images/galaxy-buds.jpg',coords:{lat:37.2086,lng:126.9778,addr:'수원대학교 소프트웨어관',detail:'302호'}},
+  {type:'lost',title:'연두색 텀블러 분실',category:'기타',location:'글경708호',date:'2026-06-14',author:'jung_h',desc:'테이블에 연두색 텀블러를 두고 왔습니다. 안쪽에 흠집이 있어요.',status:'active',likes:[],views:31,img:'images/tumbler.jpg',coords:null},
 ];
 
 // ── 대학 목록 ──
@@ -1240,15 +1281,189 @@ async function initData(){
     var seeds=SAMPLE.map(function(p){
       return {type:p.type,title:p.title,category:p.category,location:p.location,
               date:p.date,author:p.author,desc:p.desc,status:p.status,
-              likes:[],views:p.views,img:p.img||null,coords:p.coords||null,univ:ST.univ};
+              likes:[],views:p.views,img:p.img||null,coords:p.coords||null,univ:ST.univ,
+              resolved_with:p.resolved_with||null};
     });
     var ins=await sb.from('posts').insert(seeds).select();
     ST.posts=ins.data||[];
+    await seedReviews();
     if(DEMO)await seedDemoChat();
   } else {
     ST.posts=res.data;
   }
+  await loadReviews();
   await loadMyChats();
+}
+
+// ── 매너온도 ──
+// 처음 36.5°C, 받은 평가(reviews)로만 계산. 좋은 항목 +0.1, 아쉬운 항목 −0.3, 물건을 찾아줬고 아쉬운 점이 없으면 +0.5
+var MANNER={base:36.5,good:0.1,bad:0.3,returned:0.5,min:0,max:99};
+var GOOD_TAGS=['답장이 빨라요','약속 시간을 잘 지켜요','물건을 깨끗하게 보관해줬어요','위치를 정확히 알려줬어요','친절하고 매너가 좋아요'];
+var BAD_TAGS=['연락이 끊겼어요','약속을 지키지 않았어요','불친절했어요','물건 상태가 설명과 달랐어요'];
+// 온도 단계별 칭호 (36.5°C 미만은 칭호 없음)
+var TIERS=[[80,'🌋','찾았대 용광로'],[65,'☀️','걸어다니는 햇살'],[55,'🌡️','인간 온풍기'],[48,'🔥','캠퍼스 난로'],
+           [42,'🧤','손난로 같은 사람'],[38,'☕','따뜻한 선배'],[36.5,'🌱','갓 입학한 새내기']];
+
+async function loadReviews(){
+  var res=await sb.from('reviews').select('*').order('id',{ascending:false});
+  ST.reviews=res.error?[]:(res.data||[]); // reviews 테이블이 아직 없어도 앱은 그대로 동작
+}
+async function seedReviews(){
+  var rows=SAMPLE_REVIEWS.map(function(r){
+    var p=r.post&&ST.posts.find(function(x){return x.title===r.post;});
+    return {post_id:p?p.id:null,from_user:r.from,to_user:r.to,good_tags:r.good||[],bad_tags:r.bad||[],
+            comment:r.comment||null,returned:!!r.returned};
+  });
+  await sb.from('reviews').insert(rows);
+}
+function mannerOf(nick){
+  var rs=ST.reviews.filter(function(r){return r.to_user===nick;});
+  var t=MANNER.base,finds=0,good={},bad={};
+  rs.forEach(function(r){
+    var g=Array.isArray(r.good_tags)?r.good_tags:[], b=Array.isArray(r.bad_tags)?r.bad_tags:[];
+    t+=g.length*MANNER.good-b.length*MANNER.bad;
+    if(r.returned&&!b.length){t+=MANNER.returned;finds++;}
+    g.forEach(function(x){good[x]=(good[x]||0)+1;});
+    b.forEach(function(x){bad[x]=(bad[x]||0)+1;});
+  });
+  t=Math.round(Math.min(MANNER.max,Math.max(MANNER.min,t))*10)/10;
+  return {temp:t,count:rs.length,finds:finds,good:good,bad:bad,reviews:rs};
+}
+function tempLook(t){
+  if(t<30)  return {c:'#3B6FD4',f:'😥'};
+  if(t<36.5)return {c:'#3A8FC9',f:'🙂'};
+  if(t<42)  return {c:'#2E9E6B',f:'😊'};
+  if(t<55)  return {c:'#C9820F',f:'😄'};
+  if(t<65)  return {c:'#E0682A',f:'😆'};
+  return {c:'#E2483D',f:'🔥'};
+}
+function tierOf(t){for(var i=0;i<TIERS.length;i++)if(t>=TIERS[i][0])return TIERS[i];return null;}
+function tempChip(nick){
+  var m=mannerOf(nick);
+  return '<span class="temp-chip" style="color:'+tempLook(m.temp).c+'">🌡️ '+m.temp.toFixed(1)+'°</span>';
+}
+function hasReviewed(pid,from,to){
+  return ST.reviews.some(function(r){return r.post_id===pid&&r.from_user===from&&r.to_user===to;});
+}
+// 해결된 거래에서 내가 아직 평가하지 않은 상대 (없으면 null)
+function pendingReviewTarget(p){
+  if(p.status!=='resolved'||!p.resolved_with)return null;
+  var to=p.author===ST.me?p.resolved_with:(p.resolved_with===ST.me?p.author:null);
+  return to&&!hasReviewed(p.id,ST.me,to)?to:null;
+}
+function renderManner(nick){
+  var m=mannerOf(nick),lk=tempLook(m.temp),tier=tierOf(m.temp),mine=nick===ST.me;
+  document.getElementById('prof-manner').innerHTML=
+    '<div class="mn-top"><span class="mn-lbl">매너온도</span>'
+      +'<span class="mn-val" style="color:'+lk.c+'">'+m.temp.toFixed(1)+'°C '+lk.f+'</span></div>'
+    +'<div class="mn-bar"><div class="mn-fill" style="width:'+(m.temp/MANNER.max*100)+'%;background:'+lk.c+'"></div></div>'
+    +'<div class="mn-sub">'+(tier?'<span class="mn-tier">'+tier[1]+' '+tier[2]+'</span> · ':'')
+      +'찾아준 물건 '+m.finds+'개 · 받은 평가 '+m.count+'개</div>';
+  var rows=Object.keys(m.good).sort(function(a,b){return m.good[b]-m.good[a];}).map(function(k){
+    return '<div class="mn-row"><span>👍 '+esc(k)+'</span><b>'+m.good[k]+'</b></div>';
+  });
+  // 아쉬운 평가 항목과 그 후기는 본인에게만 보여줌
+  if(mine)rows=rows.concat(Object.keys(m.bad).map(function(k){
+    return '<div class="mn-row bad"><span>👎 '+esc(k)+'</span><b>'+m.bad[k]+'</b></div>';
+  }));
+  var cmts=m.reviews.filter(function(r){
+    return r.comment&&(mine||!(Array.isArray(r.bad_tags)&&r.bad_tags.length));
+  }).slice(0,3).map(function(r){
+    return '<div class="mn-cmt"><div class="mn-cmt-by">@'+esc(r.from_user)+'</div>'+esc(r.comment)+'</div>';
+  });
+  document.getElementById('prof-reviews').innerHTML=
+    (rows.length||cmts.length?rows.join('')+cmts.join(''):'<div class="mn-empty">아직 받은 매너 평가가 없어요</div>')
+    +'<div class="mn-note">처음 온도는 36.5°C예요. 물건을 주고받은 뒤 받은 평가로 오르거나 내려가요.'
+      +(mine&&Object.keys(m.bad).length?' 👎 항목은 나에게만 보여요.':'')+'</div>';
+}
+
+// 해결됨으로 바꿀 때: 도와준 사람 고르기 → 매너 평가
+async function openHelperPicker(id){
+  ST.helperPickId=id;
+  var p=ST.posts.find(function(x){return x.id===id;});if(!p)return;
+  document.getElementById('helper-inp').value='';
+  var res=await sb.from('chat_messages').select('from_user').eq('post_id',id);
+  var seen={},nms=[];
+  (res.data||[]).forEach(function(m){
+    if(m.from_user!==p.author&&!seen[m.from_user]){seen[m.from_user]=1;nms.push(m.from_user);}
+  });
+  document.getElementById('helper-list').innerHTML=nms.length
+    ?nms.map(function(n){
+        return '<div class="spick-opt" data-nm="'+esc(n)+'" onclick="resolveWith(ST.helperPickId,this.dataset.nm)">💬 @'+esc(n)+tempChip(n)+'</div>';
+      }).join('')
+    :'<div class="hp-empty">이 글에서 채팅한 사람이 없어요. 닉네임을 직접 입력해 주세요.</div>';
+  document.getElementById('helper-ov').classList.add('on');
+}
+function closeHelperPicker(){document.getElementById('helper-ov').classList.remove('on');}
+async function confirmHelperInput(){
+  var nm=document.getElementById('helper-inp').value.trim().replace(/^@/,'');
+  if(!nm){toast('닉네임을 입력해주세요');return;}
+  if(nm===ST.me){toast('본인은 고를 수 없어요');return;}
+  var ok=SAMPLE_AUTHORS.indexOf(nm)>-1;
+  if(!ok){var r=await sb.from('users').select('id').eq('nickname',nm).maybeSingle();ok=!!r.data;}
+  if(!ok){toast('가입하지 않은 닉네임이에요');return;}
+  resolveWith(ST.helperPickId,nm);
+}
+async function resolveWith(id,nick){
+  closeHelperPicker();
+  var p=ST.posts.find(function(x){return x.id===id;});if(!p)return;
+  p.status='resolved';p.resolved_with=nick||null;
+  await sb.from('posts').update({status:'resolved',resolved_with:p.resolved_with}).eq('id',id);
+  await openDet(id);
+  toast('해결됨으로 변경됐습니다 ✅');
+  if(nick&&!hasReviewed(id,ST.me,nick))openReview(id,nick);
+}
+
+function openReview(pid,to){
+  ST.rev={pid:pid,to:to,side:null,tags:[],cmt:''};
+  renderReview();
+  document.getElementById('rev-ov').classList.add('on');
+}
+function closeReview(){document.getElementById('rev-ov').classList.remove('on');ST.rev=null;}
+function keepRevCmt(){var el=document.getElementById('rev-cmt');if(el&&ST.rev)ST.rev.cmt=el.value;}
+function setRevSide(s){keepRevCmt();if(ST.rev.side!==s){ST.rev.side=s;ST.rev.tags=[];}renderReview();}
+function toggleRevTag(i){
+  keepRevCmt();
+  var t=(ST.rev.side==='good'?GOOD_TAGS:BAD_TAGS)[i],k=ST.rev.tags.indexOf(t);
+  if(k>-1)ST.rev.tags.splice(k,1); else ST.rev.tags.push(t);
+  renderReview();
+}
+function renderReview(){
+  var R=ST.rev,tags=R.side==='good'?GOOD_TAGS:R.side==='bad'?BAD_TAGS:[];
+  document.getElementById('rev-body').innerHTML=
+    '<div class="fl" style="font-size:15px;margin-bottom:12px">@'+esc(R.to)+' 님과의 거래는 어땠나요?</div>'
+    +'<div class="rev-side">'
+      +'<button class="rev-side-btn good'+(R.side==='good'?' on':'')+'" onclick="setRevSide(\'good\')"><div class="te">😊</div>좋았어요</button>'
+      +'<button class="rev-side-btn bad'+(R.side==='bad'?' on':'')+'" onclick="setRevSide(\'bad\')"><div class="te">😞</div>아쉬웠어요</button>'
+    +'</div>'
+    +(R.side
+      ?'<div class="fl">'+(R.side==='good'?'어떤 점이 좋았나요?':'어떤 점이 아쉬웠나요?')
+          +' <span class="req">*</span><span style="font-size:11px;font-weight:400;color:var(--sub)">여러 개 고를 수 있어요</span></div>'
+        +'<div class="rev-tags">'+tags.map(function(t,i){
+            var on=R.tags.indexOf(t)>-1;
+            return '<button class="rev-tag'+(on?' on':'')+'" onclick="toggleRevTag('+i+')">'+(on?'☑️ ':'⬜ ')+t+'</button>';
+          }).join('')+'</div>'
+        +'<div class="fg"><div class="fl">한 줄 후기 <span style="font-size:11px;font-weight:400;color:var(--sub)">(선택)</span></div>'
+          +'<textarea class="fi" id="rev-cmt" rows="2" maxlength="100" placeholder="고마운 마음이나 아쉬웠던 점을 남겨주세요">'+esc(R.cmt)+'</textarea></div>'
+        +'<button class="sbtn" onclick="submitReview()">평가 보내기</button>'
+      :'');
+}
+async function submitReview(){
+  var R=ST.rev;if(!R)return;
+  if(!R.tags.length){toast('항목을 하나 이상 골라주세요');return;}
+  var p=ST.posts.find(function(x){return x.id===R.pid;});if(!p)return;
+  if(hasReviewed(p.id,ST.me,R.to)){closeReview();toast('이미 평가를 남겼어요');return;}
+  var finder=p.type==='lost'?p.resolved_with:p.author; // 분실물이면 도와준 사람, 습득물이면 글쓴이가 찾아준 사람
+  var cmt=document.getElementById('rev-cmt').value.trim();
+  var row={post_id:p.id,from_user:ST.me,to_user:R.to,
+           good_tags:R.side==='good'?R.tags:[],bad_tags:R.side==='bad'?R.tags:[],
+           comment:cmt||null,returned:R.to===finder};
+  var ins=await sb.from('reviews').insert(row).select().single();
+  if(ins.error){toast('평가를 저장하지 못했어요');return;}
+  ST.reviews.unshift(ins.data);
+  closeReview();
+  toast('@'+R.to+' 님에게 매너 평가를 보냈어요 🌡️');
+  if(document.getElementById('det-ov').classList.contains('on'))openDet(p.id);
 }
 
 // 데모 전용: 해결된 샘플 게시물에 내 채팅 기록을 미리 넣어 매너 평가 흐름을 바로 확인할 수 있게 함
@@ -1316,7 +1531,7 @@ function render(){
     var ce=CE[p.category]||'📦';
     var tc=p.type==='lost'?'b-lost':'b-found';
     var tl=p.type==='lost'?'분실물':'습득물';
-    var imgH=p.img?'<img src="'+p.img+'" alt="">':'';
+    var imgH=p.img?photoImg(p.img):'';
     var likes=Array.isArray(p.likes)?p.likes:[];
     var liked=likes.indexOf(ST.me)>-1;
     var lk=liked?'❤️':'🤍';
@@ -1387,7 +1602,7 @@ async function openDet(id){
   }
   var ce=CE[p.category]||'📦';
   var isMine=p.author===ST.me;
-  var imgH=p.img?'<img src="'+p.img+'" alt="">':'';
+  var imgH=p.img?photoImg(p.img):'';
   var locLbl=p.type==='lost'?'분실 위치':'습득 위치';
   var likes=Array.isArray(p.likes)?p.likes:[];
   var liked=likes.indexOf(ST.me)>-1;
@@ -1401,18 +1616,23 @@ async function openDet(id){
       +'<button class="act-btn" onclick="openStatusPicker('+id+')"><span class="act-ico">📋</span>상태변경</button>'
       +'<button class="act-btn act-del" onclick="deletePost('+id+')"><span class="act-ico">🗑</span>삭제</button>'
     :likeBtn+'<button class="act-chat-btn" onclick="doChat('+id+')">💬 채팅하기</button>';
+  var revTo=pendingReviewTarget(p);
   document.getElementById('det-body').innerHTML=
-    '<div class="det-img">'+imgH+(p.img?'':ce)+'</div>'
+    '<div class="det-img'+(p.img?' has-ph':'')+'">'+imgH+(p.img?'':ce)+'</div>'
     +'<div class="det-body">'
       +'<div class="badges"><span class="badge '+(p.type==='lost'?'b-lost':'b-found')+'">'+(p.type==='lost'?'분실물':'습득물')+'</span>'
         +'<span class="badge b-cat">'+ce+' '+p.category+'</span>'+chip(p)+'</div>'
       +'<div class="det-title">'+p.title+'</div>'
-      +'<div class="det-meta">👤 <span class="author-link" onclick="openProfile(\''+p.author+'\')">@'+p.author+'</span>'+tierBadge(p.author)+' &nbsp;|&nbsp; 📅 '+fd(p.date)+' &nbsp;|&nbsp; 👁 '+p.views+'회</div>'
+      +'<div class="det-meta">👤 <span class="author-link" onclick="openProfile(\''+p.author+'\')">@'+p.author+'</span>'+tempChip(p.author)+tierBadge(p.author)+' &nbsp;|&nbsp; 📅 '+fd(p.date)+' &nbsp;|&nbsp; 👁 '+p.views+'회</div>'
       +(p.desc?'<div class="det-desc">'+p.desc+'</div>':'')
       +'<div class="ibox loc">📍 '+locLbl+': <strong>'+p.location+'</strong></div>'
       +'<div class="ibox dt">📅 날짜: <strong>'+fd(p.date)+'</strong></div>'
+      +(p.status==='resolved'&&p.resolved_with
+        ?'<div class="ibox helper">🤝 <span class="author-link" data-nm="'+esc(p.resolved_with)+'" onclick="openProfile(this.dataset.nm)">@'+esc(p.resolved_with)+'</span>'
+          +tempChip(p.resolved_with)+'&nbsp;님과 해결됐어요</div>':'')
       +(p.coords?'<div class="det-map-wrap"><div class="det-map-addr">📍 '+esc(p.coords.addr)+(p.coords.detail?'<br>🏢 '+esc(p.coords.detail):'')+'</div><div id="det-map"></div></div>':'')
       +thanksRowHtml(p)
+      +(revTo?'<div class="det-actions" style="border-top:none;padding-top:0"><button class="rev-cta" data-nm="'+esc(revTo)+'" onclick="openReview('+id+',this.dataset.nm)">⭐ @'+esc(revTo)+' 님에게 매너 평가 남기기</button></div>':'')
       +'<div class="det-actions">'+actBtns+'</div>'
     +'</div>';
   document.getElementById('det-ov').classList.add('on');
@@ -1429,7 +1649,7 @@ function openMenu(){
   var s=ST.me||'';
   document.getElementById('menu-av').textContent=s.charAt(0).toUpperCase();
   document.getElementById('menu-nm').textContent=s;
-  document.getElementById('menu-univ').textContent='📍 '+(ST.univ||'');
+  document.getElementById('menu-univ').textContent='📍 '+(ST.univ||'')+' · 🌡️ 매너온도 '+mannerOf(s).temp.toFixed(1)+'°C';
   document.getElementById('menu-tier').innerHTML=tierBadge(s,true);
   document.getElementById('menu-ov').classList.add('on');
   document.querySelector('.fab-wrap').style.display='none';
@@ -1491,14 +1711,14 @@ function updateChatCnt(){
   if(el){el.textContent=cnt;el.classList.toggle('on',cnt>0);}
 }
 
-// ── 티어 · XP · 친구 (데모) ──────────────────────────────────────────
-// 모든 데이터는 브라우저 메모리(친구 5명만 localStorage 테스트 키)에만 저장 — Supabase에는 쓰지 않음.
+// ── 게임형 티어 · XP (데모) — 원석(0644c27)에서 티어 부분만 가져옴. 친구 기능은 제외 ──────────────────────────────────────────
+// 모든 데이터는 브라우저 메모리에만 저장 — Supabase에는 쓰지 않음.
 // 실서비스 설계 메모:
 //  · XP는 서버(RPC/트리거)에서만 지급 — 클라이언트가 직접 XP를 쓰지 못하게 RLS로 막기
 //  · 반환 완료는 게시물 작성자와 상대 "양쪽"이 모두 확인했을 때만 인정 (returns 테이블, 양쪽 confirmed_at)
 //  · (post_id, 두 사용자) 조합당 1회만 지급(unique 제약) + 본인 게시물/자기 자신 대상 금지 + 일일 지급 상한
 //  · 신고/이의 제기 시 XP 회수 가능하도록 xp_events 원장(ledger)을 남기고 합산
-var TIERS=[
+var XP_TIERS=[
   {n:'단서 새싹',s:'새싹',ic:'🌱',min:0,max:99,ttl:'첫 단서를 막 발견한 새내기'},
   {n:'흔적 추적자',s:'추적자',ic:'🔍',min:100,max:299,ttl:'작은 흔적도 놓치지 않는 눈'},
   {n:'캠퍼스 길잡이',s:'길잡이',ic:'🧭',min:300,max:599,ttl:'캠퍼스 구석구석을 아는 안내자'},
@@ -1508,15 +1728,13 @@ var TIERS=[
 var XP_REWARD={ret:50,card:20,post:10};
 var SAMPLE_XP={kim_sw:120,inchang_helper:420,park_2023:40,lee_campus:700,choi_yun:85,shin_helper:1120,jung_h:260};
 var PROF={};          // 닉네임 → 프로필(메모리)
-var FRIENDS=[];       // 가상 친구 5명 (데모 전용)
 var THANKS=[];        // 보낸 감사 카드 기록 (중복 방지)
 var TH_CARDS=[{k:'thanks',e:'🙏',t:'고마워요'},{k:'star',e:'⭐',t:'최고예요'},{k:'found',e:'🎉',t:'덕분에 찾았어요'}];
 var TH={pid:null,cands:[],to:null,card:null};
-var FR_Q='';
 
-function tierIdx(xp){for(var i=TIERS.length-1;i>=0;i--){if(xp>=TIERS[i].min)return i;}return 0;}
+function tierIdx(xp){for(var i=XP_TIERS.length-1;i>=0;i--){if(xp>=XP_TIERS[i].min)return i;}return 0;}
 function xpInfo(xp){
-  var i=tierIdx(xp),t=TIERS[i],nx=TIERS[i+1]||null;
+  var i=tierIdx(xp),t=XP_TIERS[i],nx=XP_TIERS[i+1]||null;
   return{i:i,t:t,nx:nx,pct:nx?Math.round((xp-t.min)/(nx.min-t.min)*100):100,left:nx?nx.min-xp:0};
 }
 function fmtXp(n){return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
@@ -1531,14 +1749,14 @@ function profOf(nick){
 }
 // 엠블럼 (size: sm | md | lg)
 function emblem(i,size,pips){
-  var t=TIERS[i],p='';
-  if(pips){p='<div class="te-pips">';for(var k=0;k<5;k++)p+='<b'+(k<=i?' class="on"':'')+'></b>';p+='</div>';}
-  var e='<div class="te '+size+' t'+(i+1)+'"><div class="te-hex"></div><div class="te-core">'+t.ic+'</div></div>';
-  return pips?'<div class="te-wrap t'+(i+1)+'">'+e+p+'</div>':e;
+  var t=XP_TIERS[i],p='';
+  if(pips){p='<div class="xte-pips">';for(var k=0;k<5;k++)p+='<b'+(k<=i?' class="on"':'')+'></b>';p+='</div>';}
+  var e='<div class="xte '+size+' t'+(i+1)+'"><div class="xte-hex"></div><div class="xte-core">'+t.ic+'</div></div>';
+  return pips?'<div class="xte-wrap t'+(i+1)+'">'+e+p+'</div>':e;
 }
 // 닉네임 옆 작은 배지
 function tierBadge(nick,full){
-  var i=tierIdx(profOf(nick).xp),t=TIERS[i];
+  var i=tierIdx(profOf(nick).xp),t=XP_TIERS[i];
   return'<span class="tb t'+(i+1)+(full?' full':'')+'" title="'+esc(t.n)+'"><i>'+t.ic+'</i>'+esc(full?t.n:t.s)+'</span>';
 }
 function xpBarHtml(xp){
@@ -1565,157 +1783,7 @@ function awardXp(nick,amount,text,kind){
   if(p.acts.length>8)p.acts.length=8;
   return tierIdx(p.xp)>before;
 }
-function upMsg(nick){var t=TIERS[tierIdx(profOf(nick).xp)];return'🎉 티어 승급! '+t.ic+' '+t.n;}
-
-// ── 가상 친구 5명 (닉네임은 최초 1회 무작위 생성 후 저장) ──
-var FR_ADJ=['고요한','엉뚱한','느긋한','든든한','수줍은','씩씩한','다정한','부지런한','졸린','꼼꼼한','용감한','포근한'];
-var FR_NOUN=[['고양이','🐱'],['다람쥐','🐿️'],['여우','🦊'],['수달','🦦'],['부엉이','🦉'],['판다','🐼'],['토끼','🐰'],['고래','🐳'],['펭귄','🐧'],['오리','🦆'],['곰','🐻'],['햄스터','🐹']];
-var FR_ITEM=['검정 우산','에어팟 케이스','학생증','텀블러','보조배터리','후드집업','노트북 충전기','체크카드','안경','열쇠'];
-var FR_BIO=[
-  ['아직 배우는 중이에요. 잘 부탁해요! 🌱','처음 써봐요, 천천히 찾아볼게요','일단 시작! 오늘도 한 걸음'],
-  ['잃어버린 건 꼭 돌려주고 싶어요','눈썰미 하나는 자신 있어요 🔍','작은 단서도 놓치지 않아요'],
-  ['공대 건물은 눈 감고도 다녀요','도서관·학식·체육관 순회 중 🧭','캠퍼스 지름길은 제가 알아요'],
-  ['주인 찾아줄 때까지 포기 안 해요','분실물 센터 단골이에요 🛡️','돌려주는 순간이 제일 뿌듯해요'],
-  ['전설은 시작도 하기 전에 정해졌다 👑','찾았대의 터줏대감입니다','못 찾는 물건은 없어요, 아직은요']
-];
-var FR_RANGE=[[25,90],[110,290],[310,590],[610,990],[1010,1500]];
-function frPick(a){return a[Math.floor(Math.random()*a.length)];}
-function frShuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
-function makeFriends(){
-  var order=frShuffle([0,1,2,3,4]),used={},out=[];
-  var taken=[ST.me].concat(Object.keys(SAMPLE_XP));
-  order.forEach(function(ti,idx){
-    var nick,noun,guard=0;
-    do{noun=frPick(FR_NOUN);nick=frPick(FR_ADJ)+noun[0];guard++;}while((used[nick]||taken.indexOf(nick)>-1)&&guard<80);
-    used[nick]=1;
-    var r=FR_RANGE[ti],target=r[0]+Math.floor(Math.random()*(r[1]-r[0]+1));
-    var ret=Math.floor(target*0.55/XP_REWARD.ret);
-    var cards=Math.floor((target-ret*XP_REWARD.ret)*0.5/XP_REWARD.card);
-    var posts=Math.floor((target-ret*XP_REWARD.ret-cards*XP_REWARD.card)/XP_REWARD.post);
-    var xp=ret*XP_REWARD.ret+cards*XP_REWARD.card+posts*XP_REWARD.post;
-    var when=['오늘','어제','2일 전','4일 전','지난주'],items=frShuffle(FR_ITEM),acts=[];
-    for(var k=0;k<Math.min(ret,2);k++)acts.push({x:'"'+items[k]+'" 반환 완료',xp:XP_REWARD.ret});
-    if(cards>0)acts.push({x:'감사 카드를 받았어요 💌',xp:XP_REWARD.card});
-    if(posts>0)acts.push({x:'"'+items[3]+'" 게시물 등록',xp:XP_REWARD.post});
-    if(!acts.length)acts.push({x:'찾았대에 가입했어요 🌱',xp:0});
-    acts=acts.slice(0,4).map(function(a,n){return{t:when[n],x:a.x,xp:a.xp};});
-    out.push({id:'f'+idx,nick:nick,avatar:noun[1],xp:xp,returns:ret,cards:cards,bio:frPick(FR_BIO[ti]),acts:acts});
-  });
-  return out;
-}
-function frValid(a){
-  if(!Array.isArray(a)||a.length!==5)return false;
-  var seen={},nicks={};
-  for(var i=0;i<5;i++){
-    var f=a[i];
-    if(!f||typeof f.nick!=='string'||typeof f.xp!=='number'||!Array.isArray(f.acts))return false;
-    var t=tierIdx(f.xp);if(seen[t]||nicks[f.nick])return false;
-    seen[t]=1;nicks[f.nick]=1;
-  }
-  return true;
-}
-function loadFriends(){
-  var KEY='cjd2_demo_friends_v1',list=null;
-  try{var raw=localStorage.getItem(KEY);if(raw){var a=JSON.parse(raw);if(frValid(a))list=a;}}catch(e){}
-  if(!list){
-    list=makeFriends();
-    try{localStorage.setItem(KEY,JSON.stringify(list));}catch(e){}
-  }
-  FRIENDS=list.map(function(f,i){return{id:'f'+i,nick:f.nick,avatar:f.avatar,xp:f.xp,returns:f.returns,cards:f.cards,bio:f.bio,acts:f.acts,virtual:true,me:false};});
-  FRIENDS.forEach(function(f){PROF[f.nick]=f;});
-}
-
-// ── 친구 화면 ──
-function frCardHtml(p,key){
-  var f=xpInfo(p.xp);
-  return'<div class="fr-card t'+(f.i+1)+(p.me?' me':'')+'" onclick="openFriend(\''+key+'\')">'
-    +'<div class="fr-av-wrap"><div class="fr-av">'+esc(p.avatar||'🙂')+'</div>'+emblem(f.i,'sm',false)+'</div>'
-    +'<div class="fr-info">'
-      +'<div class="fr-nm">'+esc(p.nick)+(p.me?'<span class="fr-tag me">내 프로필</span>':'<span class="fr-tag">가상 친구</span>')+'</div>'
-      +'<div class="fr-ttl">'+tierBadge(p.nick,true)+' '+esc(f.t.ttl)+'</div>'
-      +'<div class="fr-xpl"><div class="xp-bar"><div class="xp-fill" style="width:'+Math.max(4,f.pct)+'%"></div></div><span>'+fmtXp(p.xp)+' XP</span></div>'
-      +'<div class="fr-meta">📦 반환 '+p.returns+' · 💌 카드 '+p.cards+'</div>'
-    +'</div><div class="fr-arr">›</div></div>';
-}
-function renderFriends(){
-  document.getElementById('fr-note').textContent=DEMO
-    ?'🧪 데모용 가상 친구예요. 실제 사용자 데이터가 아니고 DB에도 저장되지 않아요.'
-    :'👥 친구 기능은 준비 중이에요. 가상 친구는 데모 모드(주소 끝에 ?demo=1)에서 볼 수 있어요.';
-  document.getElementById('fr-me').innerHTML=frCardHtml(profOf(ST.me),'me');
-  var q=FR_Q.trim().toLowerCase();
-  var list=FRIENDS.filter(function(f){
-    if(!q)return true;
-    var t=TIERS[tierIdx(f.xp)];
-    return(f.nick+t.n+t.s+t.ttl+f.bio).toLowerCase().indexOf(q)>-1;
-  }).sort(function(a,b){return b.xp-a.xp;});
-  document.getElementById('fr-cnt').textContent=FRIENDS.length?(q?list.length+' / ':'')+FRIENDS.length+'명':'';
-  document.getElementById('fr-list').innerHTML=list.length
-    ?list.map(function(f){return frCardHtml(f,f.id);}).join('')
-    :'<div class="fr-empty">'+(FRIENDS.length?'검색 결과가 없어요 🔍':'아직 친구가 없어요')+'</div>';
-}
-function frSearch(v){FR_Q=v;renderFriends();}
-function openFriends(){
-  if(DEMO&&!FRIENDS.length)loadFriends();
-  FR_Q='';document.getElementById('fr-q').value='';
-  renderFriends();
-  document.getElementById('friends-scr').classList.add('on');
-  document.body.classList.add('fr-open');
-  frPush('friends');
-}
-function fprofHtml(p){
-  var f=xpInfo(p.xp),c='t'+(f.i+1);
-  var tags=(p.me?'<span class="fr-tag me">내 프로필</span>':'')+(p.virtual?'<span class="fr-tag">🧪 가상 프로필</span>':'');
-  var acts=p.acts.length?p.acts.map(function(a){
-    return'<div class="fp-act"><div class="fp-act-t">'+esc(a.t)+'</div><div class="fp-act-x">'+esc(a.x)+'</div>'
-      +(a.xp?'<div class="fp-act-p">+'+a.xp+' XP</div>':'')+'</div>';}).join('')
-    :'<div class="fr-empty">아직 활동 기록이 없어요</div>';
-  return'<div class="'+c+'"><div class="fp-hero">'
-      +'<div class="fp-av">'+esc(p.avatar||'🙂')+'</div><div class="fp-nm">'+esc(p.nick)+'</div><div class="fp-tags">'+tags+'</div>'
-      +'<div class="fp-emb">'+emblem(f.i,'lg',true)+'</div>'
-      +'<div class="fp-tier">'+esc(f.t.n)+'</div><div class="fp-ttl">'+esc(f.t.ttl)+'</div>'
-      +'<div class="fp-xp"><div class="fp-xp-top"><b>'+fmtXp(p.xp)+' XP</b><span>'+f.t.min+(f.t.max!==null?'–'+f.t.max:'+')+' XP 구간</span></div>'+xpBarHtml(p.xp)+'</div>'
-    +'</div></div>'
-    +'<div class="fp-grid"><div class="fp-st"><b>'+p.returns+'</b><span>📦 반환 완료</span></div>'
-      +'<div class="fp-st"><b>'+p.cards+'</b><span>💌 감사 카드</span></div>'
-      +'<div class="fp-st"><b>'+(f.i+1)+'/5</b><span>🏅 티어</span></div></div>'
-    +'<div class="fp-sec"><h4>한 줄 소개</h4><div class="fp-bio">'+esc(p.bio||'아직 소개가 없어요')+'</div></div>'
-    +'<div class="fp-sec"><h4>최근 활동</h4>'+acts+'</div>'
-    +(p.me&&DEMO?'<button class="fp-btn" onclick="simReturn()">🧪 데모: 반환 완료 시뮬레이션 (+50 XP)</button>':'')
-    +'<button class="fp-btn ghost" onclick="backFr()">← 친구 목록으로</button>';
-}
-var FP_KEY='me';
-function openFriend(key){
-  var p=key==='me'?profOf(ST.me):FRIENDS.filter(function(f){return f.id===key;})[0];
-  if(!p)return;
-  FP_KEY=key;
-  document.getElementById('fp-title').textContent=p.me?'내 프로필':'친구 프로필';
-  document.getElementById('fp-body').innerHTML=fprofHtml(p);
-  document.getElementById('fp-body').scrollTop=0;
-  document.getElementById('fprof-scr').classList.add('on');
-  document.body.classList.add('fr-open');
-  frPush('fprof');
-}
-function simReturn(){
-  var it=frPick(FR_ITEM);
-  var up=awardXp(ST.me,XP_REWARD.ret,'"'+it+'" 반환 완료 (데모)','ret');
-  openFriend('me');renderFriends();
-  toast(up?upMsg(ST.me):'+'+XP_REWARD.ret+' XP 반환 완료! 📦');
-}
-// 모바일 뒤로가기(history) 연동
-function frPush(s){try{history.pushState({scr:s},'');}catch(e){}}
-function frCloseTop(){
-  var fp=document.getElementById('fprof-scr'),fr=document.getElementById('friends-scr');
-  if(fp.classList.contains('on')){fp.classList.remove('on');renderFriends();if(fr.classList.contains('on'))return;}
-  else if(fr.classList.contains('on')){fr.classList.remove('on');}
-  if(!fp.classList.contains('on')&&!fr.classList.contains('on')){
-    document.body.classList.remove('fr-open');
-    render();
-  }
-}
-function backFr(){
-  if(history.state&&history.state.scr){history.back();}else{frCloseTop();}
-}
-window.addEventListener('popstate',function(){frCloseTop();});
+function upMsg(nick){var t=XP_TIERS[tierIdx(profOf(nick).xp)];return'🎉 티어 승급! '+t.ic+' '+t.n;}
 
 // ── 반환 완료 · 감사 카드 (데모) ──
 function thanksRowHtml(p){
@@ -1785,6 +1853,22 @@ function submitThanks(){
   openDet(pid);
 }
 
+// 내 프로필: 티어 목록 (현재 티어 강조, 지난 티어 달성, 다음 티어는 남은 XP)
+function renderTierList(nick){
+  var wrap=document.getElementById('prof-tiers-wrap');
+  if(nick!==ST.me){wrap.hidden=true;return;}
+  var xp=profOf(nick).xp,cur=tierIdx(xp);
+  document.getElementById('prof-tiers').innerHTML=XP_TIERS.map(function(t,i){
+    var st=i<cur?'<span class="tl-st done">✓ 달성</span>'
+      :i===cur?'<span class="tl-st cur">현재 티어</span>'
+      :'<span class="tl-st lock">🔒 '+fmtXp(t.min-xp)+' XP 남음</span>';
+    return '<div class="tl-row t'+(i+1)+(i===cur?' cur':'')+(i>cur?' lock':'')+'">'+emblem(i,'sm',false)
+      +'<div class="tl-info"><div class="tl-nm">'+esc(t.n)+'</div><div class="tl-ttl">'+esc(t.ttl)+'</div></div>'
+      +'<div class="tl-right"><div class="tl-rng">'+fmtXp(t.min)+(t.max!==null?'–'+fmtXp(t.max):'+')+' XP</div>'+st+'</div></div>';
+  }).join('');
+  wrap.hidden=false;
+}
+
 function openProfileFromChat(){
   var nm=document.getElementById('chat-nm').textContent.replace('@','');
   if(nm) openProfile(nm);
@@ -1795,11 +1879,17 @@ function openProfile(author){
   var ch=author.charAt(0).toUpperCase();
   document.getElementById('prof-av').textContent=ch;
   document.getElementById('prof-nm').textContent=author;
-  renderTierBox(author);
   document.getElementById('prof-total').textContent=posts.length;
   document.getElementById('prof-lost').textContent=posts.filter(function(p){return p.type==='lost'&&p.status!=='resolved';}).length;
   document.getElementById('prof-found').textContent=posts.filter(function(p){return p.type==='found'&&p.status!=='resolved';}).length;
   document.getElementById('prof-resolved').textContent=posts.filter(function(p){return p.status==='resolved';}).length;
+  renderManner(author);
+  renderTierBox(author);
+  renderTierList(author);
+  // 다른 사람이 남긴 새 평가 반영
+  loadReviews().then(function(){
+    if(document.getElementById('prof-nm').textContent===author)renderManner(author);
+  });
   var el=document.getElementById('prof-feed');
   if(!posts.length){
     el.innerHTML='<div class="empty"><div class="empty-i">📭</div><div>게시물이 없습니다</div></div>';
@@ -1862,11 +1952,11 @@ async function pickStatus(status){
   var id=ST.statusPickId;
   var p=ST.posts.find(function(x){return x.id===id;});
   if(!p||p.status===status)return;
-  p.status=status;
-  await sb.from('posts').update({status:status}).eq('id',id);
+  if(status==='resolved'){openHelperPicker(id);return;}
+  p.status=status;p.resolved_with=null;
+  await sb.from('posts').update({status:status,resolved_with:null}).eq('id',id);
   openDet(id);
-  toast(status==='resolved'?'해결됨으로 변경됐습니다 ✅':'진행 중으로 변경됐습니다 🔍');
-  if(status==='resolved')openThanks(id,true);
+  toast('진행 중으로 변경됐습니다 🔍');
 }
 function openEditPost(id){
   var p=ST.posts.find(function(x){return x.id===id;});if(!p)return;
@@ -1883,9 +1973,7 @@ function openEditPost(id){
   document.getElementById('tc-found').classList.toggle('on',p.type==='found');
   document.getElementById('loc-lbl').innerHTML=(p.type==='lost'?'분실 위치':'습득 위치')+' <span class="req">*</span>';
   if(p.img){
-    document.getElementById('pzw').innerHTML=
-      '<div class="prev-wrap"><img src="'+p.img+'" alt="미리보기">'
-      +'<button class="prev-rm" onclick="ST.photoUrl=null;resetPzone()">×</button></div>';
+    document.getElementById('pzw').innerHTML=previewHTML(p.img);
   }else{resetPzone();}
   document.querySelector('.sheet-title').textContent='게시물 수정';
   document.querySelector('.sbtn').textContent='수정 완료';
@@ -1905,12 +1993,7 @@ function subscribeChat(postId){
       function(payload){
         var m=payload.new;
         if(m.from_user===ST.me)return;
-        if(!ST.chats[postId])ST.chats[postId]=[];
-        ST.chats[postId].push({from:m.from_user,text:m.msg_text,time:m.msg_time,id:m.id});
-        renderChat(postId);
-        var msgs=document.getElementById('chat-msgs');
-        if(msgs)msgs.scrollTop=msgs.scrollHeight;
-        updateChatCnt();
+        addChatMsg(postId,{from:m.from_user,text:m.msg_text,time:m.msg_time,id:m.id});
       })
     .subscribe();
 }
@@ -1921,17 +2004,14 @@ async function doChat(id){
   closeDet();
   document.querySelector('.fab-wrap').style.display='none';
   document.getElementById('chat-nm').textContent='@'+p.author;
+  document.getElementById('chat-temp').innerHTML=tempChip(p.author);
   document.getElementById('chat-sub').textContent='"'+p.title+'"';
   document.getElementById('chat-av').textContent=p.type==='lost'?'😢':'🎉';
   document.getElementById('chat-scr').dataset.pid=id;
   if(!ST.chats[id]){
     var res=await sb.from('chat_messages').select('*').eq('post_id',id).order('created_at');
     var msgs=res.data||[];
-    if(!msgs.length){
-      ST.chats[id]=[{from:p.author,text:'안녕하세요! 분실물 관련해서 연락드려요 😊',time:nt()}];
-    } else {
-      ST.chats[id]=msgs.map(function(m){return{from:m.from_user,text:m.msg_text,time:m.msg_time,id:m.id};});
-    }
+    ST.chats[id]=msgs.map(function(m){return{from:m.from_user,text:m.msg_text,time:m.msg_time,id:m.id};});
     trackChat(id);
   }
   renderChat(id);
@@ -1986,13 +2066,46 @@ async function sendMsg(){
   await sb.from('chat_messages').insert({post_id:id,from_user:ST.me,msg_text:txt,msg_time:time});
   var p=ST.posts.find(function(x){return x.id===id;});
   if(p&&SAMPLE_AUTHORS.indexOf(p.author)>-1){
-    var rs=['확인했습니다! 연락처 알려드릴게요 😊','네, 맞아요! 언제 오실 수 있나요?','학생처에 맡겨뒀어요. 주중 방문해 주세요!','아, 정말요? 감사합니다! 🙏','잠깐만요, 지금 확인 중이에요 👀'];
+    var rt;
+    var script=SCRIPTED_REPLIES[p.title];
+    if(script){
+      // 정해 둔 답을 순서대로: 내가 보낸 n번째 메시지에 n번째 답 (다 쓰면 답하지 않음)
+      var n=ST.chats[id].filter(function(m){return m.from===ST.me;}).length;
+      rt=script[n-1];
+    }else{
+      var rs=['확인했습니다! 연락처 알려드릴게요 😊','네, 맞아요! 언제 오실 수 있나요?','학생처에 맡겨뒀어요. 주중 방문해 주세요!','아, 정말요? 감사합니다! 🙏','잠깐만요, 지금 확인 중이에요 👀'];
+      rt=rs[Math.floor(Math.random()*rs.length)];
+    }
+    if(!rt)return;
     setTimeout(async function(){
-      var rt=rs[Math.floor(Math.random()*rs.length)];
       var rtime=nt();
-      await sb.from('chat_messages').insert({post_id:id,from_user:p.author,msg_text:rt,msg_time:rtime});
+      var ins=await sb.from('chat_messages').insert({post_id:id,from_user:p.author,msg_text:rt,msg_time:rtime}).select().single();
+      // 실시간 수신이 없는 데모 모드에서도 답이 보이도록 직접 추가 (실시간으로 먼저 들어온 경우는 건너뜀)
+      addChatMsg(id,{from:p.author,text:rt,time:rtime,id:ins.data&&ins.data.id});
     },1100);
   }
+}
+
+// 샘플 게시물별로 정해 둔 자동 답장 (게시물 제목 → 순서대로 보낼 답)
+var SCRIPTED_REPLIES={
+  '바나나 인형 키링 습득':[
+    '안녕하세요 현재 제가 보관하고 있습니다. 직접 드릴까요 아니면 학생회관에 있는 학생회관 분실물 센터에 맡겨놓을까요?',
+    '네 알겠습니다. 제가 일정이 있어서 오후3시 이후에 맡겨놓도록 하겠습니다'
+  ]
+};
+
+function addChatMsg(postId,msg){
+  if(!ST.chats[postId])ST.chats[postId]=[];
+  if(msg.id!=null&&ST.chats[postId].some(function(m){return m.id===msg.id;}))return;
+  ST.chats[postId].push(msg);
+  updateChatCnt();
+  var scr=document.getElementById('chat-scr');
+  if(scr.classList.contains('on')&&parseInt(scr.dataset.pid)===postId){
+    renderChat(postId);
+    var msgs=document.getElementById('chat-msgs');
+    if(msgs)msgs.scrollTop=msgs.scrollHeight;
+  }
+  if(document.getElementById('chatlist-scr').classList.contains('on'))renderChatList();
 }
 
 // ── 등록 ──
@@ -2086,6 +2199,7 @@ function placeRegMarker(lat,lng,addr){
   });
   ST.mapCoords={lat:lat,lng:lng,addr:addr};
   document.getElementById('map-addr-label').textContent='📍 '+addr;
+  refreshFoundDesc();
 }
 // ── 전체 게시물 지도 (수원대 주변만) ──
 function openAllMap(){
@@ -2148,29 +2262,175 @@ function closeReg(){
   document.querySelector('.fab-wrap').style.display='';
 }
 function setType(t){
+  var changed=ST.regType!==t;
   ST.regType=t;
   document.getElementById('tc-lost').classList.toggle('on',t==='lost');
   document.getElementById('tc-found').classList.toggle('on',t==='found');
   document.getElementById('loc-lbl').innerHTML=(t==='lost'?'분실 위치':'습득 위치')+' <span class="req">*</span>';
   document.getElementById('floc').placeholder=t==='lost'?'예: 3층 복도, 도서관':'예: 공학관 1층 로비';
   syncMapReq();
+  // 사진을 올린 뒤 유형을 바꾸면 AI 초안을 지우고 새 유형으로 다시 분석한다
+  if(changed&&_aiFile){
+    aiClear('fn','fnc');aiClear('fdesc','fdc');ST.aiFound=null;
+    analyzePhoto(_aiFile);
+  }
 }
 function resetPzone(){
+  _aiSeq++;setAiStatus('');_aiFile=null;ST.aiFound=null;
+  var _fc=document.getElementById('fcat');if(_fc)_fc.dataset.ai='';
   document.getElementById('pzw').innerHTML=
     '<label class="pzone"><div class="pzone-i">☁️</div>'
     +'<div class="pzone-t">사진을 올려주세요</div><div class="pzone-s">클릭해서 추가</div>'
     +'<input type="file" accept="image/*" id="pinp" onchange="handlePhoto(this)"></label>';
 }
+// 휴대폰 원본 사진(예: 3024×4032, 3MB 이상)을 긴 변 PHOTO_MAX px JPEG로 줄인다.
+// 캔버스에 그리면 EXIF 회전 정보가 반영돼 똑바로 선 사진이 되고, 업로드·저장 용량도 크게 준다.
+// 브라우저가 열지 못하는 형식(일부 HEIC 등)이면 null → 원본을 그대로 쓴다.
+var PHOTO_MAX=1280;
+function shrinkPhoto(file){
+  return new Promise(function(resolve){
+    var url=URL.createObjectURL(file),img=new Image();
+    img.onload=function(){
+      URL.revokeObjectURL(url);
+      var s=Math.min(1,PHOTO_MAX/Math.max(img.naturalWidth,img.naturalHeight));
+      var c=document.createElement('canvas');
+      c.width=Math.round(img.naturalWidth*s);c.height=Math.round(img.naturalHeight*s);
+      var ctx=c.getContext('2d');
+      ctx.fillStyle='#fff';ctx.fillRect(0,0,c.width,c.height); // 투명 PNG → 흰 배경
+      ctx.drawImage(img,0,0,c.width,c.height);
+      c.toBlob(function(b){
+        if(!b){resolve(null);return;}
+        var r=new FileReader();
+        r.onload=function(e){resolve({url:e.target.result,file:new File([b],'photo.jpg',{type:'image/jpeg'})});};
+        r.readAsDataURL(b);
+      },'image/jpeg',0.85);
+    };
+    img.onerror=function(){URL.revokeObjectURL(url);resolve(null);};
+    img.src=url;
+  });
+}
+// 사진을 자르지 않고 전부 보여 준다: 뒤에는 같은 사진을 흐리게 깔고, 앞에는 사진 전체(contain)
+function photoImg(src,alt){
+  return '<img class="ph-bg" src="'+src+'" alt="" aria-hidden="true"><img class="ph" src="'+src+'" alt="'+(alt||'')+'">';
+}
+function previewHTML(src){
+  return '<div class="prev-wrap">'+photoImg(src,'미리보기')
+    +'<button class="prev-rm" onclick="ST.photoUrl=null;resetPzone()">×</button></div>';
+}
 function handlePhoto(inp){
   var file=inp.files[0];if(!file)return;
-  var reader=new FileReader();
-  reader.onload=function(e){
-    ST.photoUrl=e.target.result;
-    document.getElementById('pzw').innerHTML=
-      '<div class="prev-wrap"><img src="'+e.target.result+'" alt="미리보기">'
-      +'<button class="prev-rm" onclick="ST.photoUrl=null;resetPzone()">×</button></div>';
-  };
-  reader.readAsDataURL(file);
+  var seq=_aiSeq; // 줄이는 사이에 사진을 지우면(resetPzone) 결과를 버린다
+  function show(url,f){
+    if(seq!==_aiSeq)return;
+    ST.photoUrl=url;
+    document.getElementById('pzw').innerHTML=previewHTML(url);
+    _aiFile=f;
+    ST.aiTime=timeBand(new Date()); // 시간대 = 사진을 등록한 시각 기준
+    analyzePhoto(f);
+  }
+  shrinkPhoto(file).then(function(r){
+    if(r){show(r.url,r.file);return;}
+    var reader=new FileReader();
+    reader.onload=function(e){show(e.target.result,file);};
+    reader.readAsDataURL(file);
+  });
+}
+// ── AI 자동완성 ──
+// 사진 → 서버(api/analyze) → 습득물: 카테고리·물품명·설명 초안 / 분실물: 카테고리만.
+// 서버가 없으면(정적 호스팅 등) 조용히 건너뜀. 주소는 상대경로여야 함(공개 주소의 /<아이디> 접두어는 서버에 전달되지 않음).
+var _aiSeq=0,_aiFile=null;
+var FOUND_PLACE='학생회관 분실물센터';
+function setAiStatus(msg){
+  var el=document.getElementById('ai-status');if(!el)return;
+  el.style.display=msg?'block':'none';el.textContent=msg||'';
+}
+// 칸이 비어 있거나 직전 AI 값 그대로일 때만 채운다 (사용자가 고친 내용은 덮어쓰지 않음)
+function aiFill(id,cntId,val){
+  var el=document.getElementById(id);if(!el||!val)return false;
+  if(el.value&&el.value!==el.dataset.aiVal)return false;
+  el.value=val;el.dataset.aiVal=val;
+  var c=document.getElementById(cntId);if(c)c.textContent=val.length;
+  return true;
+}
+function aiClear(id,cntId){
+  var el=document.getElementById(id);if(!el)return;
+  if(el.value&&el.value===el.dataset.aiVal){el.value='';var c=document.getElementById(cntId);if(c)c.textContent='0';}
+  el.dataset.aiVal='';
+}
+function timeBand(d){
+  var h=d.getHours();
+  return h<6?'새벽':h<11?'오전':h<14?'점심':h<18?'오후':h<22?'저녁':'밤';
+}
+function korDate(v){
+  var p=(v||'').split('-');if(p.length<3)return '';
+  return (+p[1])+'월 '+(+p[2])+'일';
+}
+function eulReul(w){
+  var c=w.charCodeAt(w.length-1);
+  return (c>=0xAC00&&c<=0xD7A3&&(c-0xAC00)%28)?'을':'를';
+}
+// 습득물 설명: [날짜] [시간대] [장소]에서 [색상] [물품명]을 주웠습니다. / [대략적인 특징] / 전달·보관 방법 / 본인 확인 안내
+function composeFound(){
+  var a=ST.aiFound;if(!a)return '';
+  var when=[korDate(document.getElementById('fdate').value),ST.aiTime].filter(Boolean).join(' ');
+  var loc=foundPlace();
+  var head=loc?(when?when+' ':'')+loc+'에서 ':(when?when+'에 ':'');
+  var lines=[head+a.thing+eulReul(a.thing)+' 주웠습니다.'];
+  if(a.feature)lines.push(a.feature);
+  lines.push('직접 만나서 드리거나 '+FOUND_PLACE+'에 맡겨 두겠습니다.');
+  lines.push('연락주실 때 분실물 본인 확인을 위해 물건의 특징을 설명해주세요!');
+  return lines.join('\n').slice(0,200);
+}
+// [장소] = 지도 핀의 상세 위치 → 없으면 핀 주소의 첫 부분(예: 수원대학교 공학관) → 없으면 위치 입력란
+function foundPlace(){
+  var d=document.getElementById('map-detail');d=d?d.value.trim():'';
+  if(d)return d;
+  var a=((ST.mapCoords&&ST.mapCoords.addr)||'').split(',')[0].trim();
+  if(a&&!/선택한 위치|데모 위치/.test(a))return a;
+  var f=document.getElementById('floc');return f?f.value.trim():'';
+}
+// 장소·날짜를 나중에 입력해도 (사용자가 설명을 고치지 않았다면) 초안을 다시 맞춘다
+function refreshFoundDesc(){
+  if(ST.regType==='found'&&ST.aiFound)aiFill('fdesc','fdc',composeFound());
+}
+document.getElementById('floc').addEventListener('input',refreshFoundDesc);
+document.getElementById('map-detail').addEventListener('input',refreshFoundDesc);
+document.getElementById('fdate').addEventListener('change',refreshFoundDesc);
+async function analyzePhoto(file){
+  var seq=++_aiSeq;
+  var kind=ST.regType;
+  setAiStatus(kind==='found'?'🤖 AI가 사진을 보고 글을 쓰는 중...':'🤖 AI가 카테고리를 분류하는 중...');
+  try{
+    var fd=new FormData();
+    fd.append('file',file);
+    fd.append('kind',kind);
+    var res=await fetch('api/analyze',{method:'POST',body:fd});
+    if(res.status===429){if(seq===_aiSeq)setAiStatus('요청이 많아 잠시 후 다시 시도해주세요');return;}
+    if(!res.ok)throw new Error(res.status);
+    var r=await res.json();
+    if(seq!==_aiSeq||kind!==ST.regType)return; // 그 사이 사진·유형을 바꿨으면 무시
+    var pct=Math.round(r.confidence*100);
+    var sel=document.getElementById('fcat');
+    var sure=r.source==='workers-ai'||r.confidence>=0.5;
+    if(sure&&(!sel.value||sel.dataset.ai==='1')){sel.value=r.category;sel.dataset.ai='1';}
+    var filled=false;
+    if(kind==='found'&&r.thing){
+      ST.aiFound={thing:r.thing,feature:r.feature||''};
+      filled=aiFill('fn','fnc',r.name);
+      filled=aiFill('fdesc','fdc',composeFound())||filled;
+    }
+    if(r.agree===false){
+      setAiStatus('🤔 AI 판단이 엇갈려요 ('+r.category+' / '+r.clip_category+'). 카테고리와 물품명을 확인해주세요');
+    }else if(!sure){
+      setAiStatus('🤔 AI가 확신하지 못했어요 (가장 비슷: '+r.category+' '+pct+'%). 카테고리는 직접 골라주세요');
+    }else if(kind==='found'){
+      setAiStatus('✨ AI 추천: '+r.category+(filled?' · 물품명·설명 초안을 채웠어요':'')+' — 자유롭게 고쳐주세요');
+    }else{
+      setAiStatus('✨ AI 추천 카테고리: '+r.category+' ('+pct+'%) — 다른 걸로 바꿀 수 있어요');
+    }
+  }catch(e){
+    if(seq===_aiSeq)setAiStatus('');
+  }
 }
 async function submitPost(){
   var name=document.getElementById('fn').value.trim();
@@ -2215,7 +2475,7 @@ function toast(msg){
 
 // ── 초기화 ──
 (function(){
-  var _session=DEMO?{nickname:'원석'}:getSession();
+  var _session=DEMO?{nickname:'데모사용자'}:getSession();
   if(DEMO)document.title='찾았대 (데모)';
   if(_session){
     afterAuth(_session.nickname);
