@@ -103,7 +103,9 @@
     .card-img{width:100%;height:180px;background:linear-gradient(135deg,#EDE3D5,#D9C9B5);
               display:flex;align-items:center;justify-content:center;font-size:54px;
               position:relative;overflow:hidden;}
-    .card-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+    .ph,.ph-bg{position:absolute;inset:0;width:100%;height:100%;display:block;}
+    .ph{object-fit:contain;}
+    .ph-bg{object-fit:cover;filter:blur(16px) brightness(.92);transform:scale(1.15);}
     .card-body{padding:12px 13px 0;}
     .badges{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:7px;}
     .badge{display:inline-block;padding:3px 8px;border-radius:5px;font-size:11px;font-weight:700;}
@@ -181,7 +183,6 @@
     .pzone-s{font-size:11px;color:#aaa;margin-top:3px;}
     .prev-wrap{position:relative;border:2px dashed #c8d0e8;border-radius:14px;box-sizing:border-box;
                width:100%;height:160px;overflow:hidden;}
-    .prev-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
     .prev-rm{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.5);
              color:#fff;border:none;border-radius:50%;width:28px;height:28px;font-size:16px;cursor:pointer;}
     .fi{width:100%;padding:12px 13px;border:1.5px solid var(--gline);
@@ -227,7 +228,7 @@
     .det-img{width:100%;height:220px;background:linear-gradient(135deg,#EDE3D5,#D9C9B5);
              display:flex;align-items:center;justify-content:center;font-size:70px;
              position:relative;overflow:hidden;}
-    .det-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+    .det-img.has-ph{height:320px;}
     .det-body{padding:18px;}
     .det-title{font-size:21px;font-weight:800;color:var(--text);margin:10px 0 6px;}
     .det-meta{font-size:12px;color:var(--sub);margin-bottom:14px;}
@@ -658,6 +659,7 @@
           <option value="">모든 카테고리</option>
           <option value="전자기기">📱 전자기기</option>
           <option value="가방/지갑">👜 가방/지갑</option>
+          <option value="카드/신분증">💳 카드/신분증</option>
           <option value="의류">👕 의류</option>
           <option value="문구류">✏️ 문구류</option>
           <option value="스포츠용품">⚽ 스포츠용품</option>
@@ -736,6 +738,7 @@
           <option value="">선택하세요</option>
           <option value="전자기기">📱 전자기기</option>
           <option value="가방/지갑">👜 가방/지갑</option>
+          <option value="카드/신분증">💳 카드/신분증</option>
           <option value="의류">👕 의류</option>
           <option value="문구류">✏️ 문구류</option>
           <option value="스포츠용품">⚽ 스포츠용품</option>
@@ -1112,7 +1115,7 @@ function doLogout(){
   document.getElementById('li-pw').value='';
 }
 
-var CE={'전자기기':'📱','가방/지갑':'👜','의류':'👕','문구류':'✏️','스포츠용품':'⚽','기타':'📦'};
+var CE={'전자기기':'📱','가방/지갑':'👜','카드/신분증':'💳','의류':'👕','문구류':'✏️','스포츠용품':'⚽','기타':'📦'};
 var ST={posts:[],me:'',tab:'all',sf:'active',cf:'',q:'',regType:'lost',photoUrl:null,chats:{},univ:'',editId:null,statusPickId:null,mapCoords:null,
         reviews:[],helperPickId:null,rev:null};
 var _viewedPosts=new Set();
@@ -1137,7 +1140,7 @@ var SAMPLE_REVIEWS=[
 var SAMPLE=[
   {type:'lost',title:'검정 에어팟 케이스 분실',category:'전자기기',location:'중앙도서관 3층 열람실',date:'2026-06-10',author:'kim_sw',desc:'자리 옮기다 잃어버렸어요. 흰색 스티커가 붙은 검정 에어팟 케이스입니다.',status:'active',likes:[],views:47,img:'images/airpods-case.jpg',coords:null},
   {type:'found',title:'바나나 인형 키링 습득',category:'기타',location:'공학관 엘리베이터 앞',date:'2026-05-11',author:'inchang_helper',desc:'공학관 1층 엘리베이터 앞에서 발견했습니다. 노란 얼굴에 하얀 눈썹이 특징입니다.',status:'active',likes:[],views:310,img:'images/banana-keyring.jpg',coords:{lat:37.2112,lng:126.9742,addr:'수원대학교 공학관',detail:'1층 엘리베이터 앞'}},
-  {type:'lost',title:'학생증 분실 (홍길동)',category:'가방/지갑',location:'학생식당 1층',date:'2026-06-08',author:'park_2023',desc:'점심 먹고 학생증이 없어졌어요. 발견하시면 연락 주세요.',status:'active',likes:[],views:22,img:'images/student-id.jpg',coords:null},
+  {type:'lost',title:'학생증 분실 (홍길동)',category:'카드/신분증',location:'학생식당 1층',date:'2026-06-08',author:'park_2023',desc:'점심 먹고 학생증이 없어졌어요. 발견하시면 연락 주세요.',status:'active',likes:[],views:22,img:'images/student-id.jpg',coords:null},
   {type:'found',title:'검정 우산 습득',category:'기타',location:'본관 1층 우산꽂이 옆',date:'2026-06-12',author:'lee_campus',desc:'본관 1층 입구 검정 우산. 손잡이에 노란 고무줄이 묶여 있어요.',status:'active',likes:[],views:88,img:'images/umbrella.jpg',coords:{lat:37.2098,lng:126.9770,addr:'수원대학교 본관',detail:'1층 우산꽂이 옆'}},
   {type:'lost',title:'파란색 나이키 후드 분실',category:'의류',location:'체육관 라커룸',date:'2026-06-05',author:'choi_yun',desc:'파란색 나이키 후드 왼쪽 소매 안쪽에 볼펜 자국 있어요.',status:'resolved',likes:[],views:15,img:null,coords:null,resolved_with:SAMPLE_HELPER},
   {type:'found',title:'갤럭시 버즈',category:'전자기기',location:'소프트웨어관 302호',date:'2026-06-13',author:'shin_helper',desc:'의자 아래에서 갤럭시 이어버즈 베이지색 케이스를 발견했습니다.',status:'active',likes:[],views:134,img:'images/galaxy-buds.jpg',coords:{lat:37.2086,lng:126.9778,addr:'수원대학교 소프트웨어관',detail:'302호'}},
@@ -1528,7 +1531,7 @@ function render(){
     var ce=CE[p.category]||'📦';
     var tc=p.type==='lost'?'b-lost':'b-found';
     var tl=p.type==='lost'?'분실물':'습득물';
-    var imgH=p.img?'<img src="'+p.img+'" alt="">':'';
+    var imgH=p.img?photoImg(p.img):'';
     var likes=Array.isArray(p.likes)?p.likes:[];
     var liked=likes.indexOf(ST.me)>-1;
     var lk=liked?'❤️':'🤍';
@@ -1599,7 +1602,7 @@ async function openDet(id){
   }
   var ce=CE[p.category]||'📦';
   var isMine=p.author===ST.me;
-  var imgH=p.img?'<img src="'+p.img+'" alt="">':'';
+  var imgH=p.img?photoImg(p.img):'';
   var locLbl=p.type==='lost'?'분실 위치':'습득 위치';
   var likes=Array.isArray(p.likes)?p.likes:[];
   var liked=likes.indexOf(ST.me)>-1;
@@ -1615,7 +1618,7 @@ async function openDet(id){
     :likeBtn+'<button class="act-chat-btn" onclick="doChat('+id+')">💬 채팅하기</button>';
   var revTo=pendingReviewTarget(p);
   document.getElementById('det-body').innerHTML=
-    '<div class="det-img">'+imgH+(p.img?'':ce)+'</div>'
+    '<div class="det-img'+(p.img?' has-ph':'')+'">'+imgH+(p.img?'':ce)+'</div>'
     +'<div class="det-body">'
       +'<div class="badges"><span class="badge '+(p.type==='lost'?'b-lost':'b-found')+'">'+(p.type==='lost'?'분실물':'습득물')+'</span>'
         +'<span class="badge b-cat">'+ce+' '+p.category+'</span>'+chip(p)+'</div>'
@@ -1970,9 +1973,7 @@ function openEditPost(id){
   document.getElementById('tc-found').classList.toggle('on',p.type==='found');
   document.getElementById('loc-lbl').innerHTML=(p.type==='lost'?'분실 위치':'습득 위치')+' <span class="req">*</span>';
   if(p.img){
-    document.getElementById('pzw').innerHTML=
-      '<div class="prev-wrap"><img src="'+p.img+'" alt="미리보기">'
-      +'<button class="prev-rm" onclick="ST.photoUrl=null;resetPzone()">×</button></div>';
+    document.getElementById('pzw').innerHTML=previewHTML(p.img);
   }else{resetPzone();}
   document.querySelector('.sheet-title').textContent='게시물 수정';
   document.querySelector('.sbtn').textContent='수정 완료';
@@ -2282,19 +2283,57 @@ function resetPzone(){
     +'<div class="pzone-t">사진을 올려주세요</div><div class="pzone-s">클릭해서 추가</div>'
     +'<input type="file" accept="image/*" id="pinp" onchange="handlePhoto(this)"></label>';
 }
+// 휴대폰 원본 사진(예: 3024×4032, 3MB 이상)을 긴 변 PHOTO_MAX px JPEG로 줄인다.
+// 캔버스에 그리면 EXIF 회전 정보가 반영돼 똑바로 선 사진이 되고, 업로드·저장 용량도 크게 준다.
+// 브라우저가 열지 못하는 형식(일부 HEIC 등)이면 null → 원본을 그대로 쓴다.
+var PHOTO_MAX=1280;
+function shrinkPhoto(file){
+  return new Promise(function(resolve){
+    var url=URL.createObjectURL(file),img=new Image();
+    img.onload=function(){
+      URL.revokeObjectURL(url);
+      var s=Math.min(1,PHOTO_MAX/Math.max(img.naturalWidth,img.naturalHeight));
+      var c=document.createElement('canvas');
+      c.width=Math.round(img.naturalWidth*s);c.height=Math.round(img.naturalHeight*s);
+      var ctx=c.getContext('2d');
+      ctx.fillStyle='#fff';ctx.fillRect(0,0,c.width,c.height); // 투명 PNG → 흰 배경
+      ctx.drawImage(img,0,0,c.width,c.height);
+      c.toBlob(function(b){
+        if(!b){resolve(null);return;}
+        var r=new FileReader();
+        r.onload=function(e){resolve({url:e.target.result,file:new File([b],'photo.jpg',{type:'image/jpeg'})});};
+        r.readAsDataURL(b);
+      },'image/jpeg',0.85);
+    };
+    img.onerror=function(){URL.revokeObjectURL(url);resolve(null);};
+    img.src=url;
+  });
+}
+// 사진을 자르지 않고 전부 보여 준다: 뒤에는 같은 사진을 흐리게 깔고, 앞에는 사진 전체(contain)
+function photoImg(src,alt){
+  return '<img class="ph-bg" src="'+src+'" alt="" aria-hidden="true"><img class="ph" src="'+src+'" alt="'+(alt||'')+'">';
+}
+function previewHTML(src){
+  return '<div class="prev-wrap">'+photoImg(src,'미리보기')
+    +'<button class="prev-rm" onclick="ST.photoUrl=null;resetPzone()">×</button></div>';
+}
 function handlePhoto(inp){
   var file=inp.files[0];if(!file)return;
-  var reader=new FileReader();
-  reader.onload=function(e){
-    ST.photoUrl=e.target.result;
-    document.getElementById('pzw').innerHTML=
-      '<div class="prev-wrap"><img src="'+e.target.result+'" alt="미리보기">'
-      +'<button class="prev-rm" onclick="ST.photoUrl=null;resetPzone()">×</button></div>';
-  };
-  reader.readAsDataURL(file);
-  _aiFile=file;
-  ST.aiTime=timeBand(new Date()); // 시간대 = 사진을 등록한 시각 기준
-  analyzePhoto(file);
+  var seq=_aiSeq; // 줄이는 사이에 사진을 지우면(resetPzone) 결과를 버린다
+  function show(url,f){
+    if(seq!==_aiSeq)return;
+    ST.photoUrl=url;
+    document.getElementById('pzw').innerHTML=previewHTML(url);
+    _aiFile=f;
+    ST.aiTime=timeBand(new Date()); // 시간대 = 사진을 등록한 시각 기준
+    analyzePhoto(f);
+  }
+  shrinkPhoto(file).then(function(r){
+    if(r){show(r.url,r.file);return;}
+    var reader=new FileReader();
+    reader.onload=function(e){show(e.target.result,file);};
+    reader.readAsDataURL(file);
+  });
 }
 // ── AI 자동완성 ──
 // 사진 → 서버(api/analyze) → 습득물: 카테고리·물품명·설명 초안 / 분실물: 카테고리만.
