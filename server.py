@@ -26,7 +26,7 @@ from pathlib import Path
 import torch
 from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile
 from fastapi.responses import FileResponse
-from PIL import Image, UnidentifiedImageError
+from PIL import Image, ImageOps, UnidentifiedImageError
 from transformers import CLIPModel, CLIPProcessor
 
 BASE = Path(__file__).resolve().parent
@@ -42,6 +42,8 @@ LABELS = {
     "전자기기": {"smartphone": "스마트폰", "laptop computer": "노트북", "earbuds": "이어폰", "tablet": "태블릿", "computer mouse": "마우스",
                 "keyboard": "키보드", "remote control": "리모컨", "charger": "충전기", "headphones": "헤드폰", "smartwatch": "스마트워치"},
     "가방/지갑": {"backpack": "백팩", "handbag": "핸드백", "wallet": "지갑", "suitcase": "캐리어", "purse": "파우치", "tote bag": "에코백", "card holder": "카드지갑"},
+    "카드/신분증": {"credit card": "카드", "student ID card": "학생증", "ID card": "신분증", "transit card": "교통카드",
+                 "driver's license": "운전면허증"},
     "의류": {"jacket": "재킷", "hoodie": "후드티", "scarf": "목도리", "hat": "모자", "glove": "장갑", "necktie": "넥타이", "t-shirt": "티셔츠", "shoe": "신발", "sweater": "스웨터"},
     "문구류": {"notebook": "노트", "book": "책", "pen": "펜", "pencil case": "필통", "scissors": "가위", "ruler": "자", "folder": "파일", "textbook": "교재"},
     "스포츠용품": {"ball": "공", "tennis racket": "테니스 라켓", "baseball glove": "야구 글러브", "baseball bat": "야구 방망이", "frisbee": "프리스비",
@@ -161,14 +163,20 @@ def workers_ai(img):
     prompt = (
         "대학교 분실물 게시판에 올릴 습득물 사진이다. 사진 가운데에서 가장 크게 보이는 물건 하나만 보라. "
         "배경이나 주변의 다른 물건은 무시하라. JSON 한 개만 출력하고 다른 말은 쓰지 마라.\n"
-        '{"name": "색을 포함한 물건 이름(한국어, 15자 이내, 예: 검정색 백팩)", '
-        '"category": "' + "|".join(CATS) + '" 중 하나, '
+        '{"name": "색을 포함한 물건 이름(한국어, 20자 이내). 로고·모양으로 브랜드나 제품명을 확실히 알 수 있으면 '
+        '제품명으로 구체적으로 써라. 에어팟·갤럭시 버즈·아이폰·갤럭시 휴대폰·애플워치처럼 모양만으로 알아볼 수 있는 대표 제품은 '
+        '제품명을 쓴다(예: 흰색 에어팟, 베이지색 갤럭시 버즈, 은색 아이폰). 알아볼 수 없으면 일반 이름(예: 검정색 백팩, 흰색 보조배터리)", '
+        '"category": "' + "|".join(CATS) + '" 중 하나(아래 기준), '
         '"feature": "대략적인 특징 한 가지를 짧은 합쇼체 한 문장으로(예: 앞주머니에 작은 키링이 달려 있습니다.), 없으면 빈 문자열"}\n'
-        "규칙: 사진에서 확실히 보이는 것만 써라. 추측하지 마라. 없는 것(예: 흠집이 없다)은 쓰지 마라. "
-        "주인 확인에 쓸 결정적 특징(이름·학번·번호·글자 내용·안에 든 물건)과 개인정보는 절대 쓰지 마라."
+        "카테고리 기준: 전자기기=휴대폰·이어폰·충전기·노트북·태블릿·보조배터리, "
+        "가방/지갑=가방·지갑·카드지갑·파우치, 카드/신분증=카드 한 장(신용·체크·교통카드)·학생증·신분증(지갑 없이 카드만 보이면 여기), "
+        "의류=옷·모자·장갑·목도리·신발, 문구류=책·노트·필기구·필통·가위·자, 스포츠용품=공·라켓·운동용품, "
+        "기타=우산·텀블러·열쇠·키링·인형 등 그 밖의 물건.\n"
+        "규칙: 사진에서 확실히 보이는 것만 써라. 추측하지 마라. 제품명도 확실할 때만 쓰고, 세대·버전·프로/일반처럼 사진으로 구분하기 어려운 것은 추측해서 붙이지 마라. 없는 것(예: 흠집이 없다)은 쓰지 마라. "
+        "주인 확인에 쓸 결정적 특징(이름·학번·번호·글자 내용·안에 든 물건)과 개인정보는 절대 쓰지 마라. 카드/신분증은 카드에 적힌 글자·카드사·로고 내용 없이 색과 모양만 써라."
     )
     body = json.dumps({
-        "model": model, "max_tokens": 200, "temperature": 0.2,
+        "model": model, "max_tokens": 200, "temperature": 0,
         "messages": [{"role": "user", "content": [
             {"type": "text", "text": prompt},
             {"type": "image_url", "image_url": {"url": data_url}},
@@ -187,6 +195,9 @@ def workers_ai(img):
         cat = str(j.get("category", "")).strip()
         if not name:
             return None
+        # 카드·학생증은 적힌 글자·로고가 곧 본인 확인 정보라 특징 문장에서 뺀다 (프롬프트로 막아도 가끔 새어 나옴)
+        if cat == "카드/신분증" and re.search(r"[A-Za-z0-9]|로고|글자|문구|이름|번호|카드사", feat):
+            feat = ""
         if feat and not feat.endswith((".", "!", "?")):
             feat += "."
         return {"name": name, "feature": feat, "category": cat if cat in CATS else None}
@@ -205,7 +216,8 @@ def analyze(request: Request, file: UploadFile = File(...), kind: str = Form("fo
     if len(data) > MAX_BYTES:
         raise HTTPException(413, "사진이 너무 큽니다 (최대 8MB)")
     try:
-        img = Image.open(io.BytesIO(data)).convert("RGB")
+        # 휴대폰 사진의 EXIF 회전 정보를 반영해 똑바로 세운다 (앱이 줄여 보내지 못한 원본 대비)
+        img = ImageOps.exif_transpose(Image.open(io.BytesIO(data))).convert("RGB")
     except (UnidentifiedImageError, OSError, Image.DecompressionBombError):
         raise HTTPException(400, "이미지 파일을 읽을 수 없습니다")
 
