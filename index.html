@@ -312,6 +312,65 @@
     .chatlist-scr{position:fixed;inset:0;max-width:430px;margin:0 auto;
                   background:var(--gbg);display:none;flex-direction:column;z-index:1500;}
     .chatlist-scr.on{display:flex;}
+
+    /* ── AI 비슷한 습득물 찾기 ── */
+    .ai-find-btn{width:100%;padding:13px;margin-bottom:10px;border-radius:12px;border:1.5px solid #b9aef0;
+                 background:#f4f2ff;color:#5b4fcf;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;}
+    .ai-find-btn:active{background:#e9e5ff;}
+    .ai-scr{position:fixed;inset:0;max-width:430px;margin:0 auto;background:var(--gbg);
+            display:none;flex-direction:column;z-index:1200;}
+    .ai-scr.on{display:flex;}
+    .aim-body{flex:1;overflow-y:auto;padding:14px 14px 28px;-webkit-overflow-scrolling:touch;}
+    .aim-note{border-radius:10px;padding:10px 12px;font-size:12px;line-height:1.55;margin-bottom:10px;}
+    .aim-note.demo{background:#fff6dd;border:1px solid #f0d58a;color:#7a5a08;}
+    .aim-note.info{background:#f4f2ff;border:1px solid #d0c8f0;color:#4d4399;}
+    .aim-q{background:#fff;border:1px solid var(--gline);border-radius:14px;padding:12px;margin-bottom:12px;
+           display:flex;gap:12px;align-items:center;}
+    .aim-q-t{font-size:11px;color:var(--sub);margin-bottom:2px;}
+    .aim-q-n{font-size:15px;font-weight:700;color:var(--text);word-break:break-all;}
+    .aim-q-m{font-size:12px;color:var(--sub);margin-top:3px;line-height:1.5;}
+    .aim-th{width:64px;height:64px;border-radius:10px;object-fit:cover;background:var(--gbg);flex:none;}
+    .aim-th-e{width:64px;height:64px;border-radius:10px;background:var(--gbg);flex:none;
+              display:flex;align-items:center;justify-content:center;font-size:30px;}
+    .aim-h{font-size:13px;font-weight:700;color:var(--text);margin:4px 2px 8px;}
+    .aim-card{background:#fff;border:1px solid var(--gline);border-radius:14px;padding:12px;margin-bottom:10px;cursor:pointer;}
+    .aim-card:active{background:#fdf9f3;}
+    .aim-top{display:flex;gap:12px;align-items:flex-start;}
+    .aim-rank{position:relative;flex:none;}
+    .aim-rank b{position:absolute;top:-6px;left:-6px;width:22px;height:22px;border-radius:50%;background:var(--navy);
+                color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center;}
+    .aim-nm{font-size:14px;font-weight:700;color:var(--text);word-break:break-all;}
+    .aim-sub{font-size:12px;color:var(--sub);margin-top:3px;line-height:1.45;}
+    .aim-vt{display:inline-block;font-size:10px;font-weight:700;color:#7a5a08;background:#fff0c2;border-radius:6px;padding:1px 6px;margin-left:4px;vertical-align:1px;}
+    .aim-sc{display:flex;align-items:center;gap:8px;margin:10px 0 4px;}
+    .aim-bar{flex:1;height:8px;background:#efe6d8;border-radius:5px;overflow:hidden;}
+    .aim-bar i{display:block;height:100%;background:linear-gradient(90deg,#667eea,#764ba2);border-radius:5px;}
+    .aim-num{font-size:13px;font-weight:800;color:#5b4fcf;white-space:nowrap;}
+    .aim-lv{font-size:12px;color:var(--sub);margin-bottom:6px;}
+    .aim-rs{margin:6px 0 8px;padding:0;list-style:none;}
+    .aim-rs li{font-size:12.5px;color:var(--text);line-height:1.55;padding-left:16px;position:relative;}
+    .aim-rs li:before{content:'✓';position:absolute;left:0;color:#2f9e5b;font-weight:700;}
+    .aim-chips{display:flex;flex-wrap:wrap;gap:5px;}
+    .aim-chip{font-size:11px;padding:3px 8px;border-radius:999px;background:var(--gbg);border:1px solid var(--gline);color:var(--sub);}
+    .aim-chip.off{opacity:.55;text-decoration:line-through;}
+    .aim-rs.warn li:before{content:'!';color:#d97706;}
+    .aim-rs.warn li{color:#7a5a08;}
+    .aim-det{margin-top:6px;}
+    .aim-det summary{font-size:11.5px;color:var(--sub);cursor:pointer;list-style:none;}
+    .aim-det summary::-webkit-details-marker{display:none;}
+    .aim-det .aim-chips{margin-top:6px;}
+    .aim-ex{background:#fff;border:1px dashed var(--gline);border-radius:12px;padding:10px 12px;margin-top:6px;}
+    .aim-ex li{font-size:12px;color:var(--sub);line-height:1.6;}
+    .aim-ex b{color:var(--text);font-weight:600;}
+    .aim-lv.ok{color:#2f9e5b;font-weight:700;}
+    .aim-foot{font-size:11.5px;color:var(--sub);line-height:1.6;margin:14px 2px 0;}
+    .aim-empty{text-align:center;padding:36px 16px 20px;color:var(--sub);}
+    .aim-empty-i{font-size:52px;margin-bottom:12px;}
+    .aim-empty-t{font-size:15px;font-weight:700;color:var(--text);margin-bottom:8px;}
+    .aim-empty-s{font-size:13px;line-height:1.7;}
+    .aim-pre{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;}
+    .aim-pre button{font-size:12px;padding:7px 11px;border-radius:999px;border:1px solid #d0c8f0;background:#fff;color:#5b4fcf;
+                    cursor:pointer;font-family:inherit;}
     .cl-empty{text-align:center;padding:70px 20px;color:var(--sub);}
     .cl-empty-i{font-size:52px;margin-bottom:14px;}
     .cl-item{display:flex;gap:12px;padding:14px 16px;border-bottom:1px solid var(--gline);
@@ -780,6 +839,7 @@
         </div>
       </div>
       <div class="div"></div>
+      <button class="ai-find-btn" id="ai-find-btn" onclick="openAiFromForm()">🔍 AI로 비슷한 습득물 찾기</button>
       <button class="sbtn" onclick="submitPost()">등록하기</button>
     </div>
   </div>
@@ -899,6 +959,15 @@
     <div style="flex:1"><div class="chat-nm">💬 메시지</div></div>
   </div>
   <div id="chatlist-body" style="flex:1;overflow-y:auto;"></div>
+</div>
+
+<!-- AI 비슷한 습득물 찾기 -->
+<div class="ai-scr" id="ai-scr">
+  <div class="chat-hd">
+    <button class="chat-back" onclick="closeAi()">←</button>
+    <div style="flex:1"><div class="chat-nm">🔍 AI 비슷한 습득물 찾기</div></div>
+  </div>
+  <div class="aim-body" id="ai-body"></div>
 </div>
 
 <!-- 프로필 화면 -->
@@ -1146,6 +1215,38 @@ var SAMPLE=[
   {type:'found',title:'갤럭시 버즈',category:'전자기기',location:'소프트웨어관 302호',date:'2026-06-13',author:'shin_helper',desc:'의자 아래에서 갤럭시 이어버즈 베이지색 케이스를 발견했습니다.',status:'active',likes:[],views:134,img:'images/galaxy-buds.jpg',coords:{lat:37.2086,lng:126.9778,addr:'수원대학교 소프트웨어관',detail:'302호'}},
   {type:'lost',title:'연두색 텀블러 분실',category:'기타',location:'글경708호',date:'2026-06-14',author:'jung_h',desc:'테이블에 연두색 텀블러를 두고 왔습니다. 안쪽에 흠집이 있어요.',status:'active',likes:[],views:31,img:'images/tumbler.jpg',coords:null},
 ];
+
+// 데모 전용 가상 습득물 — AI 찾기 화면 테스트용. DEMO 메모리 DB에서만 쓰이고 실제 DB에는 기록되지 않는다.
+if(DEMO){
+  (function(){
+    function dAgo(n){var d=new Date();d.setDate(d.getDate()-n);return d.toISOString().split('T')[0];}
+    var X=function(o){o.type='found';o.status='active';o.likes=[];o.img=null;return o;};
+    SAMPLE.push(
+      X({title:'검정 이어폰 케이스 습득',category:'전자기기',location:'중앙도서관 3층 열람실',date:dAgo(0),author:'kim_sw',views:12,
+         desc:'열람실 책상 위에서 흰색 스티커가 붙은 검정 에어팟 케이스를 주웠어요.',
+         coords:{lat:37.2104,lng:126.9760,addr:'수원대학교 중앙도서관',detail:'3층 열람실'}}),
+      X({title:'갤럭시 버즈 습득',category:'전자기기',location:'소프트웨어관 1층 로비',date:dAgo(1),author:'shin_helper',views:9,
+         desc:'로비 의자 위에서 베이지색 갤럭시 버즈 충전 케이스와 이어버드를 주웠어요.',
+         coords:{lat:37.2086,lng:126.9778,addr:'수원대학교 소프트웨어관',detail:'1층 로비'}}),
+      X({title:'검정 갤럭시 버즈 습득',category:'전자기기',location:'공학관 2층 복도',date:dAgo(1),author:'park_2023',views:6,
+         desc:'검정색 갤럭시 버즈 본체와 충전 케이스를 주웠어요.',
+         coords:{lat:37.2112,lng:126.9742,addr:'수원대학교 공학관',detail:'2층 복도'}}),
+      X({title:'소니 무선 이어폰 습득',category:'전자기기',location:'학생식당 1층',date:dAgo(0),author:'jung_h',views:3,
+         desc:'베이지색 소니 무선 이어폰 충전 케이스예요.',coords:null}),
+      X({title:'이어폰 보호 케이스 습득',category:'전자기기',location:'소프트웨어관 1층',date:dAgo(1),author:'lee_campus',views:2,
+         desc:'베이지색 실리콘 보호 케이스만 발견했어요. 이어폰은 없어요.',coords:null}),
+      X({title:'검정 카드지갑 습득',category:'가방/지갑',location:'학생식당 입구',date:dAgo(1),author:'park_2023',views:8,
+         desc:'학생식당 입구 계단 옆에서 검정색 카드지갑을 발견했습니다.',coords:null}),
+      X({title:'연두색 텀블러 습득',category:'기타',location:'글경 710호 앞',date:dAgo(1),author:'jung_h',views:19,
+         desc:'복도 의자 위에 연두색 텀블러가 있었어요. 안쪽에 흠집이 있는 것 같아요.',coords:null}),
+      X({title:'학생증 습득',category:'카드/신분증',location:'학생식당 1층 계산대',date:dAgo(2),author:'choi_yun',views:5,
+         desc:'계산대 앞에서 학생증을 주웠습니다. 이름은 직접 확인해 주세요.',coords:null}),
+      X({title:'파란색 우산 습득',category:'기타',location:'공학관 1층 로비',date:dAgo(3),author:'lee_campus',views:4,
+         desc:'파란색 장우산입니다. 공학관 로비 우산꽂이에 두었어요.',
+         coords:{lat:37.2112,lng:126.9742,addr:'수원대학교 공학관',detail:'1층 로비'}})
+    );
+  })();
+}
 
 // ── 대학 목록 ──
 var UNIVS={
@@ -1633,6 +1734,7 @@ async function openDet(id){
       +(p.coords?'<div class="det-map-wrap"><div class="det-map-addr">📍 '+esc(p.coords.addr)+(p.coords.detail?'<br>🏢 '+esc(p.coords.detail):'')+'</div><div id="det-map"></div></div>':'')
       +thanksRowHtml(p)
       +(revTo?'<div class="det-actions" style="border-top:none;padding-top:0"><button class="rev-cta" data-nm="'+esc(revTo)+'" onclick="openReview('+id+',this.dataset.nm)">⭐ @'+esc(revTo)+' 님에게 매너 평가 남기기</button></div>':'')
+      +(isMine&&p.type==='lost'&&p.status==='active'?'<div class="det-actions" style="border-top:none;padding-top:0"><button class="ai-find-btn" style="margin-bottom:0" onclick="openAiFromPost('+id+')">🔍 AI로 비슷한 습득물 찾기</button></div>':'')
       +'<div class="det-actions">'+actBtns+'</div>'
     +'</div>';
   document.getElementById('det-ov').classList.add('on');
@@ -1642,7 +1744,7 @@ async function openDet(id){
 }
 function closeDet(){
   document.getElementById('det-ov').classList.remove('on');
-  var profOpen=document.getElementById('profile-scr').classList.contains('on');
+  var profOpen=document.getElementById('profile-scr').classList.contains('on')||document.getElementById('ai-scr').classList.contains('on');
   if(!profOpen) document.querySelector('.fab-wrap').style.display='';
 }
 function openMenu(){
@@ -1979,7 +2081,7 @@ function openEditPost(id){
   document.querySelector('.sbtn').textContent='수정 완료';
   closeRegMap();
   if(p.coords)openRegMap(p.coords);
-  syncMapReq();
+  syncMapReq();syncAiBtn();
   closeDet();
   document.getElementById('reg-ov').classList.add('on');
   document.querySelector('.fab-wrap').style.display='none';
@@ -2250,7 +2352,7 @@ function openReg(){
   document.getElementById('floc').placeholder='예: 3층 복도, 도서관';
   document.getElementById('tc-lost').classList.add('on');
   document.getElementById('tc-found').classList.remove('on');
-  closeRegMap();syncMapReq();
+  closeRegMap();syncMapReq();syncAiBtn();
   resetPzone();
   document.querySelector('.sheet-title').textContent='분실물 / 습득물 등록';
   document.querySelector('.sbtn').textContent='등록하기';
@@ -2264,6 +2366,7 @@ function closeReg(){
 function setType(t){
   var changed=ST.regType!==t;
   ST.regType=t;
+  syncAiBtn();
   document.getElementById('tc-lost').classList.toggle('on',t==='lost');
   document.getElementById('tc-found').classList.toggle('on',t==='found');
   document.getElementById('loc-lbl').innerHTML=(t==='lost'?'분실 위치':'습득 위치')+' <span class="req">*</span>';
@@ -2471,6 +2574,415 @@ function toast(msg){
   var el=document.getElementById('toast');
   el.textContent=msg;el.classList.add('show');
   setTimeout(function(){el.classList.remove('show');},2600);
+}
+
+// ══════════════════════════════════════════════════════════
+// AI 비슷한 습득물 찾기 — 1단계(규칙·텍스트 기반). 외부 API·모델 호출 없이 브라우저에서 계산한다.
+// 점수는 "입력 정보가 얼마나 비슷한가"의 참고 값이며, 같은 물건일 확률이 아니다.
+// ══════════════════════════════════════════════════════════
+// ==AI-MATCH-START==
+// 점수 = Σ 가중치×항목점수 (정보가 없는 항목은 중립값 AIM_UNKNOWN, 명확한 불일치는 0점+감점 배율)
+// ※ 예전 방식(없는 항목을 빼고 나머지로 100%를 다시 나누기)은 정보가 적은 후보를 부풀려서 폐기했다.
+var AIM_W={ident:.45,color:.15,loc:.15,date:.10,text:.10,cat:.05};
+var AIM_W_IMG=.30;       // 사진 분석이 연결되면 사진 비중. 나머지는 (1-AIM_W_IMG)배로 줄여 합계 1을 유지
+var AIM_IMG_READY=false; // CLIP 연결 전에는 false → 사진은 점수에 넣지 않고 "사진 미분석"으로 표시
+var AIM_UNKNOWN=.4;      // 정보 없음(불일치 0점과 구분)
+var AIM_MIN_TOTAL=60, AIM_MIN_IDENT=.7, AIM_TOP=3;
+var AIM_EARLY_OK=7;      // 습득일이 분실일보다 이만큼(일)까지 앞서는 건 입력 시차로 보고 감점만 한다
+
+// 물품 종류. 위에 있는 규칙부터 찾고 찾은 글자는 지워서 '카드지갑'이 '카드'로 또 잡히지 않게 한다.
+var AIM_TYPES=[
+  ['wallet','지갑',['카드지갑','지갑']],
+  ['charger','충전기·보조배터리',['보조배터리','충전기','케이블']],
+  ['headphones','헤드폰',['헤드폰','헤드셋']],
+  ['earbuds','무선 이어폰',['무선이어폰','블루투스이어폰','이어버즈','에어팟','airpods','airpod','이어폰','이어팟','버즈','buds']],
+  ['card','학생증·카드',['학생증','신분증','체크카드','신용카드','교통카드','사원증','카드']],
+  ['phone','휴대폰',['휴대폰','핸드폰','스마트폰','아이폰','폰']],
+  ['tumbler','텀블러',['텀블러','물병','보온병']],
+  ['umbrella','우산',['우산']],
+  ['keyring','키링·열쇠',['키링','열쇠','키홀더']],
+  ['hoodie','겉옷',['후드','맨투맨','자켓','재킷','점퍼','패딩']],
+  ['bag','가방',['가방','백팩','에코백','파우치']],
+  ['laptop','노트북·태블릿',['노트북','맥북','태블릿','아이패드']],
+  ['pen','필기구',['볼펜','필통','샤프']],
+  ['book','책·노트',['교재','전공책','공책']],
+  ['glasses','안경',['안경','선글라스']],
+  ['watch','시계',['시계','워치']]
+];
+var AIM_RELATED={'card|wallet':1,'earbuds|headphones':1};
+// 제품(모델). 같은 제품이면 가장 강한 근거, 같은 종류(이어폰)라도 제품이 다르면 다른 물건으로 본다.
+var AIM_PROD=[
+  ['galaxy_buds','갤럭시 버즈','samsung',/갤럭시이어버즈|갤럭시버즈|갤버즈|galaxybuds|(^|[^어])버즈/],
+  ['airpods','에어팟','apple',/에어팟|airpods?/],
+  ['iphone','아이폰','apple',/아이폰|iphone/],
+  ['macbook','맥북','apple',/맥북|macbook/],
+  ['ipad','아이패드','apple',/아이패드|ipad/],
+  ['galaxy_watch','갤럭시 워치','samsung',/갤럭시워치/]
+];
+var AIM_VARIANT=[['pro',/프로|pro/],['live',/라이브|live/],['fe',/fe/],['plus',/플러스|plus/],['max',/맥스|max/],['n2',/2/],['n3',/3/],['n4',/4/]];
+var AIM_BRAND=[
+  ['samsung','삼성',/삼성|갤럭시|samsung/],['apple','애플',/애플|apple|아이폰|에어팟|맥북|아이패드/],
+  ['sony','소니',/소니|sony/],['lg','LG',/엘지|톤프리|(^|[^a-z])lg([^a-z]|$)/],['xiaomi','샤오미',/샤오미|레드미|xiaomi|redmi/],
+  ['jabra','자브라',/자브라|jabra/],['jbl','JBL',/jbl/],['anker','앤커',/앤커|anker/],
+  ['nike','나이키',/나이키|nike/],['adidas','아디다스',/아디다스|adidas/]
+];
+var AIM_COLOR=[
+  ['black','검정',['검정','검은','블랙','까만']],['white','흰색',['흰색','흰','하얀','화이트']],
+  ['blue','파랑',['파란','파랑','블루','남색','네이비']],['green','연두·초록',['연두','초록','녹색','그린']],
+  ['yellow','노랑',['노란','노랑','옐로']],['red','빨강',['빨간','빨강','레드']],
+  ['pink','분홍',['분홍','핑크']],['beige','베이지',['베이지','아이보리','크림']],
+  ['gray','회색',['회색','그레이','은색','실버']],['brown','갈색',['갈색','브라운']],
+  ['purple','보라',['보라','퍼플']]
+];
+var AIM_COLOR_NEAR={'beige|white':.55,'gray|white':.4,'brown|beige':.45,'gray|black':.35,'pink|red':.35};
+var AIM_PLACE=[
+  ['library','도서관',['도서관']],['eng','공학관',['공학관']],['cafeteria','학생식당',['학생식당','학식','식당']],
+  ['main','본관',['본관']],['sw','소프트웨어관',['소프트웨어']],['biz','글로벌경영관',['글경','글로벌경영','경영관']],
+  ['gym','체육관',['체육관','라커룸']],['dorm','기숙사',['기숙사']],['union','학생회관',['학생회관']],
+  ['gate','정문·후문',['정문','후문']]
+];
+// 이어폰 구성(본체·충전 케이스·보호 케이스). 'bare'는 제품명만 적힌 글(예: "갤럭시 버즈")
+var AIM_FORM_LBL={bare:'이어폰 본체',unit:'이어폰 본체',set:'본체+충전 케이스',charging_case:'충전 케이스',case:'케이스',protective_case:'보호 케이스'};
+var AIM_FORM={'bare|bare':1,'bare|unit':1,'bare|set':1,'bare|charging_case':.6,'bare|case':.5,'bare|protective_case':.1,
+  'unit|unit':1,'set|unit':.85,'charging_case|unit':.3,'case|unit':.25,'protective_case|unit':0,
+  'set|set':1,'charging_case|set':.6,'case|set':.5,'protective_case|set':.1,
+  'charging_case|charging_case':1,'case|charging_case':.8,'charging_case|protective_case':.15,
+  'case|case':1,'case|protective_case':.7,'protective_case|protective_case':1};
+var AIM_STOP=['분실','습득','발견','잃어버','주웠','주운','있어요','입니다','합니다','했어요','했습니다','연락','주세요','같아요','있었어요','두고','왔습니다','것같','근처','케이스','본체','색'];
+var AIM_ACC='(스티커|자국|무늬|로고|글씨|라벨|고무줄|끈|리본|테이프|줄무늬|스트랩)'; // "흰색 스티커"의 흰색은 물건 색이 아님
+
+function aimClean(s){return String(s||'').toLowerCase().replace(/[^가-힣a-z0-9\s]/g,' ');}
+function aimPair(a,b){return a<b?a+'|'+b:b+'|'+a;}
+function aimTypes(text){
+  var t=aimClean(text).replace(/\s+/g,''),out=[];
+  AIM_TYPES.forEach(function(r){
+    for(var i=0;i<r[2].length;i++){
+      var k=r[2][i],ix=t.indexOf(k);
+      if(ix>-1){out.push({id:r[0],label:r[1],idx:ix});t=t.split(k).join(new Array(k.length+1).join('_'));break;}
+    }
+  });
+  return out.sort(function(a,b){return a.idx-b.idx;});
+}
+function aimColors(text){
+  var s=aimClean(text),out={};
+  AIM_COLOR.forEach(function(c){c[2].forEach(function(k){s=s.replace(new RegExp(k+'\\s*색?\\s*'+AIM_ACC,'g'),' ');});});
+  var t=s.replace(/\s+/g,'');
+  AIM_COLOR.forEach(function(c){for(var i=0;i<c[2].length;i++){if(t.indexOf(c[2][i])>-1){out[c[0]]=c[1];break;}}});
+  return out;
+}
+function aimProduct(text){
+  var t=aimClean(text).replace(/\s+/g,'');
+  for(var i=0;i<AIM_PROD.length;i++){
+    var m=AIM_PROD[i][3].exec(t);
+    if(m){
+      var rest=t.slice(m.index+m[0].length,m.index+m[0].length+8),v=[];
+      AIM_VARIANT.forEach(function(x){if(x[1].test(rest))v.push(x[0]);});
+      return {id:AIM_PROD[i][0],label:AIM_PROD[i][1],brand:AIM_PROD[i][2],variant:v.sort().join('+')};
+    }
+  }
+  return null;
+}
+function aimBrand(text,prod){
+  if(prod){for(var j=0;j<AIM_BRAND.length;j++)if(AIM_BRAND[j][0]===prod.brand)return {id:prod.brand,label:AIM_BRAND[j][1]};}
+  var t=aimClean(text).replace(/\s+/g,' ');
+  for(var i=0;i<AIM_BRAND.length;i++)if(AIM_BRAND[i][2].test(t))return {id:AIM_BRAND[i][0],label:AIM_BRAND[i][1]};
+  return null;
+}
+function aimForm(title,text){
+  var tt=aimClean(title).replace(/\s+/g,''),all=aimClean(text).replace(/\s+/g,'');
+  var caseT=/케이스|충전함|충전기/.test(tt),prot=/보호|실리콘|커버|젤리|스킨|범퍼/.test(all)&&/케이스|커버/.test(all);
+  var unit=/본체|한쪽|왼쪽|오른쪽|유닛|이어버드|한짝/.test(all);
+  if(caseT){
+    if(prot)return 'protective_case';
+    if(unit)return 'set';
+    return /충전/.test(all)?'charging_case':'case';
+  }
+  if(unit)return 'unit';
+  if(/케이스|충전/.test(all))return 'set'; // 제목은 제품명, 설명에 케이스가 같이 있음
+  return 'bare';
+}
+function aimResidual(text,place){
+  var s=aimClean(text);
+  AIM_STOP.forEach(function(w){s=s.split(w).join(' ');});
+  var rm=function(t){t.forEach(function(r){(r[2]||[]).forEach(function(k){s=s.split(k).join(' ');});});};
+  rm(AIM_TYPES);rm(AIM_COLOR);rm(AIM_PLACE);
+  AIM_PROD.forEach(function(p){s=s.replace(new RegExp(p[3].source,'g'),' ');});
+  AIM_BRAND.forEach(function(b){s=s.replace(new RegExp(b[2].source,'g'),' ');});
+  return s.split(/\s+/).filter(function(w){return w.length>=2;});
+}
+function aimBg(words){
+  var set={};words.forEach(function(w){for(var i=0;i<w.length-1;i++)set[w.substr(i,2)]=1;});return set;
+}
+function aimDice(a,b){
+  var ka=Object.keys(a),kb=Object.keys(b);if(!ka.length||!kb.length)return null;
+  var n=0;ka.forEach(function(k){if(b[k])n++;});
+  return 2*n/(ka.length+kb.length);
+}
+function aimMeters(a,b){
+  var R=6371000,r=Math.PI/180,dLat=(b.lat-a.lat)*r,dLng=(b.lng-a.lng)*r;
+  var h=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(a.lat*r)*Math.cos(b.lat*r)*Math.sin(dLng/2)*Math.sin(dLng/2);
+  return 2*R*Math.asin(Math.sqrt(h));
+}
+function aimDateOk(s){
+  if(!s)return null;if(!/^\d{4}-\d{2}-\d{2}$/.test(s))return 'invalid';
+  var d=new Date(s+'T00:00:00Z');return isNaN(d)||d.toISOString().slice(0,10)!==s?'invalid':'ok';
+}
+function aimDays(a,b){return Math.round((Date.parse(b)-Date.parse(a))/86400000);}
+function aimLocText(o){return [o.location,o.coords&&o.coords.addr,o.coords&&o.coords.detail].filter(Boolean).join(' ');}
+function aimPlaces(text){
+  var t=aimClean(text).replace(/\s+/g,''),out={};
+  AIM_PLACE.forEach(function(g){for(var i=0;i<g[2].length;i++){if(t.indexOf(g[2][i])>-1){out[g[0]]=g[1];break;}}});
+  return out;
+}
+
+// 글 하나에서 비교에 쓸 특징을 뽑는다. 제목에서 먼저 찾고 없을 때만 설명에서 찾는다(설명 속 '지갑 안의 학생증'은 종류가 아님).
+function aimAnalyze(o){
+  var title=o.title||'',full=title+' '+(o.desc||'');
+  var ty=aimTypes(title),fromTitle=ty.length>0;
+  if(!ty.length)ty=aimTypes(full);
+  var prod=aimProduct(title)||aimProduct(full),brand=aimBrand(title,prod&&aimProduct(title))||aimBrand(full,prod);
+  var type=ty.length?ty[0]:null;
+  var res=aimResidual(full);
+  return {type:type?type.id:null,typeLabel:type?type.label:null,fromTitle:fromTitle,allTypes:aimTypes(full).map(function(x){return x.id;}),
+    prod:prod,brand:brand,colors:aimColors(full),
+    form:type&&type.id==='earbuds'?aimForm(title,full):null,
+    places:aimPlaces(aimLocText(o)),res:res,bg:aimBg(res),full:aimBg(aimClean(full).split(/\s+/).filter(function(w){return w.length>=2;})),
+    dateState:aimDateOk(o.date)};
+}
+function aimWeights(){
+  if(!AIM_IMG_READY)return Object.assign({},AIM_W);
+  var w={img:AIM_W_IMG};Object.keys(AIM_W).forEach(function(k){w[k]=AIM_W[k]*(1-AIM_W_IMG);});return w;
+}
+function aimColorSim(qc,pc){
+  var best=0;
+  Object.keys(qc).forEach(function(a){Object.keys(pc).forEach(function(b){
+    var s=a===b?1:(AIM_COLOR_NEAR[aimPair(a,b)]||0);if(s>best)best=s;});});
+  return best;
+}
+
+// q: 내가 찾는 분실물, p: 비교할 습득물.
+// 반환: total(0~100), ok(추천 여부), gate(제외 사유), why(추천 이유), warn(확인할 점), conf(명확한 불일치), comp(항목별 0~1·null=정보없음)
+function aimScore(q,p){
+  var a=aimAnalyze(q),b=aimAnalyze(p),why=[],warn=[],conf=[],gate=null,mult=1,uncertain=false;
+  var comp={img:null,ident:null,color:null,loc:null,date:null,text:null,cat:null};
+  var setGate=function(code,msg){if(!gate)gate={code:code,msg:msg};};
+  if(p.status&&p.status!=='active')setGate('resolved','해결 완료된 게시물이에요');
+  if(p.type&&p.type!=='found')setGate('kind','습득물이 아니에요');
+
+  // ── 물품 종류 · 제품 · 구성 ──
+  var typeS,fullDice=aimDice(a.full,b.full);
+  if(a.type&&b.type){
+    if(a.type===b.type)typeS=1;
+    else if(AIM_RELATED[aimPair(a.type,b.type)]){
+      var inside=b.allTypes.indexOf(a.type)>-1||a.allTypes.indexOf(b.type)>-1;
+      typeS=inside?.8:.45;
+      if(inside)why.push('글 안에 ‘'+(b.allTypes.indexOf(a.type)>-1?(AIM_TYPES.filter(function(r){return r[0]===a.type;})[0][1]):a.typeLabel)+'’ 언급이 있어요');
+      else warn.push('종류가 달라요: 내 글은 ‘'+a.typeLabel+'’, 이 글은 ‘'+b.typeLabel+'’');
+    }else{
+      typeS=0;setGate('type','물품 종류가 달라요 (‘'+a.typeLabel+'’ ↔ ‘'+b.typeLabel+'’)');
+    }
+  }else{
+    uncertain=true;
+    typeS=.35+((q.category&&q.category===p.category)?.15:0)+.3*Math.min(1,(fullDice||0)*1.5);
+    warn.push('물품 종류를 확실히 알 수 없어요. 사진·채팅으로 추가 확인이 필요해요');
+  }
+  var modelS=null;
+  if(a.brand&&b.brand&&a.brand.id!==b.brand.id){
+    modelS=0;mult*=.3;
+    conf.push('브랜드가 달라요 (‘'+a.brand.label+'’ ↔ ‘'+b.brand.label+'’)');
+  }else if(a.prod&&b.prod){
+    if(a.prod.id===b.prod.id){
+      if(a.prod.variant&&b.prod.variant&&a.prod.variant!==b.prod.variant){
+        modelS=.75;mult*=.9;warn.push('같은 ‘'+a.prod.label+'’이지만 세부 모델(프로·라이브 등)이 달라 보여요');
+      }else{modelS=1;why.push('제품명이 ‘'+a.prod.label+'’(으)로 같아요');}
+    }else{modelS=.35;mult*=.5;conf.push('같은 브랜드의 다른 제품이에요 (‘'+a.prod.label+'’ ↔ ‘'+b.prod.label+'’)');}
+  }else if(a.brand&&b.brand){
+    modelS=.7;why.push('브랜드가 ‘'+a.brand.label+'’(으)로 같아요');warn.push('제품명(모델)은 한쪽에만 적혀 있어요');
+  }else if(a.brand||b.brand||a.prod||b.prod){
+    warn.push('브랜드·모델이 한쪽에만 적혀 있어 확인이 필요해요');
+  }
+  var formS=null;
+  if(a.form&&b.form){
+    formS=AIM_FORM[aimPair(a.form,b.form)];if(formS===undefined)formS=AIM_FORM[b.form+'|'+a.form];if(formS===undefined)formS=.5;
+    if(formS<.2){setGate('form','물품 구성이 달라요 (‘'+AIM_FORM_LBL[a.form]+'’ ↔ ‘'+AIM_FORM_LBL[b.form]+'’)');}
+    else if(formS<.9){warn.push('구성이 달라 보여요: 내 글은 ‘'+AIM_FORM_LBL[a.form]+'’, 이 글은 ‘'+AIM_FORM_LBL[b.form]+'’');}
+  }
+  var parts=[[.4,typeS]];if(modelS!==null)parts.push([.35,modelS]);if(formS!==null)parts.push([.25,formS]);
+  var pw=0,pv=0;parts.forEach(function(x){pw+=x[0];pv+=x[0]*x[1];});
+  comp.ident=pv/pw;
+  if(typeS===1&&modelS===null&&!(a.prod||b.prod))why.push('같은 종류(‘'+a.typeLabel+'’)예요');
+
+  // ── 색상 ──
+  var qc=Object.keys(a.colors),pc=Object.keys(b.colors);
+  if(qc.length&&pc.length){
+    comp.color=aimColorSim(a.colors,b.colors);
+    var cn=function(m){return Object.keys(m).map(function(k){return m[k];}).join('·');};
+    if(comp.color>=1)why.push('색상 ‘'+cn(a.colors)+'’이(가) 같아요');
+    else if(comp.color<.3){mult*=.55;conf.push('색상이 달라요 (내 글 ‘'+cn(a.colors)+'’ ↔ 이 글 ‘'+cn(b.colors)+'’)');}
+    else{mult*=.85;warn.push('색상이 비슷한 계열이에요 (‘'+cn(a.colors)+'’ ↔ ‘'+cn(b.colors)+'’)');}
+  }else warn.push('색상 정보가 '+(qc.length||pc.length?'한쪽에':'양쪽 모두')+' 없어 확인이 필요해요');
+
+  // ── 장소 ──
+  var qp=Object.keys(a.places),pp=Object.keys(b.places);
+  if(q.coords&&p.coords&&q.coords.lat!=null&&p.coords.lat!=null){
+    var m=aimMeters(q.coords,p.coords);comp.loc=Math.exp(-m/350);
+    if(m<=600)why.push('지도 핀이 약 '+(m<30?'30m 이내':Math.round(m/10)*10+'m')+' 거리예요');
+    else warn.push('지도 핀이 약 '+Math.round(m/100)/10+'km 떨어져 있어요');
+  }else if(qp.length&&pp.length){
+    var same=qp.filter(function(k){return b.places[k];});
+    comp.loc=same.length?1:.1;
+    if(same.length)why.push('같은 장소(‘'+a.places[same[0]]+'’) 근처예요');
+    else warn.push('장소가 달라요 (‘'+a.places[qp[0]]+'’ ↔ ‘'+b.places[pp[0]]+'’)');
+  }else{
+    var ld=aimDice(aimBg(aimClean(aimLocText(q)).split(/\s+/).filter(function(w){return w.length>=2;})),
+                   aimBg(aimClean(aimLocText(p)).split(/\s+/).filter(function(w){return w.length>=2;})));
+    if(ld!==null)comp.loc=Math.min(.6,ld);else warn.push('장소 정보가 '+(aimLocText(q)||aimLocText(p)?'한쪽에':'양쪽 모두')+' 없어 확인이 필요해요');
+  }
+
+  // ── 날짜 ──
+  if(a.dateState==='ok'&&b.dateState==='ok'){
+    var dd=aimDays(q.date,p.date);
+    if(dd<-AIM_EARLY_OK){setGate('date','습득일이 분실일보다 '+(-dd)+'일 앞서요');comp.date=0;}
+    else if(dd<-1){comp.date=.2;warn.push('습득일이 분실일보다 '+(-dd)+'일 앞서요. 분실일을 늦게 적었는지 확인해 보세요');}
+    else{
+      comp.date=dd<=1?1:dd<=3?.9:dd<=7?.75:dd<=14?.5:dd<=30?.3:dd<=60?.15:.05;
+      if(dd<=14)why.push(dd<=0?'분실일과 같은 날 습득됐어요':'분실 '+dd+'일 뒤에 습득됐어요');
+      else warn.push('분실 후 '+dd+'일이 지나 습득됐어요');
+    }
+  }else{
+    warn.push(a.dateState==='invalid'||b.dateState==='invalid'?'날짜가 올바르지 않아 비교하지 못했어요. 날짜를 확인해 주세요':'날짜 정보가 없어 확인이 필요해요');
+  }
+
+  // ── 설명(종류·색·장소 단어를 뺀 나머지 특징) ──
+  if(a.res.length&&b.res.length&&Object.keys(a.bg).length>=2&&Object.keys(b.bg).length>=2){
+    var d=aimDice(a.bg,b.bg)||0;comp.text=Math.min(1,d*1.3);
+    var sh=a.res.filter(function(w){return b.res.some(function(x){return x.slice(0,2)===w.slice(0,2);});});
+    if(sh.length&&comp.text>=.3)why.push('설명에 같은 특징이 있어요: ‘'+sh.slice(0,2).join('’, ‘')+'’');
+  }
+
+  // ── 카테고리(참고용 낮은 비중) ──
+  if(q.category&&p.category)comp.cat=q.category===p.category?1:((q.category==='기타'||p.category==='기타')?.5:.1);
+
+  // ── 사진: 분석 모델이 연결되고 aimImageScore()가 있을 때만 계산. 아니면 null(점수에 넣지 않음) ──
+  if(AIM_IMG_READY&&typeof aimImageScore==='function')comp.img=aimImageScore(q,p);
+
+  // ── 합산 ──
+  var W=aimWeights(),total=0;
+  Object.keys(W).forEach(function(k){var s=comp[k];total+=W[k]*(s===null||s===undefined?AIM_UNKNOWN:s);});
+  total*=mult;
+  var raw=total*100;
+  var identOk=comp.ident>=AIM_MIN_IDENT||(uncertain&&comp.ident>=.55&&(fullDice||0)>=.5);
+  var ok=!gate&&identOk&&raw>=AIM_MIN_TOTAL;
+  var exclMsg=gate?gate.msg:(!ok&&conf.length?conf[0]:null);
+  return {total:Math.round(raw),raw:raw,ok:ok,gate:gate,exclMsg:exclMsg,comp:comp,why:why,warn:conf.concat(warn),conf:conf,
+          uncertain:uncertain,sameType:typeS===1,used:W};
+}
+// 추천 후보(최대 TOP 3, 기준을 못 넘으면 채우지 않음)와, 같은 종류인데 제외된 후보(이유 포함)를 함께 돌려준다.
+function aimRankFull(q,posts,me){
+  var pool=posts.filter(function(p){return p.type==='found'&&p.status==='active'&&p.author!==me;})
+    .map(function(p){return {post:p,r:aimScore(q,p)};});
+  var byScore=function(a,b){return b.r.raw-a.r.raw||String(b.post.date).localeCompare(String(a.post.date));};
+  return {
+    top:pool.filter(function(x){return x.r.ok;}).sort(byScore).slice(0,AIM_TOP),
+    excluded:pool.filter(function(x){return !x.r.ok&&x.r.sameType&&x.r.exclMsg;}).sort(byScore).slice(0,2)
+  };
+}
+function aimRank(q,posts,me){return aimRankFull(q,posts,me).top;}
+// ==AI-MATCH-END==
+
+// ── 화면 ──
+var AIM_PRESETS=[
+  {k:'베이지 갤럭시 버즈',q:{title:'갤럭시 버즈',category:'전자기기',location:'',desc:'베이지색',offset:2}},
+  {k:'검정 에어팟 케이스',q:{title:'검정 에어팟 케이스 분실',category:'전자기기',location:'중앙도서관 3층',desc:'흰색 스티커가 붙어 있어요',offset:1}},
+  {k:'연두 텀블러',q:{title:'연두색 텀블러 분실',category:'기타',location:'글경708호',desc:'안쪽에 흠집이 있어요',offset:2}},
+  {k:'학생증',q:{title:'학생증 분실',category:'카드/신분증',location:'학생식당 1층',desc:'',offset:2}},
+  {k:'노트북(결과 없음 예시)',q:{title:'회색 노트북 분실',category:'전자기기',location:'정문 앞',desc:'스티커 여러 개',offset:1}}
+];
+function aimDate(offset){var d=new Date();d.setDate(d.getDate()-(offset||0));return d.toISOString().split('T')[0];}
+function syncAiBtn(){
+  var b=document.getElementById('ai-find-btn');if(b)b.style.display=ST.regType==='lost'?'':'none';
+}
+function openAiFromForm(){
+  var title=document.getElementById('fn').value.trim();
+  if(!title){toast('물품명을 먼저 입력해주세요');return;}
+  var coords=ST.mapCoords?Object.assign({},ST.mapCoords,{detail:document.getElementById('map-detail').value.trim()}):null;
+  openAi({title:title,category:document.getElementById('fcat').value,desc:document.getElementById('fdesc').value.trim(),
+          date:document.getElementById('fdate').value,coords:coords,
+          location:(coords&&(coords.detail||coords.addr))||'',img:ST.photoUrl||null});
+}
+function openAiFromPost(id){
+  var p=ST.posts.find(function(x){return x.id===id;});if(!p)return;
+  closeDet();
+  openAi({title:p.title,category:p.category,desc:p.desc||'',date:p.date,coords:p.coords||null,location:p.location||'',img:p.img||null});
+}
+function openAi(q){
+  ST.aiQ=q;renderAi();
+  document.getElementById('ai-scr').classList.add('on');
+  document.getElementById('ai-body').scrollTop=0;
+  document.querySelector('.fab-wrap').style.display='none';
+}
+function closeAi(){
+  document.getElementById('ai-scr').classList.remove('on');
+  var busy=['reg-ov','det-ov','profile-scr','chatlist-scr','chat-scr'].some(function(id){
+    return document.getElementById(id).classList.contains('on');});
+  if(!busy)document.querySelector('.fab-wrap').style.display='';
+}
+function aimPreset(i){var pr=AIM_PRESETS[i].q;
+  openAi({title:pr.title,category:pr.category,desc:pr.desc,date:aimDate(pr.offset),coords:null,location:pr.location,img:null});}
+function aimThumb(o){
+  return o.img?'<img class="aim-th" src="'+esc(o.img)+'" alt="">':'<div class="aim-th-e">'+(CE[o.category]||'🔍')+'</div>';
+}
+var AIM_LBL={ident:'종류·모델',color:'색상',loc:'장소',date:'날짜',text:'설명',cat:'카테고리'};
+function renderAi(){
+  var q=ST.aiQ,el=document.getElementById('ai-body'),h='';
+  if(DEMO){
+    h+='<div class="aim-note demo">🧪 <b>데모 모드</b> — 가상 데이터로 계산하며 실제 데이터베이스에는 아무것도 기록하지 않아요. 새로고침하면 초기화돼요.</div>'
+      +'<div class="aim-h">예시로 바로 해보기</div><div class="aim-pre">'
+      +AIM_PRESETS.map(function(x,i){return '<button onclick="aimPreset('+i+')">'+esc(x.k)+'</button>';}).join('')+'</div>';
+  }
+  h+='<div class="aim-note info">'+(AIM_IMG_READY?'':'📷 사진 분석 모델이 아직 연결되지 않아 <b>사진은 비교하지 않았어요.</b> ')
+    +'물품 종류·모델·색상·장소·날짜를 비교해요.</div>';
+  h+='<div class="aim-q">'+aimThumb(q)+'<div style="min-width:0"><div class="aim-q-t">내가 찾는 물건</div>'
+    +'<div class="aim-q-n">'+esc(q.title)+'</div>'
+    +'<div class="aim-q-m">'+(q.category?esc(q.category)+' · ':'')+'📅 '+esc(q.date||'날짜 없음')
+    +'<br>📍 '+esc(q.location||'위치 미입력')+'</div></div></div>';
+  var rk=aimRankFull(q,ST.posts,ST.me),res=rk.top;
+  if(!res.length){
+    h+='<div class="aim-empty"><div class="aim-empty-i">🔎</div>'
+      +'<div class="aim-empty-t">매칭되는 습득물을 찾지 못했어요</div>'
+      +'<div class="aim-empty-s">지금 올라온 습득물 중에는 종류·색상·날짜가 맞는 게 없어요.<br>'
+      +'물품명에 브랜드·모델·색을 적고, 지도에 위치를 표시하면 더 정확히 찾을 수 있어요.<br>'
+      +'새 습득물이 올라오면 이 화면에서 다시 찾아보세요.</div></div>';
+  }else{
+    h+='<div class="aim-h">비슷한 습득물 '+res.length+'건</div>';
+    res.forEach(function(x,i){
+      var p=x.post,r=x.r,lv=r.total>=75?'꽤 비슷해 보여요':r.total>=65?'비슷해요':'일부 비슷해요 · 확인이 필요해요';
+      h+='<div class="aim-card" onclick="openDet('+p.id+')">'
+        +'<div class="aim-top"><div class="aim-rank">'+aimThumb(p)+'<b>'+(i+1)+'</b></div>'
+        +'<div style="min-width:0;flex:1"><div class="aim-nm">'+esc(p.title)+(DEMO?'<span class="aim-vt">가상 데이터</span>':'')+'</div>'
+        +'<div class="aim-sub">'+esc(p.category)+' · 📅 '+esc(p.date)+' · 📍 '+esc(p.location)+'</div></div></div>'
+        +'<div class="aim-sc"><div class="aim-bar"><i style="width:'+r.total+'%"></i></div>'
+        +'<div class="aim-num">유사도 '+r.total+'점</div></div>'
+        +'<div class="aim-lv'+(r.total>=75?' ok':'')+'">'+lv+'</div>'
+        +(r.why.length?'<ul class="aim-rs">'+r.why.slice(0,3).map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ul>':'')
+        +(r.warn.length?'<ul class="aim-rs warn">'+r.warn.slice(0,3).map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ul>':'')
+        +'<details class="aim-det" onclick="event.stopPropagation()"><summary>점수 자세히 ▾</summary><div class="aim-chips">'
+        +Object.keys(AIM_LBL).map(function(k){
+          var v=r.comp[k];
+          return v===null||v===undefined
+            ?'<span class="aim-chip off">'+AIM_LBL[k]+' 정보 없음</span>'
+            :'<span class="aim-chip">'+AIM_LBL[k]+' '+Math.round(v*100)+'</span>';}).join('')
+        +(r.comp.img!=null?'<span class="aim-chip">사진 '+Math.round(r.comp.img*100)+'</span>':'<span class="aim-chip off">사진 미분석</span>')+'</div></details>'
+        +'</div>';
+    });
+  }
+  if(rk.excluded.length){
+    h+='<div class="aim-h" style="margin-top:14px">비슷해 보이지만 제외한 습득물</div><ul class="aim-ex">'
+      +rk.excluded.map(function(x){return '<li><b>'+esc(x.post.title)+'</b> — '+esc(x.r.exclMsg)+'</li>';}).join('')+'</ul>';
+  }
+  h+='<div class="aim-foot">※ 유사도 점수는 입력된 정보가 얼마나 비슷한지 보여주는 <b>참고 값</b>이에요. '
+    +'<b>같은 물건일 확률이 아니니</b> 카드를 눌러 상세 내용을 확인하고, 채팅으로 특징을 직접 물어보세요.</div>';
+  el.innerHTML=h;
 }
 
 // ── 초기화 ──
