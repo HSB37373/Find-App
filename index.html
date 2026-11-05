@@ -34,12 +34,19 @@
                  cursor:pointer;display:flex;align-items:center;justify-content:center;}
     .hd-menu-btn:active{background:rgba(255,255,255,.3);}
     /* 사이드 메뉴 */
-    .menu-ov{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;z-index:4000;}
-    .menu-ov.on{display:block;}
-    .menu-sheet{position:absolute;bottom:0;left:50%;transform:translateX(-50%);
-                width:100%;max-width:430px;background:#fff;border-radius:22px 22px 0 0;
-                overflow:hidden;}
-    .menu-handle{width:36px;height:4px;background:#ddd;border-radius:2px;margin:12px auto 0;}
+    /* 메뉴: 앱 영역(최대 430px)의 오른쪽에서 밀려 나오는 드로어 */
+    .menu-ov{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:4000;
+             visibility:hidden;opacity:0;transition:opacity .25s,visibility 0s .28s;}
+    .menu-ov.on{visibility:visible;opacity:1;transition:opacity .25s;}
+    .menu-col{position:absolute;inset:0;max-width:430px;margin:0 auto;overflow:hidden;}
+    .menu-sheet{position:absolute;top:0;right:0;bottom:0;width:min(300px,82%);background:#fff;
+                display:flex;flex-direction:column;overflow-y:auto;
+                padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+                box-shadow:-8px 0 24px rgba(0,0,0,.15);
+                transform:translateX(100%);transition:transform .28s cubic-bezier(.2,.8,.2,1);}
+    .menu-ov.on .menu-sheet{transform:none;}
+    .menu-close{align-self:flex-end;margin:10px 10px 0 0;width:36px;height:36px;border:none;border-radius:50%;
+                background:var(--gbg);color:var(--sub);font-size:20px;line-height:1;cursor:pointer;}
     .menu-user-row{display:flex;align-items:center;gap:14px;padding:18px 20px 16px;
                    border-bottom:1px solid var(--gline);}
     .menu-user-av{width:50px;height:50px;background:var(--gold);border-radius:50%;
@@ -54,7 +61,7 @@
                     display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
     .menu-item-label{font-size:15px;font-weight:600;color:var(--text);flex:1;}
     .menu-item-arr{color:#ccc;font-size:18px;}
-    .menu-footer{padding:16px 20px 28px;display:flex;justify-content:flex-end;}
+    .menu-footer{margin-top:auto;padding:16px 20px 28px;display:flex;justify-content:flex-end;}
     .menu-logout-btn{background:#fff0f0;color:#e74c3c;border:1.5px solid #fac8c8;
                      padding:11px 22px;border-radius:22px;font-size:14px;font-weight:700;
                      cursor:pointer;font-family:inherit;}
@@ -640,9 +647,9 @@
 
   <div class="stats">
     <div class="stat on" id="st-all" onclick="setStat('all')"><div class="stat-n" id="s-all">0</div><div class="stat-l">전체 등록</div></div>
-    <div class="stat" id="st-lost" onclick="setStat('lost')"><div class="stat-n" id="s-lost">0</div><div class="stat-l">찾는 중</div></div>
+    <div class="stat" id="st-lost" onclick="setStat('lost')"><div class="stat-n" id="s-lost">0</div><div class="stat-l">찾아줘</div></div>
     <div class="stat" id="st-found" onclick="setStat('found')"><div class="stat-n g" id="s-found">0</div><div class="stat-l">보관 중</div></div>
-    <div class="stat" id="st-done" onclick="setStat('done')"><div class="stat-n gr" id="s-done">0</div><div class="stat-l">해결됨</div></div>
+    <div class="stat" id="st-done" onclick="setStat('done')"><div class="stat-n gr" id="s-done">0</div><div class="stat-l">찾았대</div></div>
   </div>
 
   <div class="tabs">
@@ -870,9 +877,9 @@
 </div>
 
 <!-- 더보기 메뉴 -->
-<div class="menu-ov" id="menu-ov" onclick="if(event.target===this)closeMenu()">
-  <div class="menu-sheet">
-    <div class="menu-handle"></div>
+<div class="menu-ov" id="menu-ov" onclick="if(!event.target.closest('.menu-sheet'))closeMenu()">
+  <div class="menu-col"><div class="menu-sheet">
+    <button class="menu-close" onclick="closeMenu()" aria-label="메뉴 닫기">×</button>
     <div class="menu-user-row">
       <div class="menu-user-av" id="menu-av"></div>
       <div>
@@ -889,7 +896,7 @@
     <div class="menu-footer">
       <button class="menu-logout-btn" onclick="doLogout()">로그아웃</button>
     </div>
-  </div>
+  </div></div>
 </div>
 
 <!-- 채팅 목록 -->
@@ -1142,7 +1149,7 @@ var SAMPLE=[
   {type:'found',title:'바나나 인형 키링 습득',category:'기타',location:'공학관 엘리베이터 앞',date:'2026-05-11',author:'inchang_helper',desc:'공학관 1층 엘리베이터 앞에서 발견했습니다. 노란 얼굴에 하얀 눈썹이 특징입니다.',status:'active',likes:[],views:310,img:'images/banana-keyring.jpg',coords:{lat:37.2112,lng:126.9742,addr:'수원대학교 공학관',detail:'1층 엘리베이터 앞'}},
   {type:'lost',title:'학생증 분실 (홍길동)',category:'카드/신분증',location:'학생식당 1층',date:'2026-06-08',author:'park_2023',desc:'점심 먹고 학생증이 없어졌어요. 발견하시면 연락 주세요.',status:'active',likes:[],views:22,img:'images/student-id.jpg',coords:null},
   {type:'found',title:'검정 우산 습득',category:'기타',location:'본관 1층 우산꽂이 옆',date:'2026-06-12',author:'lee_campus',desc:'본관 1층 입구 검정 우산. 손잡이에 노란 고무줄이 묶여 있어요.',status:'active',likes:[],views:88,img:'images/umbrella.jpg',coords:{lat:37.2098,lng:126.9770,addr:'수원대학교 본관',detail:'1층 우산꽂이 옆'}},
-  {type:'lost',title:'파란색 나이키 후드 분실',category:'의류',location:'체육관 라커룸',date:'2026-06-05',author:'choi_yun',desc:'파란색 나이키 후드 왼쪽 소매 안쪽에 볼펜 자국 있어요.',status:'resolved',likes:[],views:15,img:null,coords:null,resolved_with:SAMPLE_HELPER},
+  {type:'lost',title:'파란색 나이키 후드 분실',category:'의류',location:'체육관 라커룸',date:'2026-06-05',author:'choi_yun',desc:'파란색 나이키 후드 왼쪽 소매 안쪽에 볼펜 자국 있어요.',status:'resolved',likes:[],views:15,img:'images/blue-hoodie.jpg',coords:null,resolved_with:SAMPLE_HELPER},
   {type:'found',title:'갤럭시 버즈',category:'전자기기',location:'소프트웨어관 302호',date:'2026-06-13',author:'shin_helper',desc:'의자 아래에서 갤럭시 이어버즈 베이지색 케이스를 발견했습니다.',status:'active',likes:[],views:134,img:'images/galaxy-buds.jpg',coords:{lat:37.2086,lng:126.9778,addr:'수원대학교 소프트웨어관',detail:'302호'}},
   {type:'lost',title:'연두색 텀블러 분실',category:'기타',location:'글경708호',date:'2026-06-14',author:'jung_h',desc:'테이블에 연두색 텀블러를 두고 왔습니다. 안쪽에 흠집이 있어요.',status:'active',likes:[],views:31,img:'images/tumbler.jpg',coords:null},
 ];
