@@ -176,10 +176,16 @@
     .fg{margin-bottom:16px;}
     .fl{font-size:13px;font-weight:700;margin-bottom:7px;display:flex;align-items:center;gap:6px;}
     .req{color:#e74c3c;}
-    .ai-tag{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;
+    .ic{width:1em;height:1em;flex:none;display:inline-block;vertical-align:-.14em;fill:none;stroke:currentColor;
+        stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+    .ic.fill{fill:currentColor;}
+    .mi{display:inline-flex;align-items:center;gap:3px;margin-left:8px;white-space:nowrap;}
+    .card-img>.ic,.det-img>.ic{color:#B89A7E;stroke-width:1.4;}
+    .pin-ico .ic{width:18px;height:18px;color:#fff;}
+    .ai-tag{background:var(--navy);color:#fff;
             font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;}
-    .ai-hint{background:#f4f2ff;border:1px solid #d0c8f0;border-radius:10px;
-             padding:10px 13px;font-size:12px;color:#5a4fa0;margin-bottom:12px;}
+    .ai-hint{background:var(--gbg);border:1px solid var(--gline);border-radius:10px;
+             padding:10px 13px;font-size:12px;color:var(--sub);margin-bottom:12px;}
     .pzone{border:2px dashed #c8d0e8;border-radius:14px;padding:0 16px;box-sizing:border-box;
            width:100%;height:160px;display:flex;flex-direction:column;align-items:center;justify-content:center;
            text-align:center;cursor:pointer;position:relative;}
@@ -616,11 +622,11 @@
       <div class="usel-tagline">학교를 선택하면 해당 캠퍼스의<br>분실물 게시판으로 이동해요</div>
     </div>
     <div class="ureg-tabs">
-      <div class="utab on" onclick="setRegion('seoul',this)">🏙 서울권</div>
-      <div class="utab" onclick="setRegion('gyeonggi',this)">🌿 경기/인천권</div>
+      <div class="utab on" onclick="setRegion('seoul',this)">서울권</div>
+      <div class="utab" onclick="setRegion('gyeonggi',this)">경기/인천권</div>
     </div>
     <div class="usel-srch">
-      <input class="usel-sinp" id="usel-q" placeholder="🔍  학교 이름으로 검색..." oninput="setUnivQ(this.value)">
+      <input class="usel-sinp" id="usel-q" placeholder="학교 이름으로 검색" oninput="setUnivQ(this.value)">
     </div>
     <div class="usel-cnt" id="usel-cnt"></div>
     <div class="usel-list" id="univ-list"></div>
@@ -637,9 +643,9 @@
       </div>
       <div class="hd-right">
         <button class="hd-chat-btn" onclick="openChatList()">
-          💬<span class="chat-cnt" id="chat-cnt"></span>
+          <i data-ic="message-circle"></i><span class="chat-cnt" id="chat-cnt"></span>
         </button>
-        <button class="hd-menu-btn" onclick="openMenu()">☰</button>
+        <button class="hd-menu-btn" onclick="openMenu()" aria-label="메뉴"><i data-ic="menu"></i></button>
         <span id="user-nm" style="display:none"></span>
       </div>
     </div>
@@ -656,7 +662,7 @@
     <div class="tab on" onclick="setTab('all',this)">전체</div>
     <div class="tab" onclick="setTab('lost',this)">분실물</div>
     <div class="tab" onclick="setTab('found',this)">습득물</div>
-    <div class="tab" onclick="openAllMap()">🗺️ 지도</div>
+    <div class="tab" onclick="openAllMap()"><i data-ic="map"></i> 지도</div>
   </div>
 
   <div class="filters">
@@ -664,13 +670,13 @@
       <div class="cat-wrap">
         <select class="cat-sel" onchange="setCat(this.value)">
           <option value="">모든 카테고리</option>
-          <option value="전자기기">📱 전자기기</option>
-          <option value="가방/지갑">👜 가방/지갑</option>
-          <option value="카드/신분증">💳 카드/신분증</option>
-          <option value="의류">👕 의류</option>
-          <option value="문구류">✏️ 문구류</option>
-          <option value="스포츠용품">⚽ 스포츠용품</option>
-          <option value="기타">📦 기타</option>
+          <option value="전자기기">전자기기</option>
+          <option value="가방/지갑">가방/지갑</option>
+          <option value="카드/신분증">카드/신분증</option>
+          <option value="의류">의류</option>
+          <option value="문구류">문구류</option>
+          <option value="스포츠용품">스포츠용품</option>
+          <option value="기타">기타</option>
         </select>
       </div>
     </div>
@@ -683,7 +689,7 @@
 
   <div class="srch">
     <div class="srch-in">
-      <span>🔍</span>
+      <span><i data-ic="search"></i></span>
       <input class="srch-inp" id="si" placeholder="물품명, 장소로 검색..." oninput="setQ(this.value)">
     </div>
   </div>
@@ -693,7 +699,7 @@
 
 <!-- FAB -->
 <div class="fab-wrap">
-  <button class="fab" onclick="openReg()">✏️ 등록하기</button>
+  <button class="fab" onclick="openReg()"><i data-ic="square-pen"></i> 등록하기</button>
 </div>
 
 <!-- Toast -->
@@ -712,26 +718,26 @@
         <div class="fl">유형 <span class="req">*</span></div>
         <div class="type-grid">
           <div class="type-card on" id="tc-lost" onclick="setType('lost')">
-            <div class="te">😢</div><div class="tn">분실물</div><div class="td">내가 잃어버렸어요</div>
+            <div class="te"><i data-ic="search"></i></div><div class="tn">분실물</div><div class="td">내가 잃어버렸어요</div>
           </div>
           <div class="type-card" id="tc-found" onclick="setType('found')">
-            <div class="te">🎉</div><div class="tn">습득물</div><div class="td">내가 주웠어요</div>
+            <div class="te"><i data-ic="package-open"></i></div><div class="tn">습득물</div><div class="td">내가 주웠어요</div>
           </div>
         </div>
       </div>
       <div class="fg">
         <div class="fl">사진 <span style="font-size:11px;font-weight:400;color:var(--sub)">(선택)</span>
-          <span class="ai-tag">✨ AI 자동완성</span></div>
-        <div class="ai-hint">✨ 사진을 올리면 AI가 물품명·카테고리·설명을 자동으로 채워드려요</div>
+          <span class="ai-tag">AI 자동완성</span></div>
+        <div class="ai-hint">사진을 올리면 AI가 물품명·카테고리·설명을 자동으로 채워드려요</div>
         <div id="pzw">
           <label class="pzone">
-            <div class="pzone-i">☁️</div>
+            <div class="pzone-i"><i data-ic="image-plus"></i></div>
             <div class="pzone-t">사진을 올려주세요</div>
             <div class="pzone-s">클릭해서 추가</div>
             <input type="file" accept="image/*" id="pinp" onchange="handlePhoto(this)">
           </label>
         </div>
-        <div id="ai-status" style="display:none;font-size:12px;margin-top:8px;color:#5b4fcf"></div>
+        <div id="ai-status" style="display:none;font-size:12px;margin-top:8px;color:var(--navy)"></div>
       </div>
       <div class="fg">
         <div class="fl">물품명 <span class="req">*</span></div>
@@ -743,13 +749,13 @@
         <div class="fl">카테고리 <span class="req">*</span></div>
         <select class="fi" id="fcat" onchange="this.dataset.ai=''">
           <option value="">선택하세요</option>
-          <option value="전자기기">📱 전자기기</option>
-          <option value="가방/지갑">👜 가방/지갑</option>
-          <option value="카드/신분증">💳 카드/신분증</option>
-          <option value="의류">👕 의류</option>
-          <option value="문구류">✏️ 문구류</option>
-          <option value="스포츠용품">⚽ 스포츠용품</option>
-          <option value="기타">📦 기타</option>
+          <option value="전자기기">전자기기</option>
+          <option value="가방/지갑">가방/지갑</option>
+          <option value="카드/신분증">카드/신분증</option>
+          <option value="의류">의류</option>
+          <option value="문구류">문구류</option>
+          <option value="스포츠용품">스포츠용품</option>
+          <option value="기타">기타</option>
         </select>
       </div>
       <div class="fg" style="display:none">
@@ -769,14 +775,14 @@
         <div class="cc"><span id="fdc">0</span>/200</div>
       </div>
       <label class="maprow">
-        <input type="checkbox" id="fmap" onchange="toggleMapSection(this.checked)"> <span id="fmap-txt">🗺️ 지도에서 위치 표시 (선택)</span>
+        <input type="checkbox" id="fmap" onchange="toggleMapSection(this.checked)"> <span id="fmap-txt">지도에서 위치 표시 (선택)</span>
       </label>
       <div class="map-section" id="map-section">
         <div class="map-search-row">
           <input class="map-search-inp" id="map-addr-inp" placeholder="수원대 주변 주소·장소 검색"
                  onkeydown="if(event.key==='Enter')searchMapAddr()">
           <button class="map-search-btn" onclick="searchMapAddr()">검색</button>
-          <button class="map-gps-btn" onclick="useMyLocation()">📡 내 위치</button>
+          <button class="map-gps-btn" onclick="useMyLocation()"><i data-ic="locate-fixed"></i> 내 위치</button>
         </div>
         <div class="map-hint">지도를 누르면 핀이 찍히고, 핀을 끌어서 위치를 옮길 수 있어요. (수원대 주변 약 5km)</div>
         <div class="map-addr-label" id="map-addr-label"></div>
@@ -797,8 +803,8 @@
   <div class="spick-sheet">
     <div class="spick-handle"></div>
     <div class="spick-title">상태 변경</div>
-    <div class="spick-opt" id="sopt-active" onclick="pickStatus('active')">🔍 해결 안 됨</div>
-    <div class="spick-opt" id="sopt-resolved" onclick="pickStatus('resolved')">✅ 해결 됨</div>
+    <div class="spick-opt" id="sopt-active" onclick="pickStatus('active')">해결 안 됨</div>
+    <div class="spick-opt" id="sopt-resolved" onclick="pickStatus('resolved')">해결 됨</div>
   </div>
 </div>
 
@@ -806,7 +812,7 @@
 <div class="spick-ov" id="helper-ov" onclick="if(event.target===this)closeHelperPicker()">
   <div class="spick-sheet">
     <div class="spick-handle"></div>
-    <div class="spick-title">🤝 누구 덕분에 해결됐나요?</div>
+    <div class="spick-title">누구 덕분에 해결됐나요?</div>
     <div id="helper-list"></div>
     <div class="hp-row">
       <input class="fi" id="helper-inp" placeholder="닉네임 직접 입력" maxlength="20"
@@ -822,7 +828,7 @@
   <div class="sheet">
     <div class="sheet-handle"></div>
     <div class="sheet-head">
-      <span class="sheet-title">🌡️ 매너 평가</span>
+      <span class="sheet-title">매너 평가</span>
       <button class="sheet-close" onclick="closeReview()">×</button>
     </div>
     <div class="sheet-body" id="rev-body"></div>
@@ -846,7 +852,7 @@
   <div class="sheet" style="max-height:94vh">
     <div class="sheet-handle"></div>
     <div class="sheet-head">
-      <span class="sheet-title">🗺️ 수원대 주변 지도</span>
+      <span class="sheet-title">수원대 주변 지도</span>
       <button class="sheet-close" onclick="closeAllMap()">×</button>
     </div>
     <div class="all-map-legend" id="all-map-legend"></div>
@@ -859,7 +865,7 @@
   <div class="chat-hd">
     <button class="chat-back" onclick="closeChat()">←</button>
     <div class="chat-prof-btn" id="chat-prof-btn" onclick="openProfileFromChat()">
-      <div class="chat-av" id="chat-av">👤</div>
+      <div class="chat-av" id="chat-av"><i data-ic="user"></i></div>
       <div>
         <div class="chat-nm"><span id="chat-nm"></span><span id="chat-temp"></span></div>
         <div class="chat-sub" id="chat-sub"></div>
@@ -872,7 +878,7 @@
   <div class="chat-ft">
     <input class="chat-inp" id="chat-inp" placeholder="메시지를 입력하세요..."
            onkeydown="if(event.key==='Enter')sendMsg()">
-    <button class="chat-snd" onclick="sendMsg()">➤</button>
+    <button class="chat-snd" onclick="sendMsg()" aria-label="보내기"><i data-ic="send"></i></button>
   </div>
 </div>
 
@@ -889,7 +895,7 @@
       </div>
     </div>
     <div class="menu-item" onclick="closeMenu();openProfile(ST.me)">
-      <div class="menu-item-icon">👤</div>
+      <div class="menu-item-icon"><i data-ic="user"></i></div>
       <div class="menu-item-label">내 프로필</div>
       <span class="menu-item-arr">›</span>
     </div>
@@ -903,7 +909,7 @@
 <div class="chatlist-scr" id="chatlist-scr">
   <div class="chat-hd">
     <button class="chat-back" onclick="closeChatList()">←</button>
-    <div style="flex:1"><div class="chat-nm">💬 메시지</div></div>
+    <div style="flex:1"><div class="chat-nm">메시지</div></div>
   </div>
   <div id="chatlist-body" style="flex:1;overflow-y:auto;"></div>
 </div>
@@ -928,13 +934,13 @@
       </div>
     </div>
     <div id="prof-tiers-wrap" hidden>
-      <div class="prof-section-title">🏅 티어 목록</div>
-      <div class="tl-how">게시물 등록 +10 XP · 반환 완료 +50 XP · 감사 카드 +20 XP</div>
+      <div class="prof-section-title">티어 목록</div>
+      <div class="tl-how">게시물 등록 +10 XP, 반환 완료 +50 XP, 감사 카드 +20 XP</div>
       <div class="tl-list" id="prof-tiers"></div>
     </div>
-    <div class="prof-section-title">🌡️ 받은 매너 평가</div>
+    <div class="prof-section-title">받은 매너 평가</div>
     <div class="mn-list" id="prof-reviews"></div>
-    <div class="prof-section-title">📋 게시물 목록</div>
+    <div class="prof-section-title">게시물 목록</div>
     <div class="prof-feed" id="prof-feed"></div>
   </div>
 </div>
@@ -943,16 +949,20 @@
 <div class="th-ov" id="th-ov" onclick="if(event.target===this)closeThanks()">
   <div class="th-sheet">
     <div class="spick-handle"></div>
-    <div class="th-title">🎁 반환 완료 · 감사 카드</div>
+    <div class="th-title">반환 완료와 감사 카드</div>
     <div class="th-desc" id="th-desc"></div>
     <div class="th-who" id="th-who"></div>
     <div class="th-cards" id="th-cards"></div>
-    <div class="th-note">🧪 데모: 상대도 반환 완료를 확인하고 카드를 보낸 것으로 가정해요.<br>실제 서비스에서는 양쪽이 모두 확인해야 XP가 지급돼요.</div>
+    <div class="th-note">데모: 상대도 반환 완료를 확인하고 카드를 보낸 것으로 가정해요.<br>실제 서비스에서는 양쪽이 모두 확인해야 XP가 지급돼요.</div>
     <button class="sbtn" onclick="submitThanks()">반환 완료 확인하고 카드 보내기</button>
   </div>
 </div>
 
 <script>
+// 선 아이콘: Lucide (ISC 라이선스, lucide-static 0.460.0) — 이모지 대신 쓰는 통일된 아이콘
+var ICONS={"building-2":"<path d=\"M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z\"/> <path d=\"M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2\"/> <path d=\"M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2\"/> <path d=\"M10 6h4\"/> <path d=\"M10 10h4\"/> <path d=\"M10 14h4\"/> <path d=\"M10 18h4\"/>","calendar":"<path d=\"M8 2v4\"/> <path d=\"M16 2v4\"/> <rect width=\"18\" height=\"18\" x=\"3\" y=\"4\" rx=\"2\"/> <path d=\"M3 10h18\"/>","check":"<path d=\"M20 6 9 17l-5-5\"/>","clipboard-list":"<rect width=\"8\" height=\"4\" x=\"8\" y=\"2\" rx=\"1\" ry=\"1\"/> <path d=\"M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2\"/> <path d=\"M12 11h4\"/> <path d=\"M12 16h4\"/> <path d=\"M8 11h.01\"/> <path d=\"M8 16h.01\"/>","compass":"<path d=\"m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z\"/> <circle cx=\"12\" cy=\"12\" r=\"10\"/>","credit-card":"<rect width=\"20\" height=\"14\" x=\"2\" y=\"5\" rx=\"2\"/> <line x1=\"2\" x2=\"22\" y1=\"10\" y2=\"10\"/>","crown":"<path d=\"M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z\"/> <path d=\"M5 21h14\"/>","dumbbell":"<path d=\"M14.4 14.4 9.6 9.6\"/> <path d=\"M18.657 21.485a2 2 0 1 1-2.829-2.828l-1.767 1.768a2 2 0 1 1-2.829-2.829l6.364-6.364a2 2 0 1 1 2.829 2.829l-1.768 1.767a2 2 0 1 1 2.828 2.829z\"/> <path d=\"m21.5 21.5-1.4-1.4\"/> <path d=\"M3.9 3.9 2.5 2.5\"/> <path d=\"M6.404 12.768a2 2 0 1 1-2.829-2.829l1.768-1.767a2 2 0 1 1-2.828-2.829l2.828-2.828a2 2 0 1 1 2.829 2.828l1.767-1.768a2 2 0 1 1 2.829 2.829z\"/>","eye":"<path d=\"M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0\"/> <circle cx=\"12\" cy=\"12\" r=\"3\"/>","gift":"<rect x=\"3\" y=\"8\" width=\"18\" height=\"4\" rx=\"1\"/> <path d=\"M12 8v13\"/> <path d=\"M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7\"/> <path d=\"M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5\"/>","handshake":"<path d=\"m11 17 2 2a1 1 0 1 0 3-3\"/> <path d=\"m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4\"/> <path d=\"m21 3 1 11h-2\"/> <path d=\"M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3\"/> <path d=\"M3 4h8\"/>","heart-handshake":"<path d=\"M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z\"/> <path d=\"M12 5 9.04 7.96a2.17 2.17 0 0 0 0 3.08c.82.82 2.13.85 3 .07l2.07-1.9a2.82 2.82 0 0 1 3.79 0l2.96 2.66\"/> <path d=\"m18 15-2-2\"/> <path d=\"m15 18-2-2\"/>","heart":"<path d=\"M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z\"/>","image-plus":"<path d=\"M16 5h6\"/> <path d=\"M19 2v6\"/> <path d=\"M21 11.5V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7.5\"/> <path d=\"m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21\"/> <circle cx=\"9\" cy=\"9\" r=\"2\"/>","inbox":"<polyline points=\"22 12 16 12 14 15 10 15 8 12 2 12\"/> <path d=\"M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z\"/>","locate-fixed":"<line x1=\"2\" x2=\"5\" y1=\"12\" y2=\"12\"/> <line x1=\"19\" x2=\"22\" y1=\"12\" y2=\"12\"/> <line x1=\"12\" x2=\"12\" y1=\"2\" y2=\"5\"/> <line x1=\"12\" x2=\"12\" y1=\"19\" y2=\"22\"/> <circle cx=\"12\" cy=\"12\" r=\"7\"/> <circle cx=\"12\" cy=\"12\" r=\"3\"/>","lock":"<rect width=\"18\" height=\"11\" x=\"3\" y=\"11\" rx=\"2\" ry=\"2\"/> <path d=\"M7 11V7a5 5 0 0 1 10 0v4\"/>","map-pin":"<path d=\"M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0\"/> <circle cx=\"12\" cy=\"10\" r=\"3\"/>","map":"<path d=\"M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z\"/> <path d=\"M15 5.764v15\"/> <path d=\"M9 3.236v15\"/>","menu":"<line x1=\"4\" x2=\"20\" y1=\"12\" y2=\"12\"/> <line x1=\"4\" x2=\"20\" y1=\"6\" y2=\"6\"/> <line x1=\"4\" x2=\"20\" y1=\"18\" y2=\"18\"/>","message-circle":"<path d=\"M7.9 20A9 9 0 1 0 4 16.1L2 22Z\"/>","package-open":"<path d=\"M12 22v-9\"/> <path d=\"M15.17 2.21a1.67 1.67 0 0 1 1.63 0L21 4.57a1.93 1.93 0 0 1 0 3.36L8.82 14.79a1.655 1.655 0 0 1-1.64 0L3 12.43a1.93 1.93 0 0 1 0-3.36z\"/> <path d=\"M20 13v3.87a2.06 2.06 0 0 1-1.11 1.83l-6 3.08a1.93 1.93 0 0 1-1.78 0l-6-3.08A2.06 2.06 0 0 1 4 16.87V13\"/> <path d=\"M21 12.43a1.93 1.93 0 0 0 0-3.36L8.83 2.2a1.64 1.64 0 0 0-1.63 0L3 4.57a1.93 1.93 0 0 0 0 3.36l12.18 6.86a1.636 1.636 0 0 0 1.63 0z\"/>","package":"<path d=\"M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z\"/> <path d=\"M12 22V12\"/> <path d=\"m3.3 7 7.703 4.734a2 2 0 0 0 1.994 0L20.7 7\"/> <path d=\"m7.5 4.27 9 5.15\"/>","party-popper":"<path d=\"M5.8 11.3 2 22l10.7-3.79\"/> <path d=\"M4 3h.01\"/> <path d=\"M22 8h.01\"/> <path d=\"M15 2h.01\"/> <path d=\"M22 20h.01\"/> <path d=\"m22 2-2.24.75a2.9 2.9 0 0 0-1.96 3.12c.1.86-.57 1.63-1.45 1.63h-.38c-.86 0-1.6.6-1.76 1.44L14 10\"/> <path d=\"m22 13-.82-.33c-.86-.34-1.82.2-1.98 1.11c-.11.7-.72 1.22-1.43 1.22H17\"/> <path d=\"m11 2 .33.82c.34.86-.2 1.82-1.11 1.98C9.52 4.9 9 5.52 9 6.23V7\"/> <path d=\"M11 13c1.93 1.93 2.83 4.17 2 5-.83.83-3.07-.07-5-2-1.93-1.93-2.83-4.17-2-5 .83-.83 3.07.07 5 2Z\"/>","pencil":"<path d=\"M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z\"/> <path d=\"m15 5 4 4\"/>","school":"<path d=\"M14 22v-4a2 2 0 1 0-4 0v4\"/> <path d=\"m18 10 3.447 1.724a1 1 0 0 1 .553.894V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-7.382a1 1 0 0 1 .553-.894L6 10\"/> <path d=\"M18 5v17\"/> <path d=\"m4 6 7.106-3.553a2 2 0 0 1 1.788 0L20 6\"/> <path d=\"M6 5v17\"/> <circle cx=\"12\" cy=\"9\" r=\"2\"/>","search":"<circle cx=\"11\" cy=\"11\" r=\"8\"/> <path d=\"m21 21-4.3-4.3\"/>","send":"<path d=\"M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z\"/> <path d=\"m21.854 2.147-10.94 10.939\"/>","shield":"<path d=\"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z\"/>","shirt":"<path d=\"M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z\"/>","smartphone":"<rect width=\"14\" height=\"20\" x=\"5\" y=\"2\" rx=\"2\" ry=\"2\"/> <path d=\"M12 18h.01\"/>","sprout":"<path d=\"M7 20h10\"/> <path d=\"M10 20c5.5-2.5.8-6.4 3-10\"/> <path d=\"M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z\"/> <path d=\"M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z\"/>","square-check":"<rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\"/> <path d=\"m9 12 2 2 4-4\"/>","square-pen":"<path d=\"M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"/> <path d=\"M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z\"/>","square":"<rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\"/>","star":"<path d=\"M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z\"/>","thermometer":"<path d=\"M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z\"/>","thumbs-down":"<path d=\"M17 14V2\"/> <path d=\"M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z\"/>","thumbs-up":"<path d=\"M7 10v12\"/> <path d=\"M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z\"/>","trash-2":"<path d=\"M3 6h18\"/> <path d=\"M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6\"/> <path d=\"M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2\"/> <line x1=\"10\" x2=\"10\" y1=\"11\" y2=\"17\"/> <line x1=\"14\" x2=\"14\" y1=\"11\" y2=\"17\"/>","user":"<path d=\"M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2\"/> <circle cx=\"12\" cy=\"7\" r=\"4\"/>","wallet":"<path d=\"M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1\"/> <path d=\"M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4\"/>"};
+function ic(name,cls){return '<svg class="ic'+(cls?' '+cls:'')+'" viewBox="0 0 24 24" aria-hidden="true">'+(ICONS[name]||'')+'</svg>';}
+document.querySelectorAll('i[data-ic]').forEach(function(el){el.outerHTML=ic(el.dataset.ic,el.className);});
 // ══════════════════════════════════════════════════════════
 // Supabase 설정 — 아래 두 값을 본인 프로젝트 값으로 교체하세요
 // ══════════════════════════════════════════════════════════
@@ -1122,7 +1132,7 @@ function doLogout(){
   document.getElementById('li-pw').value='';
 }
 
-var CE={'전자기기':'📱','가방/지갑':'👜','카드/신분증':'💳','의류':'👕','문구류':'✏️','스포츠용품':'⚽','기타':'📦'};
+var CE={'전자기기':'smartphone','가방/지갑':'wallet','카드/신분증':'credit-card','의류':'shirt','문구류':'pencil','스포츠용품':'dumbbell','기타':'package'};
 var ST={posts:[],me:'',tab:'all',sf:'active',cf:'',q:'',regType:'lost',photoUrl:null,chats:{},univ:'',editId:null,statusPickId:null,mapCoords:null,
         reviews:[],helperPickId:null,rev:null};
 var _viewedPosts=new Set();
@@ -1249,13 +1259,13 @@ function renderUnivList(){
   document.getElementById('usel-cnt').textContent=list.length+'개 학교';
   var el=document.getElementById('univ-list');
   if(!list.length){
-    el.innerHTML='<div class="usel-empty">검색 결과가 없습니다 🔍</div>';
+    el.innerHTML='<div class="usel-empty">검색 결과가 없습니다</div>';
     return;
   }
   el.innerHTML=list.map(function(u){
     return '<div class="ucrd" onclick="selectUniv(\''+u.name.replace(/'/g,"\\'")+'\')">'
-      +'<div class="ucrd-icon">🏫</div>'
-      +'<div class="ucrd-info"><div class="ucrd-name">'+u.name+'</div><div class="ucrd-loc">📍 '+u.loc+'</div></div>'
+      +'<div class="ucrd-icon">'+ic('school')+'</div>'
+      +'<div class="ucrd-info"><div class="ucrd-name">'+u.name+'</div><div class="ucrd-loc">'+ic('map-pin')+' '+u.loc+'</div></div>'
       +'<div class="ucrd-arr">›</div>'
     +'</div>';
   }).join('');
@@ -1283,7 +1293,7 @@ function changeUniv(){}
 // ── 데이터 (Supabase) ──
 async function initData(){
   var res=await sb.from('posts').select('*').eq('univ',ST.univ).order('id',{ascending:false});
-  if(res.error){toast('데이터를 불러올 수 없습니다 😢');return;}
+  if(res.error){toast('데이터를 불러올 수 없습니다');return;}
   if(!res.data||!res.data.length){
     var seeds=SAMPLE.map(function(p){
       return {type:p.type,title:p.title,category:p.category,location:p.location,
@@ -1347,7 +1357,7 @@ function tempLook(t){
 function tierOf(t){for(var i=0;i<TIERS.length;i++)if(t>=TIERS[i][0])return TIERS[i];return null;}
 function tempChip(nick){
   var m=mannerOf(nick);
-  return '<span class="temp-chip" style="color:'+tempLook(m.temp).c+'">🌡️ '+m.temp.toFixed(1)+'°</span>';
+  return '<span class="temp-chip" style="color:'+tempLook(m.temp).c+'">'+ic('thermometer')+m.temp.toFixed(1)+'°</span>';
 }
 function hasReviewed(pid,from,to){
   return ST.reviews.some(function(r){return r.post_id===pid&&r.from_user===from&&r.to_user===to;});
@@ -1362,16 +1372,16 @@ function renderManner(nick){
   var m=mannerOf(nick),lk=tempLook(m.temp),tier=tierOf(m.temp),mine=nick===ST.me;
   document.getElementById('prof-manner').innerHTML=
     '<div class="mn-top"><span class="mn-lbl">매너온도</span>'
-      +'<span class="mn-val" style="color:'+lk.c+'">'+m.temp.toFixed(1)+'°C '+lk.f+'</span></div>'
+      +'<span class="mn-val" style="color:'+lk.c+'">'+m.temp.toFixed(1)+'°C</span></div>'
     +'<div class="mn-bar"><div class="mn-fill" style="width:'+(m.temp/MANNER.max*100)+'%;background:'+lk.c+'"></div></div>'
-    +'<div class="mn-sub">'+(tier?'<span class="mn-tier">'+tier[1]+' '+tier[2]+'</span> · ':'')
-      +'찾아준 물건 '+m.finds+'개 · 받은 평가 '+m.count+'개</div>';
+    +'<div class="mn-sub">'+(tier?'<span class="mn-tier">'+tier[2]+'</span>, ':'')
+      +'찾아준 물건 '+m.finds+'개, 받은 평가 '+m.count+'개</div>';
   var rows=Object.keys(m.good).sort(function(a,b){return m.good[b]-m.good[a];}).map(function(k){
-    return '<div class="mn-row"><span>👍 '+esc(k)+'</span><b>'+m.good[k]+'</b></div>';
+    return '<div class="mn-row"><span>'+ic('thumbs-up')+' '+esc(k)+'</span><b>'+m.good[k]+'</b></div>';
   });
   // 아쉬운 평가 항목과 그 후기는 본인에게만 보여줌
   if(mine)rows=rows.concat(Object.keys(m.bad).map(function(k){
-    return '<div class="mn-row bad"><span>👎 '+esc(k)+'</span><b>'+m.bad[k]+'</b></div>';
+    return '<div class="mn-row bad"><span>'+ic('thumbs-down')+' '+esc(k)+'</span><b>'+m.bad[k]+'</b></div>';
   }));
   var cmts=m.reviews.filter(function(r){
     return r.comment&&(mine||!(Array.isArray(r.bad_tags)&&r.bad_tags.length));
@@ -1381,7 +1391,7 @@ function renderManner(nick){
   document.getElementById('prof-reviews').innerHTML=
     (rows.length||cmts.length?rows.join('')+cmts.join(''):'<div class="mn-empty">아직 받은 매너 평가가 없어요</div>')
     +'<div class="mn-note">처음 온도는 36.5°C예요. 물건을 주고받은 뒤 받은 평가로 오르거나 내려가요.'
-      +(mine&&Object.keys(m.bad).length?' 👎 항목은 나에게만 보여요.':'')+'</div>';
+      +(mine&&Object.keys(m.bad).length?' 아쉬웠던 점은 나에게만 보여요.':'')+'</div>';
 }
 
 // 해결됨으로 바꿀 때: 도와준 사람 고르기 → 매너 평가
@@ -1396,7 +1406,7 @@ async function openHelperPicker(id){
   });
   document.getElementById('helper-list').innerHTML=nms.length
     ?nms.map(function(n){
-        return '<div class="spick-opt" data-nm="'+esc(n)+'" onclick="resolveWith(ST.helperPickId,this.dataset.nm)">💬 @'+esc(n)+tempChip(n)+'</div>';
+        return '<div class="spick-opt" data-nm="'+esc(n)+'" onclick="resolveWith(ST.helperPickId,this.dataset.nm)">'+ic('message-circle')+' @'+esc(n)+tempChip(n)+'</div>';
       }).join('')
     :'<div class="hp-empty">이 글에서 채팅한 사람이 없어요. 닉네임을 직접 입력해 주세요.</div>';
   document.getElementById('helper-ov').classList.add('on');
@@ -1417,7 +1427,7 @@ async function resolveWith(id,nick){
   p.status='resolved';p.resolved_with=nick||null;
   await sb.from('posts').update({status:'resolved',resolved_with:p.resolved_with}).eq('id',id);
   await openDet(id);
-  toast('해결됨으로 변경됐습니다 ✅');
+  toast('해결됨으로 변경됐습니다');
   if(nick&&!hasReviewed(id,ST.me,nick))openReview(id,nick);
 }
 
@@ -1440,15 +1450,15 @@ function renderReview(){
   document.getElementById('rev-body').innerHTML=
     '<div class="fl" style="font-size:15px;margin-bottom:12px">@'+esc(R.to)+' 님과의 거래는 어땠나요?</div>'
     +'<div class="rev-side">'
-      +'<button class="rev-side-btn good'+(R.side==='good'?' on':'')+'" onclick="setRevSide(\'good\')"><div class="te">😊</div>좋았어요</button>'
-      +'<button class="rev-side-btn bad'+(R.side==='bad'?' on':'')+'" onclick="setRevSide(\'bad\')"><div class="te">😞</div>아쉬웠어요</button>'
+      +'<button class="rev-side-btn good'+(R.side==='good'?' on':'')+'" onclick="setRevSide(\'good\')"><div class="te">'+ic('thumbs-up')+'</div>좋았어요</button>'
+      +'<button class="rev-side-btn bad'+(R.side==='bad'?' on':'')+'" onclick="setRevSide(\'bad\')"><div class="te">'+ic('thumbs-down')+'</div>아쉬웠어요</button>'
     +'</div>'
     +(R.side
       ?'<div class="fl">'+(R.side==='good'?'어떤 점이 좋았나요?':'어떤 점이 아쉬웠나요?')
           +' <span class="req">*</span><span style="font-size:11px;font-weight:400;color:var(--sub)">여러 개 고를 수 있어요</span></div>'
         +'<div class="rev-tags">'+tags.map(function(t,i){
             var on=R.tags.indexOf(t)>-1;
-            return '<button class="rev-tag'+(on?' on':'')+'" onclick="toggleRevTag('+i+')">'+(on?'☑️ ':'⬜ ')+t+'</button>';
+            return '<button class="rev-tag'+(on?' on':'')+'" onclick="toggleRevTag('+i+')">'+(on?ic('square-check')+' ':ic('square')+' ')+t+'</button>';
           }).join('')+'</div>'
         +'<div class="fg"><div class="fl">한 줄 후기 <span style="font-size:11px;font-weight:400;color:var(--sub)">(선택)</span></div>'
           +'<textarea class="fi" id="rev-cmt" rows="2" maxlength="100" placeholder="고마운 마음이나 아쉬웠던 점을 남겨주세요">'+esc(R.cmt)+'</textarea></div>'
@@ -1469,7 +1479,7 @@ async function submitReview(){
   if(ins.error){toast('평가를 저장하지 못했어요');return;}
   ST.reviews.unshift(ins.data);
   closeReview();
-  toast('@'+R.to+' 님에게 매너 평가를 보냈어요 🌡️');
+  toast('@'+R.to+' 님에게 매너 평가를 보냈어요');
   if(document.getElementById('det-ov').classList.contains('on'))openDet(p.id);
 }
 
@@ -1531,30 +1541,30 @@ function render(){
   var ps=getFeed();
   var el=document.getElementById('feed');
   if(!ps.length){
-    el.innerHTML='<div class="empty"><div class="empty-i">🔍</div><div>게시물이 없습니다</div><div style="font-size:13px;color:#bbb;margin-top:6px">등록하기 버튼으로 첫 게시물을 올려보세요!</div></div>';
+    el.innerHTML='<div class="empty"><div class="empty-i">'+ic('search')+'</div><div>게시물이 없습니다</div><div style="font-size:13px;color:#bbb;margin-top:6px">등록하기 버튼으로 첫 게시물을 올려보세요!</div></div>';
     return;
   }
   el.innerHTML=ps.map(function(p){
-    var ce=CE[p.category]||'📦';
+    var ce=ic(CE[p.category]||'package');
     var tc=p.type==='lost'?'b-lost':'b-found';
     var tl=p.type==='lost'?'분실물':'습득물';
     var imgH=p.img?photoImg(p.img):'';
     var likes=Array.isArray(p.likes)?p.likes:[];
     var liked=likes.indexOf(ST.me)>-1;
-    var lk=liked?'❤️':'🤍';
+    var lk=liked?ic('heart','fill'):ic('heart');
     return '<div class="card" onclick="openDet('+p.id+')">'
       +'<div class="card-img">'+imgH+(p.img?'':ce)+'</div>'
       +'<div class="card-body">'
         +'<div class="badges"><span class="badge '+tc+'">'+tl+'</span><span class="badge b-cat">'+ce+' '+p.category+'</span>'+chip(p)+'</div>'
         +'<div class="card-title">'+p.title+'</div>'
-        +'<div class="card-meta"><span class="author-link" onclick="event.stopPropagation();openProfile(\''+p.author+'\')">@'+p.author+'</span>'+tierBadge(p.author)+' · 📍'+p.location+' · '+fd(p.date)+'</div>'
+        +'<div class="card-meta"><span class="author-link" onclick="event.stopPropagation();openProfile(\''+p.author+'\')">@'+p.author+'</span>'+tierBadge(p.author)+'<span class="mi">'+ic('map-pin')+p.location+'</span><span class="mi">'+ic('calendar')+fd(p.date)+'</span></div>'
         +'<div class="card-desc">'+(p.desc||'')+'</div>'
       +'</div>'
       +'<div class="card-foot">'
         +'<span class="ft-item'+(liked?' liked':'')+'" onclick="event.stopPropagation();like('+p.id+')">'+lk+' '+likes.length+'</span>'
-        +'<span class="ft-item">👁 '+p.views+'</span>'
+        +'<span class="ft-item">'+ic('eye')+' '+p.views+'</span>'
         +'<span class="ft-space"></span>'
-        +'<button class="chat-btn" onclick="event.stopPropagation();doChat('+p.id+')">💬 채팅하기</button>'
+        +'<button class="chat-btn" onclick="event.stopPropagation();doChat('+p.id+')">'+ic('message-circle')+' 채팅하기</button>'
       +'</div>'
     +'</div>';
   }).join('');
@@ -1607,22 +1617,22 @@ async function openDet(id){
     p.views++;
     await sb.from('posts').update({views:p.views}).eq('id',id);
   }
-  var ce=CE[p.category]||'📦';
+  var ce=ic(CE[p.category]||'package');
   var isMine=p.author===ST.me;
   var imgH=p.img?photoImg(p.img):'';
   var locLbl=p.type==='lost'?'분실 위치':'습득 위치';
   var likes=Array.isArray(p.likes)?p.likes:[];
   var liked=likes.indexOf(ST.me)>-1;
   var likeBtn='<button class="act-btn'+(liked?' like-on':'')+'" onclick="toggleLike('+id+')">'
-    +'<span class="act-ico">'+(liked?'❤️':'🤍')+'</span>'
+    +'<span class="act-ico">'+(liked?ic('heart','fill'):ic('heart'))+'</span>'
     +likes.length
     +'</button>';
   var actBtns=isMine
     ?likeBtn
-      +'<button class="act-btn" onclick="openEditPost('+id+')"><span class="act-ico">✏️</span>수정</button>'
-      +'<button class="act-btn" onclick="openStatusPicker('+id+')"><span class="act-ico">📋</span>상태변경</button>'
-      +'<button class="act-btn act-del" onclick="deletePost('+id+')"><span class="act-ico">🗑</span>삭제</button>'
-    :likeBtn+'<button class="act-chat-btn" onclick="doChat('+id+')">💬 채팅하기</button>';
+      +'<button class="act-btn" onclick="openEditPost('+id+')"><span class="act-ico">'+ic('square-pen')+'</span>수정</button>'
+      +'<button class="act-btn" onclick="openStatusPicker('+id+')"><span class="act-ico">'+ic('clipboard-list')+'</span>상태변경</button>'
+      +'<button class="act-btn act-del" onclick="deletePost('+id+')"><span class="act-ico">'+ic('trash-2')+'</span>삭제</button>'
+    :likeBtn+'<button class="act-chat-btn" onclick="doChat('+id+')">'+ic('message-circle')+' 채팅하기</button>';
   var revTo=pendingReviewTarget(p);
   document.getElementById('det-body').innerHTML=
     '<div class="det-img'+(p.img?' has-ph':'')+'">'+imgH+(p.img?'':ce)+'</div>'
@@ -1630,16 +1640,16 @@ async function openDet(id){
       +'<div class="badges"><span class="badge '+(p.type==='lost'?'b-lost':'b-found')+'">'+(p.type==='lost'?'분실물':'습득물')+'</span>'
         +'<span class="badge b-cat">'+ce+' '+p.category+'</span>'+chip(p)+'</div>'
       +'<div class="det-title">'+p.title+'</div>'
-      +'<div class="det-meta">👤 <span class="author-link" onclick="openProfile(\''+p.author+'\')">@'+p.author+'</span>'+tempChip(p.author)+tierBadge(p.author)+' &nbsp;|&nbsp; 📅 '+fd(p.date)+' &nbsp;|&nbsp; 👁 '+p.views+'회</div>'
+      +'<div class="det-meta">'+ic('user')+' <span class="author-link" onclick="openProfile(\''+p.author+'\')">@'+p.author+'</span>'+tempChip(p.author)+tierBadge(p.author)+'<span class="mi">'+ic('calendar')+fd(p.date)+'</span><span class="mi">'+ic('eye')+p.views+'회</span></div>'
       +(p.desc?'<div class="det-desc">'+p.desc+'</div>':'')
-      +'<div class="ibox loc">📍 '+locLbl+': <strong>'+p.location+'</strong></div>'
-      +'<div class="ibox dt">📅 날짜: <strong>'+fd(p.date)+'</strong></div>'
+      +'<div class="ibox loc">'+ic('map-pin')+' '+locLbl+': <strong>'+p.location+'</strong></div>'
+      +'<div class="ibox dt">'+ic('calendar')+' 날짜: <strong>'+fd(p.date)+'</strong></div>'
       +(p.status==='resolved'&&p.resolved_with
-        ?'<div class="ibox helper">🤝 <span class="author-link" data-nm="'+esc(p.resolved_with)+'" onclick="openProfile(this.dataset.nm)">@'+esc(p.resolved_with)+'</span>'
+        ?'<div class="ibox helper">'+ic('handshake')+' <span class="author-link" data-nm="'+esc(p.resolved_with)+'" onclick="openProfile(this.dataset.nm)">@'+esc(p.resolved_with)+'</span>'
           +tempChip(p.resolved_with)+'&nbsp;님과 해결됐어요</div>':'')
-      +(p.coords?'<div class="det-map-wrap"><div class="det-map-addr">📍 '+esc(p.coords.addr)+(p.coords.detail?'<br>🏢 '+esc(p.coords.detail):'')+'</div><div id="det-map"></div></div>':'')
+      +(p.coords?'<div class="det-map-wrap"><div class="det-map-addr">'+ic('map-pin')+' '+esc(p.coords.addr)+(p.coords.detail?'<br>'+ic('building-2')+' '+esc(p.coords.detail):'')+'</div><div id="det-map"></div></div>':'')
       +thanksRowHtml(p)
-      +(revTo?'<div class="det-actions" style="border-top:none;padding-top:0"><button class="rev-cta" data-nm="'+esc(revTo)+'" onclick="openReview('+id+',this.dataset.nm)">⭐ @'+esc(revTo)+' 님에게 매너 평가 남기기</button></div>':'')
+      +(revTo?'<div class="det-actions" style="border-top:none;padding-top:0"><button class="rev-cta" data-nm="'+esc(revTo)+'" onclick="openReview('+id+',this.dataset.nm)">'+ic('star')+' @'+esc(revTo)+' 님에게 매너 평가 남기기</button></div>':'')
       +'<div class="det-actions">'+actBtns+'</div>'
     +'</div>';
   document.getElementById('det-ov').classList.add('on');
@@ -1656,7 +1666,7 @@ function openMenu(){
   var s=ST.me||'';
   document.getElementById('menu-av').textContent=s.charAt(0).toUpperCase();
   document.getElementById('menu-nm').textContent=s;
-  document.getElementById('menu-univ').textContent='📍 '+(ST.univ||'')+' · 🌡️ 매너온도 '+mannerOf(s).temp.toFixed(1)+'°C';
+  document.getElementById('menu-univ').innerHTML=ic('map-pin')+' '+esc(ST.univ||'')+'<span class="mi">'+ic('thermometer')+'매너온도 '+mannerOf(s).temp.toFixed(1)+'°C</span>';
   document.getElementById('menu-tier').innerHTML=tierBadge(s,true);
   document.getElementById('menu-ov').classList.add('on');
   document.querySelector('.fab-wrap').style.display='none';
@@ -1691,12 +1701,12 @@ function renderChatList(){
     return{p:p,last:msgs[msgs.length-1],id:parseInt(id)};
   }).filter(function(x){return x!==null;});
   if(!items.length){
-    el.innerHTML='<div class="cl-empty"><div class="cl-empty-i">💬</div><div style="font-size:15px;font-weight:700;margin-bottom:6px">진행 중인 채팅이 없어요</div><div style="font-size:13px;color:#bbb">게시물에서 채팅하기를 눌러보세요</div></div>';
+    el.innerHTML='<div class="cl-empty"><div class="cl-empty-i">'+ic('message-circle')+'</div><div style="font-size:15px;font-weight:700;margin-bottom:6px">진행 중인 채팅이 없어요</div><div style="font-size:13px;color:#bbb">게시물에서 채팅하기를 눌러보세요</div></div>';
     return;
   }
   el.innerHTML=items.map(function(item){
     var p=item.p;
-    var av=p.type==='lost'?'😢':'🎉';
+    var av=p.type==='lost'?ic('search'):ic('package-open');
     var lastText=item.last.text.length>30?item.last.text.slice(0,30)+'…':item.last.text;
     var isMine=item.last.from===ST.me;
     return '<div class="cl-item" onclick="doChat('+p.id+')">'
@@ -1726,17 +1736,17 @@ function updateChatCnt(){
 //  · (post_id, 두 사용자) 조합당 1회만 지급(unique 제약) + 본인 게시물/자기 자신 대상 금지 + 일일 지급 상한
 //  · 신고/이의 제기 시 XP 회수 가능하도록 xp_events 원장(ledger)을 남기고 합산
 var XP_TIERS=[
-  {n:'단서 새싹',s:'새싹',ic:'🌱',min:0,max:99,ttl:'첫 단서를 막 발견한 새내기'},
-  {n:'흔적 추적자',s:'추적자',ic:'🔍',min:100,max:299,ttl:'작은 흔적도 놓치지 않는 눈'},
-  {n:'캠퍼스 길잡이',s:'길잡이',ic:'🧭',min:300,max:599,ttl:'캠퍼스 구석구석을 아는 안내자'},
-  {n:'분실물 수호자',s:'수호자',ic:'🛡️',min:600,max:999,ttl:'주인을 끝까지 지켜주는 든든한 방패'},
-  {n:'전설의 파인더',s:'파인더',ic:'👑',min:1000,max:null,ttl:'모두가 아는 전설의 분실물 해결사'}
+  {n:'단서 새싹',s:'새싹',ic:ic('sprout'),min:0,max:99,ttl:'첫 단서를 막 발견한 새내기'},
+  {n:'흔적 추적자',s:'추적자',ic:ic('search'),min:100,max:299,ttl:'작은 흔적도 놓치지 않는 눈'},
+  {n:'캠퍼스 길잡이',s:'길잡이',ic:ic('compass'),min:300,max:599,ttl:'캠퍼스 구석구석을 아는 안내자'},
+  {n:'분실물 수호자',s:'수호자',ic:ic('shield'),min:600,max:999,ttl:'주인을 끝까지 지켜주는 든든한 방패'},
+  {n:'전설의 파인더',s:'파인더',ic:ic('crown'),min:1000,max:null,ttl:'모두가 아는 전설의 분실물 해결사'}
 ];
 var XP_REWARD={ret:50,card:20,post:10};
 var SAMPLE_XP={kim_sw:120,inchang_helper:420,park_2023:40,lee_campus:700,choi_yun:85,shin_helper:1120,jung_h:260};
 var PROF={};          // 닉네임 → 프로필(메모리)
 var THANKS=[];        // 보낸 감사 카드 기록 (중복 방지)
-var TH_CARDS=[{k:'thanks',e:'🙏',t:'고마워요'},{k:'star',e:'⭐',t:'최고예요'},{k:'found',e:'🎉',t:'덕분에 찾았어요'}];
+var TH_CARDS=[{k:'thanks',e:ic('heart-handshake'),t:'고마워요'},{k:'star',e:ic('star'),t:'최고예요'},{k:'found',e:ic('party-popper'),t:'덕분에 찾았어요'}];
 var TH={pid:null,cands:[],to:null,card:null};
 
 function tierIdx(xp){for(var i=XP_TIERS.length-1;i>=0;i--){if(xp>=XP_TIERS[i].min)return i;}return 0;}
@@ -1748,9 +1758,9 @@ function fmtXp(n){return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
 function profOf(nick){
   if(!PROF[nick]){
     var me=(nick===ST.me);
-    PROF[nick]={nick:nick,xp:me?(DEMO?215:0):(SAMPLE_XP[nick]||0),avatar:me?'🦉':null,returns:me&&DEMO?3:0,cards:me&&DEMO?4:0,
+    PROF[nick]={nick:nick,xp:me?(DEMO?215:0):(SAMPLE_XP[nick]||0),avatar:null,returns:me&&DEMO?3:0,cards:me&&DEMO?4:0,
       bio:me?'분실물은 내가 찾아줄게! 🔍':'',me:me,virtual:false,
-      acts:me&&DEMO?[{t:'어제',x:'"학생증" 반환 완료',xp:50},{t:'3일 전',x:'감사 카드를 받았어요 💌',xp:20},{t:'지난주',x:'"체크카드" 게시물 등록',xp:10}]:[]};
+      acts:me&&DEMO?[{t:'어제',x:'"학생증" 반환 완료',xp:50},{t:'3일 전',x:'감사 카드를 받았어요',xp:20},{t:'지난주',x:'"체크카드" 게시물 등록',xp:10}]:[]};
   }
   return PROF[nick];
 }
@@ -1768,9 +1778,9 @@ function tierBadge(nick,full){
 }
 function xpBarHtml(xp){
   var f=xpInfo(xp);
-  if(!f.nx)return'<div class="xp-bar"><div class="xp-fill" style="width:100%"></div></div><div class="xp-max">👑 최대 티어예요! 더 오를 곳이 없어요</div>';
+  if(!f.nx)return'<div class="xp-bar"><div class="xp-fill" style="width:100%"></div></div><div class="xp-max">최대 티어예요! 더 오를 곳이 없어요</div>';
   return'<div class="xp-bar"><div class="xp-fill" style="width:'+Math.max(4,f.pct)+'%"></div></div>'
-    +'<div class="xp-sub"><span>'+esc(f.t.n)+' · '+f.pct+'%</span><span>'+esc(f.nx.n)+'까지 '+fmtXp(f.left)+' XP</span></div>';
+    +'<div class="xp-sub"><span>'+esc(f.t.n)+' '+f.pct+'%</span><span>'+esc(f.nx.n)+'까지 '+fmtXp(f.left)+' XP</span></div>';
 }
 // 작성자 프로필(profile-scr) 상단 박스
 function renderTierBox(nick){
@@ -1790,7 +1800,7 @@ function awardXp(nick,amount,text,kind){
   if(p.acts.length>8)p.acts.length=8;
   return tierIdx(p.xp)>before;
 }
-function upMsg(nick){var t=XP_TIERS[tierIdx(profOf(nick).xp)];return'🎉 티어 승급! '+t.ic+' '+t.n;}
+function upMsg(nick){var t=XP_TIERS[tierIdx(profOf(nick).xp)];return'티어 승급! '+t.n;}
 
 // ── 반환 완료 · 감사 카드 (데모) ──
 function thanksRowHtml(p){
@@ -1800,9 +1810,9 @@ function thanksRowHtml(p){
     var chatted=(ST.chats[p.id]||[]).some(function(m){return m.from===ST.me;});
     if(!chatted)return'';
     var done=THANKS.some(function(r){return r.post_id===p.id&&r.from===ST.me&&r.to===p.author;});
-    if(done)return'<div class="th-row"><button class="th-open done" disabled>✅ 반환 완료 · 감사 카드 전송됨</button></div>';
+    if(done)return'<div class="th-row"><button class="th-open done" disabled>'+ic('check')+' 반환 완료, 감사 카드 전송됨</button></div>';
   }
-  return'<div class="th-row"><button class="th-open" onclick="openThanks('+p.id+')">🎁 반환 완료 · 감사 카드 보내기</button></div>';
+  return'<div class="th-row"><button class="th-open" onclick="openThanks('+p.id+')">'+ic('gift')+' 반환 완료, 감사 카드 보내기</button></div>';
 }
 async function thanksCandidates(p){
   var names=[];
@@ -1852,11 +1862,11 @@ function submitThanks(){
   var label='"'+(p?p.title:'')+'"';
   // 데모: 상대도 반환 완료를 확인하고 감사 카드를 보냈다고 가정 → 양쪽 지급
   var up=awardXp(ST.me,XP_REWARD.ret,label+' 반환 완료','ret');
-  up=awardXp(ST.me,XP_REWARD.card,'@'+to+'님에게 감사 카드를 받았어요 💌','card')||up;
+  up=awardXp(ST.me,XP_REWARD.card,'@'+to+'님에게 감사 카드를 받았어요','card')||up;
   awardXp(to,XP_REWARD.ret,label+' 반환 완료','ret');
-  awardXp(to,XP_REWARD.card,'@'+ST.me+'님에게 감사 카드를 받았어요 💌','card');
+  awardXp(to,XP_REWARD.card,'@'+ST.me+'님에게 감사 카드를 받았어요','card');
   closeThanks();
-  toast(up?upMsg(ST.me):'반환 완료! +'+(XP_REWARD.ret+XP_REWARD.card)+' XP 🎁');
+  toast(up?upMsg(ST.me):'반환 완료! +'+(XP_REWARD.ret+XP_REWARD.card)+' XP');
   openDet(pid);
 }
 
@@ -1868,7 +1878,7 @@ function renderTierList(nick){
   document.getElementById('prof-tiers').innerHTML=XP_TIERS.map(function(t,i){
     var st=i<cur?'<span class="tl-st done">✓ 달성</span>'
       :i===cur?'<span class="tl-st cur">현재 티어</span>'
-      :'<span class="tl-st lock">🔒 '+fmtXp(t.min-xp)+' XP 남음</span>';
+      :'<span class="tl-st lock">'+ic('lock')+' '+fmtXp(t.min-xp)+' XP 남음</span>';
     return '<div class="tl-row t'+(i+1)+(i===cur?' cur':'')+(i>cur?' lock':'')+'">'+emblem(i,'sm',false)
       +'<div class="tl-info"><div class="tl-nm">'+esc(t.n)+'</div><div class="tl-ttl">'+esc(t.ttl)+'</div></div>'
       +'<div class="tl-right"><div class="tl-rng">'+fmtXp(t.min)+(t.max!==null?'–'+fmtXp(t.max):'+')+' XP</div>'+st+'</div></div>';
@@ -1899,10 +1909,10 @@ function openProfile(author){
   });
   var el=document.getElementById('prof-feed');
   if(!posts.length){
-    el.innerHTML='<div class="empty"><div class="empty-i">📭</div><div>게시물이 없습니다</div></div>';
+    el.innerHTML='<div class="empty"><div class="empty-i">'+ic('inbox')+'</div><div>게시물이 없습니다</div></div>';
   } else {
     el.innerHTML=posts.map(function(p){
-      var ce=CE[p.category]||'📦';
+      var ce=ic(CE[p.category]||'package');
       var tc=p.type==='lost'?'b-lost':'b-found';
       var tl=p.type==='lost'?'분실물':'습득물';
       var likes=Array.isArray(p.likes)?p.likes:[];
@@ -1910,9 +1920,9 @@ function openProfile(author){
         +'<div class="card-body" style="padding:13px 13px 0">'
           +'<div class="badges"><span class="badge '+tc+'">'+tl+'</span><span class="badge b-cat">'+ce+' '+p.category+'</span>'+chip(p)+'</div>'
           +'<div class="card-title">'+p.title+'</div>'
-          +'<div class="card-meta">📍 '+p.location+' · '+fd(p.date)+'</div>'
+          +'<div class="card-meta">'+ic('map-pin')+' '+p.location+'<span class="mi">'+ic('calendar')+fd(p.date)+'</span></div>'
         +'</div>'
-        +'<div class="card-foot"><span class="ft-item">🤍 '+likes.length+'</span><span class="ft-item">👁 '+p.views+'</span></div>'
+        +'<div class="card-foot"><span class="ft-item">'+ic('heart')+' '+likes.length+'</span><span class="ft-item">'+ic('eye')+' '+p.views+'</span></div>'
       +'</div>';
     }).join('');
   }
@@ -1963,7 +1973,7 @@ async function pickStatus(status){
   p.status=status;p.resolved_with=null;
   await sb.from('posts').update({status:status,resolved_with:null}).eq('id',id);
   openDet(id);
-  toast('진행 중으로 변경됐습니다 🔍');
+  toast('진행 중으로 변경됐습니다');
 }
 function openEditPost(id){
   var p=ST.posts.find(function(x){return x.id===id;});if(!p)return;
@@ -2013,7 +2023,7 @@ async function doChat(id){
   document.getElementById('chat-nm').textContent='@'+p.author;
   document.getElementById('chat-temp').innerHTML=tempChip(p.author);
   document.getElementById('chat-sub').textContent='"'+p.title+'"';
-  document.getElementById('chat-av').textContent=p.type==='lost'?'😢':'🎉';
+  document.getElementById('chat-av').innerHTML=p.type==='lost'?ic('search'):ic('package-open');
   document.getElementById('chat-scr').dataset.pid=id;
   if(!ST.chats[id]){
     var res=await sb.from('chat_messages').select('*').eq('post_id',id).order('created_at');
@@ -2156,7 +2166,7 @@ function closeRegMap(){
 function syncMapReq(){
   var found=ST.regType==='found';
   document.getElementById('fmap').disabled=found;
-  document.getElementById('fmap-txt').textContent=found?'🗺️ 주운 위치를 지도에 핀으로 찍어주세요 (필수)':'🗺️ 지도에서 위치 표시 (선택)';
+  document.getElementById('fmap-txt').textContent=found?'주운 위치를 지도에 핀으로 찍어주세요 (필수)':'지도에서 위치 표시 (선택)';
   if(found&&!document.getElementById('fmap').checked)openRegMap();
 }
 function searchMapAddr(){
@@ -2205,7 +2215,7 @@ function placeRegMarker(lat,lng,addr){
     setPin(ll.lat,ll.lng);
   });
   ST.mapCoords={lat:lat,lng:lng,addr:addr};
-  document.getElementById('map-addr-label').textContent='📍 '+addr;
+  document.getElementById('map-addr-label').innerHTML=ic('map-pin')+' '+esc(addr);
   refreshFoundDesc();
 }
 // ── 전체 게시물 지도 (수원대 주변만) ──
@@ -2216,16 +2226,16 @@ function openAllMap(){
     return p.type==='found'&&p.coords&&p.status!=='resolved'&&NEAR_BOUNDS.contains([p.coords.lat,p.coords.lng]);
   });
   document.getElementById('all-map-legend').textContent=
-    '📦 진행 중인 습득물 핀 '+pts.length+'개 (지도에 보이는 핀 수와 같아요)';
+    '진행 중인 습득물 핀 '+pts.length+'개 (지도에 보이는 핀 수와 같아요)';
   setTimeout(function(){
     if(_allMap){_allMap.remove();_allMap=null;}
     _allMap=newNearMap('all-map').setView([CAMPUS.lat,CAMPUS.lng],14);
-    L.marker([CAMPUS_PIN.lat,CAMPUS_PIN.lng],{icon:L.divIcon({className:'',html:'<div class="pin-ico" style="background:#E8A33D">🏫</div>',iconSize:[34,34],iconAnchor:[17,17]})})
+    L.marker([CAMPUS_PIN.lat,CAMPUS_PIN.lng],{icon:L.divIcon({className:'',html:'<div class="pin-ico" style="background:#E8A33D">'+ic('school')+'</div>',iconSize:[34,34],iconAnchor:[17,17]})})
       .addTo(_allMap).bindPopup('수원대학교 (학생회관)');
     pts.forEach(function(p){
-      var icon=L.divIcon({className:'',html:'<div class="pin-ico pin-found">📦</div>',iconSize:[34,34],iconAnchor:[17,17]});
+      var icon=L.divIcon({className:'',html:'<div class="pin-ico pin-found">'+ic('package')+'</div>',iconSize:[34,34],iconAnchor:[17,17]});
       L.marker([p.coords.lat,p.coords.lng],{icon:icon}).addTo(_allMap).bindPopup(
-        '<b>'+esc(p.title)+'</b><br>📍 '+esc(p.location)+(p.coords.detail?'<br>🏢 '+esc(p.coords.detail):'')
+        '<b>'+esc(p.title)+'</b><br>'+ic('map-pin')+' '+esc(p.location)+(p.coords.detail?'<br>'+ic('building-2')+' '+esc(p.coords.detail):'')
         +'<br><button class="pop-btn" onclick="openDetFromMap('+Number(p.id)+')">자세히 보기</button>');
     });
     _allMap.invalidateSize();
@@ -2286,7 +2296,7 @@ function resetPzone(){
   _aiSeq++;setAiStatus('');_aiFile=null;ST.aiFound=null;
   var _fc=document.getElementById('fcat');if(_fc)_fc.dataset.ai='';
   document.getElementById('pzw').innerHTML=
-    '<label class="pzone"><div class="pzone-i">☁️</div>'
+    '<label class="pzone"><div class="pzone-i">'+ic('image-plus')+'</div>'
     +'<div class="pzone-t">사진을 올려주세요</div><div class="pzone-s">클릭해서 추가</div>'
     +'<input type="file" accept="image/*" id="pinp" onchange="handlePhoto(this)"></label>';
 }
@@ -2406,7 +2416,7 @@ document.getElementById('fdate').addEventListener('change',refreshFoundDesc);
 async function analyzePhoto(file){
   var seq=++_aiSeq;
   var kind=ST.regType;
-  setAiStatus(kind==='found'?'🤖 AI가 사진을 보고 글을 쓰는 중...':'🤖 AI가 카테고리를 분류하는 중...');
+  setAiStatus(kind==='found'?'AI가 사진을 보고 글을 쓰는 중...':'AI가 카테고리를 분류하는 중...');
   try{
     var fd=new FormData();
     fd.append('file',file);
@@ -2427,13 +2437,13 @@ async function analyzePhoto(file){
       filled=aiFill('fdesc','fdc',composeFound())||filled;
     }
     if(r.agree===false){
-      setAiStatus('🤔 AI 판단이 엇갈려요 ('+r.category+' / '+r.clip_category+'). 카테고리와 물품명을 확인해주세요');
+      setAiStatus('AI 판단이 엇갈려요 ('+r.category+' / '+r.clip_category+'). 카테고리와 물품명을 확인해주세요');
     }else if(!sure){
-      setAiStatus('🤔 AI가 확신하지 못했어요 (가장 비슷: '+r.category+' '+pct+'%). 카테고리는 직접 골라주세요');
+      setAiStatus('AI가 확신하지 못했어요 (가장 비슷: '+r.category+' '+pct+'%). 카테고리는 직접 골라주세요');
     }else if(kind==='found'){
-      setAiStatus('✨ AI 추천: '+r.category+(filled?' · 물품명·설명 초안을 채웠어요':'')+' — 자유롭게 고쳐주세요');
+      setAiStatus('AI 추천: '+r.category+(filled?'. 물품명과 설명 초안을 채웠어요':'')+'. 자유롭게 고쳐 주세요.');
     }else{
-      setAiStatus('✨ AI 추천 카테고리: '+r.category+' ('+pct+'%) — 다른 걸로 바꿀 수 있어요');
+      setAiStatus('AI 추천 카테고리: '+r.category+' ('+pct+'%) — 다른 걸로 바꿀 수 있어요');
     }
   }catch(e){
     if(seq===_aiSeq)setAiStatus('');
@@ -2459,7 +2469,7 @@ async function submitPost(){
     var idx=ST.posts.findIndex(function(x){return x.id===ST.editId;});
     if(idx>-1)Object.assign(ST.posts[idx],upd);
     ST.editId=null;closeReg();render();
-    toast('게시물이 수정됐습니다 ✅');
+    toast('게시물이 수정됐습니다');
   }else{
     var np={type:ST.regType,title:name,category:catRaw,location:loc,date:date,
       author:ST.me,desc:desc||(ST.regType==='lost'?'분실':'습득'),
@@ -2470,7 +2480,7 @@ async function submitPost(){
     ST.posts.unshift(ins.data);
     var xpUp=DEMO?awardXp(ST.me,XP_REWARD.post,'"'+name+'" 게시물 등록','post'):false;
     closeReg();render();
-    toast(xpUp?upMsg(ST.me):(DEMO?'게시물이 등록되었습니다 ✅ +'+XP_REWARD.post+' XP':'게시물이 등록되었습니다 ✅'));
+    toast(xpUp?upMsg(ST.me):(DEMO?'게시물이 등록되었습니다 +'+XP_REWARD.post+' XP':'게시물이 등록되었습니다'));
   }
 }
 
