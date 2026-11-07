@@ -314,6 +314,13 @@
     .chatlist-scr.on{display:flex;}
 
     /* ── AI 비슷한 습득물 찾기 ── */
+    .done-ov{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:1700;padding:20px;}
+    .done-ov.on{display:flex;}
+    .done-card{background:#fff;border-radius:16px;padding:20px 18px 14px;width:100%;max-width:360px;text-align:center;}
+    .done-t{font-size:16px;font-weight:800;margin-bottom:4px;}
+    .done-s{font-size:12px;color:var(--sub);margin-bottom:14px;word-break:keep-all;}
+    .done-row{display:flex;gap:8px;}
+    .done-row button{flex:1;padding:10px;border-radius:10px;border:1px solid var(--gline);background:#fff;font-family:inherit;font-weight:700;font-size:13px;cursor:pointer;}
     .ai-find-btn{width:100%;padding:13px;margin-bottom:10px;border-radius:12px;border:1.5px solid #b9aef0;
                  background:#f4f2ff;color:#5b4fcf;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;}
     .ai-find-btn:active{background:#e9e5ff;}
@@ -959,6 +966,16 @@
     <div style="flex:1"><div class="chat-nm">💬 메시지</div></div>
   </div>
   <div id="chatlist-body" style="flex:1;overflow-y:auto;"></div>
+</div>
+
+<!-- 분실물 등록 완료 안내 (등록 성공 직후에만 열림) -->
+<div class="done-ov" id="done-ov">
+  <div class="done-card">
+    <div class="done-t">게시물이 등록되었습니다 ✅</div>
+    <div class="done-s" id="done-sub"></div>
+    <button class="ai-find-btn" onclick="openAiFromSaved()">🔍 AI로 비슷한 습득물 찾기</button>
+    <div class="done-row"><button onclick="viewSavedPost()">게시물 보기</button><button onclick="closePostDone()">닫기</button></div>
+  </div>
 </div>
 
 <!-- AI 비슷한 습득물 찾기 -->
@@ -2567,8 +2584,27 @@ async function submitPost(){
     var xpUp=DEMO?awardXp(ST.me,XP_REWARD.post,'"'+name+'" 게시물 등록','post'):false;
     closeReg();render();
     toast(xpUp?upMsg(ST.me):(DEMO?'게시물이 등록되었습니다 ✅ +'+XP_REWARD.post+' XP':'게시물이 등록되었습니다 ✅'));
+    // 저장에 성공한 분실물에만 AI 바로가기를 보여준다. 테스트 데이터 일괄 등록(가상 사용자)에서는 열지 않는다.
+    if(np.type==='lost'&&!/^테스트계정_/.test(ST.me))showPostDone(ins.data.id);
   }
 }
+
+// ── 분실물 등록 완료 → AI 매칭 바로가기 (저장된 게시물 id 로만 동작. 새 게시물을 만들지 않는다) ──
+function showPostDone(id){
+  var p=ST.posts.find(function(x){return x.id===id;});if(!p)return;
+  ST.doneId=id;
+  document.getElementById('done-sub').textContent='“'+p.title+'” — 비슷한 습득물이 이미 올라와 있는지 바로 확인해볼까요?';
+  document.getElementById('done-ov').classList.add('on');
+}
+function closePostDone(){document.getElementById('done-ov').classList.remove('on');}
+function viewSavedPost(){var id=ST.doneId;closePostDone();if(id)openDet(id);}
+function openAiFromSaved(){
+  var p=ST.posts.find(function(x){return x.id===ST.doneId;});
+  closePostDone();if(!p)return;
+  try{openAi({title:p.title,category:p.category,desc:p.desc||'',date:p.date,coords:p.coords||null,location:p.location||'',img:p.img||null});}
+  catch(e){console.error(e);toast('AI 매칭을 열지 못했어요. 게시물은 정상 등록되어 있어요');}
+}
+
 
 function toast(msg){
   var el=document.getElementById('toast');
