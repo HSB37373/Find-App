@@ -1,0 +1,1176 @@
+{
+ "note": "Wikimedia Commons 사진은 각 라이선스(CC BY / CC BY-SA / CC0 / Public domain) 조건에 따라 작가 표시를 유지한다.",
+ "items": [
+  {
+   "key": "A01-F",
+   "file": "testdata/images/A01-F.jpg",
+   "commons_title": "File:SAMSUNG Galaxy Buds+ (5).jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:SAMSUNG_Galaxy_Buds%2B_(5).jpg",
+   "author": "Dinkun Chen",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "orig_width": 3405,
+   "orig_height": 5489,
+   "observed": {
+    "object": "갤럭시 버즈+ 충전 케이스",
+    "color": "연한 하늘색(블루) - 요청한 베이지/크림색과 다름",
+    "brand": "삼성",
+    "model": "Galaxy Buds+",
+    "features": [
+     "케이스 뚜껑 닫힘",
+     "SAMSUNG 로고 보임",
+     "스마트폰 뒷면 위"
+    ]
+   },
+   "same_object_evidence": "same_uploader_series",
+   "kind": "photo"
+  },
+  {
+   "key": "A01-L",
+   "file": "testdata/images/A01-L.jpg",
+   "commons_title": "File:SAMSUNG Galaxy Buds+ (4).jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:SAMSUNG_Galaxy_Buds%2B_(4).jpg",
+   "author": "Dinkun Chen",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "orig_width": 6960,
+   "orig_height": 4640,
+   "observed": {
+    "object": "갤럭시 버즈+ 충전 케이스",
+    "color": "연한 하늘색(블루) - 요청한 베이지/크림색과 다름",
+    "brand": "삼성",
+    "model": "Galaxy Buds+",
+    "features": [
+     "케이스 뚜껑 열림",
+     "이어버드 2개 거치",
+     "나무 책상 위"
+    ]
+   },
+   "same_object_evidence": "same_uploader_series",
+   "kind": "photo"
+  },
+  {
+   "key": "A02-F",
+   "file": "testdata/images/A02-F.jpg",
+   "commons_title": "File:IPhone 18 Pro - black 03.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:IPhone_18_Pro_-_black_03.jpg",
+   "author": "Farragutful",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "orig_width": 3855,
+   "orig_height": 3211,
+   "observed": {
+    "object": "아이폰",
+    "color": "블랙(짙은 검정/흑회색)",
+    "brand": "애플",
+    "model": "iPhone 18 Pro 추정(파일명 기준)",
+    "features": [
+     "뒷면 애플 로고",
+     "삼중 카메라",
+     "흰 포장 상자 안에 케이블과 함께"
+    ]
+   },
+   "same_object_evidence": "same_uploader_series",
+   "kind": "photo"
+  },
+  {
+   "key": "A02-L",
+   "file": "testdata/images/A02-L.jpg",
+   "commons_title": "File:IPhone 18 Pro - black 01.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:IPhone_18_Pro_-_black_01.jpg",
+   "author": "Farragutful",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "orig_width": 2180,
+   "orig_height": 2785,
+   "observed": {
+    "object": "아이폰",
+    "color": "블랙(짙은 검정/흑회색)",
+    "brand": "애플",
+    "model": "iPhone 18 Pro 추정(파일명 기준)",
+    "features": [
+     "뒷면 애플 로고",
+     "삼중 카메라",
+     "케이스 없음",
+     "직물 매트 위"
+    ]
+   },
+   "same_object_evidence": "same_uploader_series",
+   "kind": "photo"
+  },
+  {
+   "key": "A03-F",
+   "file": "testdata/images/A03-F.jpg",
+   "kind": "mock",
+   "license": "직접 제작 (CC0 로 사용 가능, 저작권 문제 없음)",
+   "author": "testdata/make_mock_images.py",
+   "observed": {
+    "object": "학생증 모형(A03-L 과 같은 디자인, 다른 각도·배경)",
+    "color": "",
+    "brand": "없음",
+    "features": [
+     "SAMPLE/견본 표시",
+     "이름·번호는 가상 값"
+    ]
+   },
+   "same_object_evidence": "same_design_rendered_twice"
+  },
+  {
+   "key": "A03-L",
+   "file": "testdata/images/A03-L.jpg",
+   "kind": "mock",
+   "license": "직접 제작 (CC0 로 사용 가능, 저작권 문제 없음)",
+   "author": "testdata/make_mock_images.py",
+   "observed": {
+    "object": "학생증 모형(A03-F 와 같은 디자인, 다른 각도·배경)",
+    "color": "",
+    "brand": "없음",
+    "features": [
+     "SAMPLE/견본 표시",
+     "이름·번호는 가상 값"
+    ]
+   },
+   "same_object_evidence": "same_design_rendered_twice"
+  },
+  {
+   "key": "A04-F",
+   "file": "testdata/images/A04-F.jpg",
+   "commons_title": "File:Peets Bodum French Press Travel Mug 2 2019-05-06.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:Peets_Bodum_French_Press_Travel_Mug_2_2019-05-06.jpg",
+   "author": "FASTILY",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "orig_width": 3024,
+   "orig_height": 4032,
+   "observed": {
+    "object": "여행용 텀블러(프렌치프레스 머그)",
+    "color": "투명 본체에 갈색 뚜껑·갈색 슬리브",
+    "brand": "Peet's Coffee & Tea / Bodum",
+    "model": "Bodum French Press Travel Mug",
+    "features": [
+     "투명 이중벽 본체",
+     "갈색 뚜껑",
+     "갈색 가죽 질감 슬리브에 Peet's Coffee & Tea 로고",
+     "프렌치프레스 여행용 머그",
+     "옆에 여분 필터 포장(Bodum)이 함께 있음",
+     "나무 탁자 위 비스듬한 촬영"
+    ]
+   },
+   "same_object_evidence": "same_uploader_series",
+   "same_object_note": "업로더 FASTILY, 연속 파일명 'Peets Bodum French Press Travel Mug 1/2 2019-05-06' (같은 날 같은 물건 다른 각도)",
+   "kind": "photo"
+  },
+  {
+   "key": "A04-L",
+   "file": "testdata/images/A04-L.jpg",
+   "commons_title": "File:Peets Bodum French Press Travel Mug 1 2019-05-06.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:Peets_Bodum_French_Press_Travel_Mug_1_2019-05-06.jpg",
+   "author": "FASTILY",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "orig_width": 3024,
+   "orig_height": 4032,
+   "observed": {
+    "object": "여행용 텀블러(프렌치프레스 머그)",
+    "color": "투명 본체에 갈색 뚜껑·갈색 슬리브",
+    "brand": "Peet's Coffee & Tea / Bodum",
+    "model": "Bodum French Press Travel Mug",
+    "features": [
+     "투명 이중벽 본체",
+     "갈색 뚜껑",
+     "갈색 가죽 질감 슬리브에 Peet's Coffee & Tea 로고",
+     "프렌치프레스 여행용 머그",
+     "세로로 놓고 정면 촬영"
+    ]
+   },
+   "same_object_evidence": "same_uploader_series",
+   "same_object_note": "업로더 FASTILY, 연속 파일명 'Peets Bodum French Press Travel Mug 1/2 2019-05-06' (같은 날 같은 물건 다른 각도)",
+   "kind": "photo"
+  },
+  {
+   "key": "A05-F",
+   "file": "testdata/images/A05-F.jpg",
+   "commons_title": "File:Black umbrella splashing in the garden.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:Black_umbrella_splashing_in_the_garden.jpg",
+   "author": "Shixart1985",
+   "license": "CC BY 2.0",
+   "license_url": "https://creativecommons.org/licenses/by/2.0",
+   "orig_width": 6016,
+   "orig_height": 4016,
+   "observed": {
+    "object": "장우산",
+    "color": "매우 어두운 남색~검정에 가까운 파랑",
+    "brand": "불명",
+    "model": "불명",
+    "features": [
+     "펼친 우산 전체",
+     "비 맞는 중",
+     "정원 잔디 위"
+    ]
+   },
+   "same_object_evidence": "same_uploader_series",
+   "kind": "photo"
+  },
+  {
+   "key": "A05-L",
+   "file": "testdata/images/A05-L.jpg",
+   "commons_title": "File:Raindrops glisten on the surface of a dark umbrella.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:Raindrops_glisten_on_the_surface_of_a_dark_umbrella.jpg",
+   "author": "Shixart1985",
+   "license": "CC BY 2.0",
+   "license_url": "https://creativecommons.org/licenses/by/2.0",
+   "orig_width": 5460,
+   "orig_height": 3645,
+   "observed": {
+    "object": "장우산",
+    "color": "어두운 남색(네이비에 가까운 짙은 파랑)",
+    "brand": "불명",
+    "model": "불명",
+    "features": [
+     "펼친 우산 일부 확대",
+     "빗방울 맺힘",
+     "야외 배경"
+    ]
+   },
+   "same_object_evidence": "same_uploader_series",
+   "kind": "photo"
+  },
+  {
+   "key": "A06-F",
+   "file": "testdata/images/A06-F.jpg",
+   "commons_title": "File:ZNAP Kartenetui (Slimpuro) 01.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:ZNAP_Kartenetui_(Slimpuro)_01.jpg",
+   "author": "www.kartenetui.info",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0",
+   "orig_width": 1344,
+   "orig_height": 1021,
+   "observed": {
+    "object": "카드지갑(카드 케이스)",
+    "color": "짙은 갈색(커버) + 검정 'RFID SHIELD' 금속 케이스",
+    "brand": "ZNAP/Slimpuro",
+    "model": "Kartenetui",
+    "features": [
+     "옆쪽 낮은 각도 시점",
+     "상단에 RFID SHIELD 문구",
+     "하단에 갈색 커버가 보임"
+    ]
+   },
+   "same_object_evidence": "same_uploader_series",
+   "kind": "photo"
+  },
+  {
+   "key": "A06-L",
+   "file": "testdata/images/A06-L.jpg",
+   "commons_title": "File:ZNAP Kartenetui (Slimpuro) 05.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:ZNAP_Kartenetui_(Slimpuro)_05.jpg",
+   "author": "www.kartenetui.info",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0",
+   "orig_width": 2016,
+   "orig_height": 1512,
+   "observed": {
+    "object": "카드지갑(카드 케이스)",
+    "color": "짙은 갈색(코르크 질감 커버) + 검정 금속 케이스",
+    "brand": "ZNAP/Slimpuro",
+    "model": "Kartenetui",
+    "features": [
+     "닫힌 상태 정면 위쪽 시점",
+     "갈색 커버에 검정 슬라이드 케이스"
+    ]
+   },
+   "same_object_evidence": "same_uploader_series",
+   "kind": "photo"
+  },
+  {
+   "key": "A07-F",
+   "file": "testdata/images/A07-F.jpg",
+   "commons_title": "File:Black Titanium Frame Eyeglasses, JINS MTF-16S-151B, 2.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:Black_Titanium_Frame_Eyeglasses,_JINS_MTF-16S-151B,_2.jpg",
+   "author": "Yapparina",
+   "license": "CC0",
+   "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+   "orig_width": 5184,
+   "orig_height": 3456,
+   "observed": {
+    "object": "안경",
+    "color": "검정",
+    "brand": "JINS",
+    "model": "MTF-16S-151B(블랙 티타늄 프레임)",
+    "features": [
+     "가는 검정 메탈 프레임(뿔테 아님)",
+     "코받침 클로즈업",
+     "흰 배경, 얼굴 없음"
+    ]
+   },
+   "same_object_evidence": "same_uploader_series",
+   "kind": "photo"
+  },
+  {
+   "key": "A07-L",
+   "file": "testdata/images/A07-L.jpg",
+   "commons_title": "File:Black Titanium Frame Eyeglasses, JINS MTF-16S-151B, 1.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:Black_Titanium_Frame_Eyeglasses,_JINS_MTF-16S-151B,_1.jpg",
+   "author": "Yapparina",
+   "license": "CC0",
+   "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+   "orig_width": 5184,
+   "orig_height": 3456,
+   "observed": {
+    "object": "안경",
+    "color": "검정",
+    "brand": "JINS",
+    "model": "MTF-16S-151B(블랙 티타늄 프레임)",
+    "features": [
+     "가는 검정 메탈 프레임(뿔테 아님)",
+     "사각형 렌즈",
+     "흰 배경, 얼굴 없음"
+    ]
+   },
+   "same_object_evidence": "same_uploader_series",
+   "kind": "photo"
+  },
+  {
+   "key": "A08-F",
+   "file": "testdata/images/A08-F.jpg",
+   "commons_title": "File:Pineng PN-963 Power Bank (2).jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:Pineng_PN-963_Power_Bank_(2).jpg",
+   "author": "Bindydad123",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "orig_width": 4608,
+   "orig_height": 3456,
+   "observed": {
+    "object": "보조배터리",
+    "color": "검정(격자무늬)에 빨간 옆면",
+    "brand": "Pineng",
+    "model": "PN-963 (10000mAh)",
+    "features": [
+     "뒷면/옆면 낮은 각도: 격자무늬 면과 빨간 옆선 보임",
+     "흰 책상 위, 뒤에 검은 케이블"
+    ]
+   },
+   "same_object_evidence": "same_uploader_series",
+   "note": "같은 업로더 Bindydad123 의 연속 파일명 Pineng PN-963 Power Bank (1)~(3), 같은 배경/같은 개체. 기존 A08 교체본.",
+   "kind": "photo"
+  },
+  {
+   "key": "A08-L",
+   "file": "testdata/images/A08-L.jpg",
+   "commons_title": "File:Pineng PN-963 Power Bank (1).jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:Pineng_PN-963_Power_Bank_(1).jpg",
+   "author": "Bindydad123",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "orig_width": 4608,
+   "orig_height": 3456,
+   "observed": {
+    "object": "보조배터리",
+    "color": "검정(격자무늬)에 빨간 옆면",
+    "brand": "Pineng",
+    "model": "PN-963 (10000mAh)",
+    "features": [
+     "앞면(윗면) 비스듬히: 디스플레이창과 USB 포트 보임",
+     "흰 책상 위, 뒤에 검은 케이블"
+    ]
+   },
+   "same_object_evidence": "same_uploader_series",
+   "note": "같은 업로더 Bindydad123 의 연속 파일명 Pineng PN-963 Power Bank (1)~(3), 같은 배경/같은 개체. 기존 A08 교체본.",
+   "kind": "photo"
+  },
+  {
+   "key": "A09-F",
+   "file": "testdata/images/A09-F.jpg",
+   "commons_title": "File:Nexus 7 (2012)-4454.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:Nexus_7_(2012)-4454.jpg",
+   "author": "Raimond Spekking",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "orig_width": 2987,
+   "orig_height": 3982,
+   "observed": {
+    "object": "태블릿 PC",
+    "color": "검정(점박이 질감 뒷면)",
+    "brand": "Google/ASUS",
+    "model": "Nexus 7 (2012)",
+    "features": [
+     "뒷면 nexus 로고",
+     "ASUS 로고와 하단 규격 라벨"
+    ]
+   },
+   "same_object_evidence": "same_uploader_series",
+   "kind": "photo"
+  },
+  {
+   "key": "A09-L",
+   "file": "testdata/images/A09-L.jpg",
+   "commons_title": "File:Nexus 7 (2012)-4453.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:Nexus_7_(2012)-4453.jpg",
+   "author": "Raimond Spekking",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "orig_width": 2670,
+   "orig_height": 3560,
+   "observed": {
+    "object": "태블릿 PC",
+    "color": "검정 베젤, 화면 꺼짐",
+    "brand": "Google/ASUS",
+    "model": "Nexus 7 (2012)",
+    "features": [
+     "정면, 상단 카메라",
+     "화면 꺼짐, 개인정보 없음"
+    ]
+   },
+   "same_object_evidence": "same_uploader_series",
+   "kind": "photo"
+  },
+  {
+   "key": "A10-F",
+   "file": "testdata/images/A10-F.jpg",
+   "commons_title": "File:Trousse - 2.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:Trousse_-_2.jpg",
+   "author": "Lionel Allorge",
+   "license": "CC BY-SA 3.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+   "orig_width": 4642,
+   "orig_height": 2145,
+   "observed": {
+    "object": "필통(원통형 지퍼 파우치)",
+    "color": "검정",
+    "brand": "식별 불가",
+    "model": "미상",
+    "features": [
+     "검은 천 재질 원통형",
+     "지퍼와 금속 고리 지퍼 손잡이",
+     "흰 배경 단독 촬영",
+     "지퍼 쪽이 보이는 위쪽 촬영"
+    ]
+   },
+   "same_object_evidence": "same_uploader_series",
+   "series_note": "A10-L/F: 같은 업로더(Lionel Allorge)의 연속 파일명 'Trousse - 1.jpg', 'Trousse - 2.jpg', 같은 개체를 다른 각도로 촬영",
+   "kind": "photo"
+  },
+  {
+   "key": "A10-L",
+   "file": "testdata/images/A10-L.jpg",
+   "commons_title": "File:Trousse - 1.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:Trousse_-_1.jpg",
+   "author": "Lionel Allorge",
+   "license": "CC BY-SA 3.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+   "orig_width": 4576,
+   "orig_height": 2211,
+   "observed": {
+    "object": "필통(원통형 지퍼 파우치)",
+    "color": "검정",
+    "brand": "식별 불가",
+    "model": "미상",
+    "features": [
+     "검은 천 재질 원통형",
+     "지퍼와 금속 고리 지퍼 손잡이",
+     "흰 배경 단독 촬영",
+     "측면 촬영"
+    ]
+   },
+   "same_object_evidence": "same_uploader_series",
+   "series_note": "A10-L/F: 같은 업로더(Lionel Allorge)의 연속 파일명 'Trousse - 1.jpg', 'Trousse - 2.jpg', 같은 개체를 다른 각도로 촬영",
+   "kind": "photo"
+  },
+  {
+   "key": "B01-F",
+   "file": "testdata/images/B01-F.jpg",
+   "commons_title": "File:AirPods (cropped).jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:AirPods_(cropped).jpg",
+   "author": "Maurizio Pesce from Milan, Italia",
+   "license": "CC BY 2.0",
+   "license_url": "https://creativecommons.org/licenses/by/2.0",
+   "orig_width": 4089,
+   "orig_height": 2599,
+   "observed": {
+    "object": "에어팟 이어버드 2개와 충전 케이스(뚜껑 열림)",
+    "color": "흰색",
+    "brand": "애플",
+    "model": "AirPods (1·2세대 계열)",
+    "features": [
+     "실리콘 팁 없는 막대형 이어버드",
+     "흰색 충전 케이스",
+     "회색 배경"
+    ]
+   },
+   "same_object_evidence": "n/a",
+   "kind": "photo"
+  },
+  {
+   "key": "B01-L",
+   "file": "testdata/images/B01-L.jpg",
+   "commons_title": "File:Apple airpods pro.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:Apple_airpods_pro.jpg",
+   "author": "Arne Müseler",
+   "license": "CC BY-SA 3.0 de",
+   "license_url": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+   "orig_width": 893,
+   "orig_height": 719,
+   "observed": {
+    "object": "에어팟 프로 이어버드 한 쌍(케이스 없음)",
+    "color": "흰색",
+    "brand": "애플",
+    "model": "AirPods Pro (1세대)",
+    "features": [
+     "실리콘 이어팁 장착",
+     "스템(막대) 있는 무선 이어버드",
+     "밝은 회색 배경 위 단독 촬영"
+    ]
+   },
+   "same_object_evidence": "n/a",
+   "kind": "photo"
+  },
+  {
+   "key": "B02-F",
+   "file": "testdata/images/B02-F.jpg",
+   "commons_title": "File:Samsung Galaxy Buds.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:Samsung_Galaxy_Buds.jpg",
+   "author": "Kskhh",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "orig_width": 3438,
+   "orig_height": 2855,
+   "observed": {
+    "object": "갤럭시 버즈 충전 케이스와 이어버드(뚜껑 열림)",
+    "color": "흰색",
+    "brand": "삼성",
+    "model": "Galaxy Buds (2019, 1세대)",
+    "features": [
+     "케이스 뚜껑 열림",
+     "L/R 표시와 녹색 표시등",
+     "파란 배경 위 단독 촬영"
+    ]
+   },
+   "same_object_evidence": "n/a",
+   "kind": "photo"
+  },
+  {
+   "key": "B02-L",
+   "file": "testdata/images/B02-L.jpg",
+   "commons_title": "File:Samsung Galaxy buds.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:Samsung_Galaxy_buds.jpg",
+   "author": "Kārlis Dambrāns",
+   "license": "CC BY 2.0",
+   "license_url": "https://creativecommons.org/licenses/by/2.0",
+   "orig_width": 3480,
+   "orig_height": 2320,
+   "observed": {
+    "object": "갤럭시 버즈 충전 케이스와 이어버드(손에 들고 있음)",
+    "color": "검정",
+    "brand": "삼성",
+    "model": "Galaxy Buds (2019, 1세대)",
+    "features": [
+     "케이스 뚜껑 열림",
+     "L/R 표시와 녹색 표시등",
+     "손(얼굴 없음)으로 들고 있음"
+    ]
+   },
+   "same_object_evidence": "n/a",
+   "kind": "photo"
+  },
+  {
+   "key": "B03-L",
+   "file": "testdata/images/B03-L.jpg",
+   "commons_title": "File:Earbud wires.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:Earbud_wires.jpg",
+   "author": "Jerikasb",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "orig_width": 6016,
+   "orig_height": 4000,
+   "observed": {
+    "object": "줄 달린 유선 이어폰(라이트닝 커넥터)",
+    "color": "흰색",
+    "brand": "애플(EarPods 형)",
+    "model": "EarPods Lightning 타입으로 보임",
+    "features": [
+     "줄이 꼬여 있음",
+     "리모컨/마이크부 있음",
+     "나무 탁자 위"
+    ]
+   },
+   "same_object_evidence": "n/a",
+   "kind": "photo"
+  },
+  {
+   "key": "B04-F",
+   "file": "testdata/images/B04-F.jpg",
+   "commons_title": "File:Black vertical credit card holder with 10 pockets - Bf.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:Black_vertical_credit_card_holder_with_10_pockets_-_Bf.jpg",
+   "author": "Fructibus",
+   "license": "CC0",
+   "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+   "orig_width": 4608,
+   "orig_height": 3456,
+   "observed": {
+    "object": "카드 홀더(카드 슬롯 투명 포켓, 열린 상태, 비어 있음)",
+    "color": "검정",
+    "brand": "불명",
+    "model": "Black vertical credit card holder with 10 pockets",
+    "features": [
+     "여러 칸의 투명 포켓",
+     "안에 카드 없음",
+     "회색 배경"
+    ]
+   },
+   "same_object_evidence": "n/a",
+   "kind": "photo"
+  },
+  {
+   "key": "B04-L",
+   "file": "testdata/images/B04-L.jpg",
+   "commons_title": "File:Leather bi-fold wallet by Eugene Pik (2021) 06.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:Leather_bi-fold_wallet_by_Eugene_Pik_(2021)_06.jpg",
+   "author": "Eugenepik",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "orig_width": 2048,
+   "orig_height": 1151,
+   "observed": {
+    "object": "가죽 반지갑(이중 접이식)",
+    "color": "검정",
+    "brand": "불명",
+    "model": "수공 가죽 바이폴드 지갑",
+    "features": [
+     "도톨한 질감의 가죽",
+     "스티치 마감",
+     "접힌 상태, 손으로 잡고 있음",
+     "읽히는 개인정보 없음"
+    ]
+   },
+   "same_object_evidence": "n/a",
+   "kind": "photo"
+  },
+  {
+   "key": "B05-F",
+   "file": "testdata/images/B05-F.jpg",
+   "commons_title": "File:Hydroflask.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:Hydroflask.jpg",
+   "author": "Kjaskren",
+   "license": "CC0",
+   "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+   "orig_width": 3024,
+   "orig_height": 4032,
+   "observed": {
+    "object": "텀블러(보온병)",
+    "color": "흰색",
+    "brand": "하이드로플라스크(Hydro Flask)",
+    "model": "와이드 마우스 대용량 추정",
+    "features": [
+     "굵고 큰 원통형",
+     "검정 손바닥 로고와 Hydro Flask 글자",
+     "검정 뚜껑과 손잡이, 은색 링",
+     "표면에 긁힌 자국"
+    ]
+   },
+   "same_object_evidence": "n/a",
+   "kind": "photo"
+  },
+  {
+   "key": "B05-L",
+   "file": "testdata/images/B05-L.jpg",
+   "commons_title": "File:HydroFlask Bottle.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:HydroFlask_Bottle.jpg",
+   "author": "Alec Voss",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "orig_width": 3024,
+   "orig_height": 4032,
+   "observed": {
+    "object": "텀블러(보온병)",
+    "color": "검정",
+    "brand": "하이드로플라스크(Hydro Flask)",
+    "model": "스탠다드 마우스 24oz 추정(빨대형 뚜껑)",
+    "features": [
+     "슬림한 원통형",
+     "흰색 손바닥 로고와 Hydro Flask 글자",
+     "은색 링이 있는 빨대형 뚜껑과 손잡이",
+     "몸통 위쪽에 찌그러진 자국"
+    ]
+   },
+   "same_object_evidence": "n/a",
+   "kind": "photo"
+  },
+  {
+   "key": "B06-F",
+   "file": "testdata/images/B06-F.jpg",
+   "commons_title": "File:Apple iPhone 6 (Silver) - Front.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:Apple_iPhone_6_(Silver)_-_Front.jpg",
+   "author": "Beamish4",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "orig_width": 4056,
+   "orig_height": 5408,
+   "observed": {
+    "object": "스마트폰(앞면)",
+    "color": "흰색/은색",
+    "brand": "애플",
+    "model": "iPhone 6",
+    "features": [
+     "흰색 전면 베젤과 홈 버튼",
+     "화면 켜짐: 기본 아이콘 화면(iOS 12 추정, 폴란드어 UI, 'Brak SIM')",
+     "개인정보 없음",
+     "은색 테두리"
+    ]
+   },
+   "same_object_evidence": "n/a",
+   "kind": "photo"
+  },
+  {
+   "key": "B06-L",
+   "file": "testdata/images/B06-L.jpg",
+   "commons_title": "File:SAMSUNG Galaxy S22 Ultra BLACK (6).jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:SAMSUNG_Galaxy_S22_Ultra_BLACK_(6).jpg",
+   "author": "Dinkun Chen",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "orig_width": 2645,
+   "orig_height": 4842,
+   "observed": {
+    "object": "스마트폰(뒷면)",
+    "color": "검정",
+    "brand": "삼성",
+    "model": "Galaxy S22 Ultra",
+    "features": [
+     "뒷면이 위로 보임",
+     "세로 배열 카메라 렌즈 4개",
+     "SAMSUNG 로고",
+     "S펜이 뒷면 위에 놓임",
+     "화면 미노출"
+    ]
+   },
+   "same_object_evidence": "n/a",
+   "kind": "photo"
+  },
+  {
+   "key": "B07-F",
+   "file": "testdata/images/B07-F.jpg",
+   "commons_title": "File:Regnhlíf.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:Regnhl%C3%ADf.jpg",
+   "author": "Camera: Sternenlaus, Photo: birdy",
+   "license": "CC BY-SA 3.0",
+   "license_url": "http://creativecommons.org/licenses/by-sa/3.0/",
+   "orig_width": 931,
+   "orig_height": 787,
+   "observed": {
+    "object": "장우산(펼친 상태)",
+    "color": "검정",
+    "brand": "불명",
+    "model": "불명",
+    "features": [
+     "J자 손잡이(검정)",
+     "우산 안쪽에 별자리 무늬",
+     "밝은 나무 바닥 위에 놓임"
+    ]
+   },
+   "same_object_evidence": "n/a",
+   "kind": "photo"
+  },
+  {
+   "key": "B07-L",
+   "file": "testdata/images/B07-L.jpg",
+   "commons_title": "File:Black umbrella.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:Black_umbrella.jpg",
+   "author": "Janakiraman janaki",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "orig_width": 4608,
+   "orig_height": 2592,
+   "observed": {
+    "object": "접이식 우산(접힌 상태)",
+    "color": "검정(짙은 회색 손잡이)",
+    "brand": "불명",
+    "model": "불명",
+    "features": [
+     "접힌 상태로 바닥에 놓임",
+     "원통형 손잡이와 검은 손목 끈",
+     "우산 천 안쪽에 은색 줄무늬 보임"
+    ]
+   },
+   "same_object_evidence": "n/a",
+   "kind": "photo"
+  },
+  {
+   "key": "B08-F",
+   "file": "testdata/images/B08-F.jpg",
+   "commons_title": "File:Eyeglasses with progressive trifocal prescription.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:Eyeglasses_with_progressive_trifocal_prescription.jpg",
+   "author": "Stanistani",
+   "license": "CC BY-SA 3.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+   "orig_width": 3264,
+   "orig_height": 2448,
+   "observed": {
+    "object": "투명 렌즈 안경",
+    "color": "은색(회색) 금속테, 검정 다리 끝",
+    "brand": "불명",
+    "model": "불명",
+    "features": [
+     "투명 렌즈",
+     "가는 금속 프레임",
+     "코받침 있음",
+     "렌즈가 두꺼운 도수 안경, 정면으로 펼쳐 놓음"
+    ]
+   },
+   "same_object_evidence": "n/a",
+   "kind": "photo"
+  },
+  {
+   "key": "B08-L",
+   "file": "testdata/images/B08-L.jpg",
+   "commons_title": "File:2008-07-27 Sunglasses.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:2008-07-27_Sunglasses.jpg",
+   "author": "Ildar Sagdejev (Specious)",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "orig_width": 3888,
+   "orig_height": 2592,
+   "observed": {
+    "object": "선글라스",
+    "color": "검정 프레임, 짙은 회색 그라데이션 렌즈",
+    "brand": "불명",
+    "model": "불명",
+    "features": [
+     "큼직한 둥근 사각 렌즈",
+     "바위 위에 놓임",
+     "굵은 검정 테"
+    ]
+   },
+   "same_object_evidence": "n/a",
+   "kind": "photo"
+  },
+  {
+   "key": "B09-F",
+   "file": "testdata/images/B09-F.jpg",
+   "commons_title": "File:T-money_card.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:T-money_card.jpg",
+   "author": "zisk",
+   "license": "Public domain",
+   "license_url": "",
+   "orig_width": 499,
+   "orig_height": 316,
+   "observed": {
+    "object": "교통카드(티머니)",
+    "color": "검정 바탕에 파란 T 문양",
+    "brand": "T-money(티머니)",
+    "model": "일반용 티머니 카드",
+    "features": [
+     "카드 번호·이름 보이지 않음",
+     "'전국 어디서나 티머니!' 문구",
+     "하단 마일리지/티머니 로고"
+    ]
+   },
+   "same_object_evidence": "n/a",
+   "kind": "photo"
+  },
+  {
+   "key": "B09-L",
+   "file": "testdata/images/B09-L.jpg",
+   "kind": "mock",
+   "license": "직접 제작 (CC0 로 사용 가능, 저작권 문제 없음)",
+   "author": "testdata/make_mock_images.py",
+   "observed": {
+    "object": "신용카드 모형",
+    "color": "",
+    "brand": "없음",
+    "features": [
+     "SAMPLE/견본 표시",
+     "이름·번호는 가상 값"
+    ]
+   },
+   "same_object_evidence": "n/a"
+  },
+  {
+   "key": "B10-F",
+   "file": "testdata/images/B10-F.jpg",
+   "commons_title": "File:Various_keys_on_keyring.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:Various_keys_on_keyring.jpg",
+   "author": "Pittigrilli",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "orig_width": 3699,
+   "orig_height": 3024,
+   "observed": {
+    "object": "집 열쇠 꾸러미(열쇠고리)",
+    "color": "황동/금색 열쇠 다수, 파란 태그",
+    "brand": "n/a",
+    "model": "n/a",
+    "features": [
+     "금속 열쇠 약 6개",
+     "파란 플라스틱 태그",
+     "파란 카라비너",
+     "검정 천 위"
+    ]
+   },
+   "same_object_evidence": "n/a",
+   "kind": "photo"
+  },
+  {
+   "key": "B10-L",
+   "file": "testdata/images/B10-L.jpg",
+   "commons_title": "File:BMW_Car_Key.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:BMW_Car_Key.jpg",
+   "author": "Adder3824",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "orig_width": 3264,
+   "orig_height": 2448,
+   "observed": {
+    "object": "자동차 스마트키(리모컨 키)",
+    "color": "검정 + 파란 측면 라인, 은색 버튼",
+    "brand": "BMW",
+    "model": "BMW 스마트키(3버튼)",
+    "features": [
+     "BMW 로고",
+     "잠금/해제/트렁크 버튼 3개",
+     "하단 비상키 삽입부"
+    ]
+   },
+   "same_object_evidence": "n/a",
+   "kind": "photo"
+  },
+  {
+   "key": "C01-L",
+   "file": "testdata/images/C01-L.jpg",
+   "commons_title": "File:Apple_Watch_Sport_-_38mm_Space_Gray_(3769).jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:Apple_Watch_Sport_-_38mm_Space_Gray_(3769).jpg",
+   "author": "Gregory Varnum",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "orig_width": 4032,
+   "orig_height": 3024,
+   "observed": {
+    "object": "스마트워치",
+    "color": "검정(스페이스 그레이 케이스, 검정 스포츠 밴드)",
+    "brand": "Apple",
+    "model": "Apple Watch Sport 38mm",
+    "features": [
+     "사각 화면 꺼짐",
+     "측면 크라운과 버튼",
+     "실리콘 밴드"
+    ]
+   },
+   "same_object_evidence": "n/a",
+   "kind": "photo"
+  },
+  {
+   "key": "C02-L",
+   "file": "testdata/images/C02-L.jpg",
+   "commons_title": "File:A_pair_of_white_shoes.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:A_pair_of_white_shoes.jpg",
+   "author": "JustinLiang522",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "orig_width": 3024,
+   "orig_height": 4032,
+   "observed": {
+    "object": "운동화(스니커즈) 한 켤레",
+    "color": "흰색, 뒤꿈치 안쪽 검정",
+    "brand": "불명",
+    "model": "불명",
+    "features": [
+     "흰 가죽 소재",
+     "납작한 흰 끈",
+     "두꺼운 흰 밑창",
+     "타일 바닥 위"
+    ]
+   },
+   "same_object_evidence": "n/a",
+   "kind": "photo"
+  },
+  {
+   "key": "C03-L",
+   "file": "testdata/images/C03-L.jpg",
+   "commons_title": "File:Top_cover_of_a_closed_Lenovo_ThinkPad_X220_laptop.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:Top_cover_of_a_closed_Lenovo_ThinkPad_X220_laptop.jpg",
+   "author": "Siarhei V",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "orig_width": 2977,
+   "orig_height": 2040,
+   "observed": {
+    "object": "노트북(닫힌 상태, 덮개 윗면)",
+    "color": "검정(어두운 회색)",
+    "brand": "Lenovo",
+    "model": "ThinkPad X220",
+    "features": [
+     "lenovo 로고",
+     "ThinkPad 로고",
+     "은색 힌지 2개",
+     "화면 정보 없음"
+    ]
+   },
+   "same_object_evidence": "n/a",
+   "kind": "photo"
+  },
+  {
+   "key": "C04-L",
+   "file": "testdata/images/C04-L.jpg",
+   "commons_title": "File:One Big Thick Book (51942507753).jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:One_Big_Thick_Book_(51942507753).jpg",
+   "author": "Dejan Krsmanovic",
+   "license": "CC BY 2.0",
+   "license_url": "https://creativecommons.org/licenses/by/2.0",
+   "orig_width": 4800,
+   "orig_height": 3200,
+   "observed": {
+    "object": "두꺼운 양장 책(전공 교재 느낌)",
+    "color": "짙은 남색/검정 표지, 흰 페이지",
+    "brand": "없음",
+    "model": "불명",
+    "features": [
+     "책 한 권이 세워져 페이지가 부채꼴로 펼쳐짐",
+     "검은 배경, 표지 제목 안 보임",
+     "가름끈 보임"
+    ]
+   },
+   "same_object_evidence": "n/a",
+   "kind": "photo"
+  },
+  {
+   "key": "C05-L",
+   "file": "testdata/images/C05-L.jpg",
+   "commons_title": "File:Discarded stuff toy.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:Discarded_stuff_toy.jpg",
+   "author": "ShiminUfesoj",
+   "license": "CC0",
+   "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+   "orig_width": 3072,
+   "orig_height": 4096,
+   "observed": {
+    "object": "곰 인형(테디베어)",
+    "color": "갈색(곱슬 털), 회색 코·귀 안쪽",
+    "brand": "불명",
+    "model": "불명",
+    "features": [
+     "빨간 티셔츠 입음(I ♥ IXUS 프린트)",
+     "검은 구슬 눈",
+     "길바닥 종이 상자 위에 놓임",
+     "털이 약간 낡음"
+    ]
+   },
+   "same_object_evidence": "n/a",
+   "kind": "photo"
+  },
+  {
+   "key": "C06-F",
+   "file": "testdata/images/C06-F.jpg",
+   "commons_title": "File:Black Half-Finger Leather Gloves SAF.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:Black_Half-Finger_Leather_Gloves_SAF.jpg",
+   "author": "Ominae",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "orig_width": 4032,
+   "orig_height": 3024,
+   "observed": {
+    "object": "장갑 한 켤레(손가락 없는 하프핑거 가죽 장갑)",
+    "color": "검정",
+    "brand": "불명",
+    "model": "Half Finger Leather Black, 사이즈 M",
+    "features": [
+     "가죽 재질",
+     "손목 벨크로",
+     "손등 구멍 4개",
+     "사이즈 M 라벨 부착"
+    ]
+   },
+   "same_object_evidence": "n/a",
+   "kind": "photo"
+  },
+  {
+   "key": "C07-F",
+   "file": "testdata/images/C07-F.jpg",
+   "commons_title": "File:100% Kaschmir Wool Schal Beispiel.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:100%25_Kaschmir_Wool_Schal_Beispiel.jpg",
+   "author": "https://www.kaschmirprodukte.de",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "orig_width": 600,
+   "orig_height": 800,
+   "observed": {
+    "object": "목도리/스카프",
+    "color": "청회색(블루 단색)",
+    "brand": "없음",
+    "model": "불명",
+    "features": [
+     "단색 울/캐시미어 느낌",
+     "돌돌 말려 세워져 있음",
+     "끝단 프린지",
+     "흰 배경"
+    ]
+   },
+   "same_object_evidence": "n/a",
+   "kind": "photo"
+  },
+  {
+   "key": "C08-F",
+   "file": "testdata/images/C08-F.jpg",
+   "commons_title": "File:Eastpak Sugarbush backpack black.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:Eastpak_Sugarbush_backpack_black.jpg",
+   "author": "Ubcule",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "orig_width": 3264,
+   "orig_height": 3264,
+   "observed": {
+    "object": "백팩(배낭)",
+    "color": "검정 + 베이지(황갈색) 하단·장식",
+    "brand": "Eastpak",
+    "model": "Eastpak Sugarbush 계열",
+    "features": [
+     "앞주머니 지퍼 2개, 가죽 느낌 지퍼 손잡이",
+     "상단 가죽 손잡이",
+     "다이아몬드 모양 베이지 패치",
+     "하단 베이지 바닥"
+    ]
+   },
+   "same_object_evidence": "n/a",
+   "kind": "photo"
+  },
+  {
+   "key": "C09-F",
+   "file": "testdata/images/C09-F.jpg",
+   "commons_title": "File:CD-R King USB Flash Disk AX Series 16GB.jpg",
+   "page_url": "https://commons.wikimedia.org/wiki/File:CD-R_King_USB_Flash_Disk_AX_Series_16GB.jpg",
+   "author": "Pokéfan95",
+   "license": "CC0",
+   "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+   "orig_width": 1537,
+   "orig_height": 1183,
+   "observed": {
+    "object": "USB 메모리",
+    "color": "파랑 케이스 + 흰색 슬라이드 부분",
+    "brand": "CD-R King",
+    "model": "USB Flash Disk AX Series 16GB",
+    "features": [
+     "슬라이드(회전)식 커넥터",
+     "케이스에 16GB 표기",
+     "갈색 표면 위 촬영"
+    ]
+   },
+   "same_object_evidence": "n/a",
+   "kind": "photo"
+  },
+  {
+   "key": "C10-F",
+   "file": "testdata/images/C10-F.jpg",
+   "kind": "mock",
+   "license": "직접 제작 (CC0 로 사용 가능, 저작권 문제 없음)",
+   "author": "testdata/make_mock_images.py",
+   "observed": {
+    "object": "주민등록증 모형",
+    "color": "",
+    "brand": "없음",
+    "features": [
+     "SAMPLE/견본 표시",
+     "이름·번호는 가상 값"
+    ]
+   },
+   "same_object_evidence": "n/a"
+  }
+ ]
+}

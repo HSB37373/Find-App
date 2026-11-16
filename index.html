@@ -953,6 +953,11 @@
       <div class="menu-item-label">내 프로필</div>
       <span class="menu-item-arr">›</span>
     </div>
+    <div class="menu-item" id="menu-lab" style="display:none" onclick="closeMenu();openLab()">
+      <div class="menu-item-icon">🧪</div>
+      <div class="menu-item-label">AI 매칭 검증 (테스트 전용)</div>
+      <span class="menu-item-arr">›</span>
+    </div>
     <div class="menu-footer">
       <button class="menu-logout-btn" onclick="doLogout()">로그아웃</button>
     </div>
@@ -1039,6 +1044,9 @@ var SUPABASE_URL  = 'https://xxxxxxxxxxxx.supabase.co';
 var SUPABASE_ANON = 'your-anon-key-here';
 // 데모 모드(?demo=1): 로그인·Supabase 없이 메모리 DB로 화면만 확인 (새로고침하면 초기화)
 var DEMO = /[?&]demo=1\b/.test(location.search);
+// ?demo=1&testset=1: AI 매칭 검증용 가상 게시물 50개를 데모 메모리 DB 에만 등록 (testdata/lab.js). 실서비스 모드에서는 쓰이지 않는다.
+var TESTSET = DEMO && /[?&]testset=1\b/.test(location.search);
+function testBadge(p){return DEMO&&/^테스트계정_/.test(p.author)?'<span class="badge" style="background:#efe9ff;color:#5b4fcf">🧪 테스트 · 가상 사용자</span>':'';}
 function makeDemoSb(){
   var db={users:[],posts:[],chat_messages:[],reviews:[]}, seq=1;
   function Q(t){this.t=t;this.op='select';this.f=[];this.ord=null;this.want=false;this.one=false;}
@@ -1405,12 +1413,35 @@ async function initData(){
     var ins=await sb.from('posts').insert(seeds).select();
     ST.posts=ins.data||[];
     await seedReviews();
-    if(DEMO)await seedDemoChat();
+    if(DEMO){await seedDemoChat();await seedTestPosts();}
   } else {
     ST.posts=res.data;
   }
   await loadReviews();
   await loadMyChats();
+}
+
+// 테스트 게시물 50개(testdata/posts.json + testdata/images) — 데모(?demo=1) 메모리 DB 에만 넣는다. 실서비스(Supabase) 모드에서는 호출되지 않는다.
+// 원본은 Git 에 보관돼 있고, 접속할 때마다 같은 순서(날짜순)로 복원된다. tkey 로 중복 등록을 막는다.
+async function seedTestPosts(){
+  if(!DEMO)return;
+  try{
+    var r=await fetch('testdata/posts.json',{cache:'no-cache'});
+    if(!r.ok)throw new Error('HTTP '+r.status);
+    var recs=await r.json();
+    var have={};ST.posts.forEach(function(p){if(p.tkey)have[p.tkey]=1;});
+    recs=recs.filter(function(x){return !have[x.key];})
+      .sort(function(a,b){return a.date<b.date?-1:a.date>b.date?1:a.key<b.key?-1:1;});
+    if(!recs.length)return;
+    var rows=recs.map(function(x){
+      var c=x.place?{lat:x.place.lat,lng:x.place.lng,addr:x.place.addr,detail:x.place.detail||''}:null;
+      return {type:x.type,title:x.title,category:x.category,location:(c&&(c.detail||c.addr))||'위치 미입력',date:x.date,
+              author:x.author,desc:x.desc,status:'active',likes:[],views:0,img:x.img||null,coords:c,univ:ST.univ,tkey:x.key};
+    });
+    var ins=await sb.from('posts').insert(rows).select();
+    if(ins.error)throw ins.error;
+    ST.posts=(ins.data||[]).slice().reverse().concat(ST.posts); // id 내림차순(최신 등록이 위)
+  }catch(e){console.error('테스트 게시물 불러오기 실패',e);}
 }
 
 // ── 매너온도 ──
@@ -1656,7 +1687,7 @@ function render(){
     return '<div class="card" onclick="openDet('+p.id+')">'
       +'<div class="card-img">'+imgH+(p.img?'':ce)+'</div>'
       +'<div class="card-body">'
-        +'<div class="badges"><span class="badge '+tc+'">'+tl+'</span><span class="badge b-cat">'+ce+' '+p.category+'</span>'+chip(p)+'</div>'
+        +'<div class="badges"><span class="badge '+tc+'">'+tl+'</span><span class="badge b-cat">'+ce+' '+p.category+'</span>'+chip(p)+testBadge(p)+'</div>'
         +'<div class="card-title">'+p.title+'</div>'
         +'<div class="card-meta"><span class="author-link" onclick="event.stopPropagation();openProfile(\''+p.author+'\')">@'+p.author+'</span>'+tierBadge(p.author)+' · 📍'+p.location+' · '+fd(p.date)+'</div>'
         +'<div class="card-desc">'+(p.desc||'')+'</div>'
@@ -1739,7 +1770,7 @@ async function openDet(id){
     '<div class="det-img'+(p.img?' has-ph':'')+'">'+imgH+(p.img?'':ce)+'</div>'
     +'<div class="det-body">'
       +'<div class="badges"><span class="badge '+(p.type==='lost'?'b-lost':'b-found')+'">'+(p.type==='lost'?'분실물':'습득물')+'</span>'
-        +'<span class="badge b-cat">'+ce+' '+p.category+'</span>'+chip(p)+'</div>'
+        +'<span class="badge b-cat">'+ce+' '+p.category+'</span>'+chip(p)+testBadge(p)+'</div>'
       +'<div class="det-title">'+p.title+'</div>'
       +'<div class="det-meta">👤 <span class="author-link" onclick="openProfile(\''+p.author+'\')">@'+p.author+'</span>'+tempChip(p.author)+tierBadge(p.author)+' &nbsp;|&nbsp; 📅 '+fd(p.date)+' &nbsp;|&nbsp; 👁 '+p.views+'회</div>'
       +(p.desc?'<div class="det-desc">'+p.desc+'</div>':'')
@@ -2605,7 +2636,6 @@ function openAiFromSaved(){
   catch(e){console.error(e);toast('AI 매칭을 열지 못했어요. 게시물은 정상 등록되어 있어요');}
 }
 
-
 function toast(msg){
   var el=document.getElementById('toast');
   el.textContent=msg;el.classList.add('show');
@@ -3026,7 +3056,8 @@ function renderAi(){
   var _session=DEMO?{nickname:'데모사용자'}:getSession();
   if(DEMO)document.title='찾았대 (데모)';
   if(_session){
-    afterAuth(_session.nickname);
+    var _ready=afterAuth(_session.nickname);
+    if(TESTSET)_ready.then(function(){var s=document.createElement('script');s.src='testdata/lab.js';document.body.appendChild(s);});
   } else {
     document.getElementById('univ-scr').style.display='none';
     switchAuthTab('login');

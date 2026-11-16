@@ -1,0 +1,303 @@
+{
+ "version": 1,
+ "note": "정답표. 분실물(lost) 기준 expected = 같은 물건인 습득물. group A=정답 있음(같은 물건), B=비슷하지만 다른 물건, C=대응 없음. 일반 화면에서는 읽지 않고 테스트 랩에서만 읽는다.",
+ "lost": {
+  "A01-L": {
+   "group": "A",
+   "note": "제품명 없이 \"삼성 무선 이어폰\"으로 표현 / 사진: 갤럭시 버즈+ 케이스(같은 촬영자 연작)",
+   "expected": [
+    "A01-F"
+   ]
+  },
+  "A02-L": {
+   "group": "A",
+   "note": "모델명 없이 \"아이폰\"만 / 사진: 검은색 아이폰 뒷면(같은 촬영자 연작)",
+   "expected": [
+    "A02-F"
+   ]
+  },
+  "A03-L": {
+   "group": "A",
+   "note": "사진: SAMPLE 학생증 모형(같은 디자인을 다른 각도·배경으로 렌더링)",
+   "expected": [
+    "A03-F"
+   ]
+  },
+  "A04-L": {
+   "group": "A",
+   "note": "사진: Peet's 여행용 텀블러(같은 촬영자 연작)",
+   "expected": [
+    "A04-F"
+   ]
+  },
+  "A05-L": {
+   "group": "A",
+   "note": "지도 핀 없이 등록(분실물은 핀 선택) / 사진: 남색 우산(같은 촬영자 연작, 색은 어두운 남색)",
+   "expected": [
+    "A05-F"
+   ]
+  },
+  "A06-L": {
+   "group": "A",
+   "note": "사진: 갈색 카드지갑(같은 촬영자 연작)",
+   "expected": [
+    "A06-F"
+   ]
+  },
+  "A07-L": {
+   "group": "A",
+   "note": "사진: 검정 금속테 안경(같은 촬영자 연작)",
+   "expected": [
+    "A07-F"
+   ]
+  },
+  "A08-L": {
+   "group": "A",
+   "note": "사진: Pineng 보조배터리(같은 촬영자 연작)",
+   "expected": [
+    "A08-F"
+   ]
+  },
+  "A09-L": {
+   "group": "A",
+   "note": "사진: 넥서스 7 앞면(같은 개체의 뒷면이 습득 사진)",
+   "expected": [
+    "A09-F"
+   ]
+  },
+  "A10-L": {
+   "group": "A",
+   "note": "사진: 검정 원통형 필통(같은 촬영자 연작)",
+   "expected": [
+    "A10-F"
+   ]
+  },
+  "B01-L": {
+   "group": "B",
+   "note": "에어팟 프로(실리콘 팁) vs 일반 에어팟(막대형) — 같은 애플 에어팟, 모델 다름",
+   "expected": [],
+   "decoy": [
+    "B01-F"
+   ]
+  },
+  "B02-L": {
+   "group": "B",
+   "note": "같은 갤럭시 버즈, 색만 다름(검정 vs 흰색)",
+   "expected": [],
+   "decoy": [
+    "B02-F"
+   ]
+  },
+  "B03-L": {
+   "group": "B",
+   "note": "이어폰 본체 vs 이어폰 보호 케이스",
+   "expected": [],
+   "decoy": [
+    "B03-F"
+   ]
+  },
+  "B04-L": {
+   "group": "B",
+   "note": "검정 일반 지갑(반지갑) vs 검정 카드지갑",
+   "expected": [],
+   "decoy": [
+    "B04-F"
+   ]
+  },
+  "B05-L": {
+   "group": "B",
+   "note": "같은 브랜드(하이드로플라스크), 다른 색·크기",
+   "expected": [],
+   "decoy": [
+    "B05-F"
+   ]
+  },
+  "B06-L": {
+   "group": "B",
+   "note": "삼성 갤럭시 vs 아이폰 (브랜드·색 다름)",
+   "expected": [],
+   "decoy": [
+    "B06-F"
+   ]
+  },
+  "B07-L": {
+   "group": "B",
+   "note": "접이식 우산 vs 장우산",
+   "expected": [],
+   "decoy": [
+    "B07-F"
+   ]
+  },
+  "B08-L": {
+   "group": "B",
+   "note": "선글라스 vs 투명 렌즈 안경(은색 금속테)",
+   "expected": [],
+   "decoy": [
+    "B08-F"
+   ]
+  },
+  "B09-L": {
+   "group": "B",
+   "note": "신용카드 vs 교통카드(티머니)",
+   "expected": [],
+   "decoy": [
+    "B09-F"
+   ]
+  },
+  "B10-L": {
+   "group": "B",
+   "note": "자동차 스마트키 vs 집 열쇠 꾸러미",
+   "expected": [],
+   "decoy": [
+    "B10-F"
+   ]
+  },
+  "C01-L": {
+   "group": "C",
+   "note": "대응 습득물 없음",
+   "expected": []
+  },
+  "C02-L": {
+   "group": "C",
+   "note": "대응 습득물 없음",
+   "expected": []
+  },
+  "C03-L": {
+   "group": "C",
+   "note": "대응 습득물 없음(같은 건물에서 습득된 태블릿 A09-F 는 다른 물건)",
+   "expected": []
+  },
+  "C04-L": {
+   "group": "C",
+   "note": "대응 습득물 없음",
+   "expected": []
+  },
+  "C05-L": {
+   "group": "C",
+   "note": "대응 습득물 없음",
+   "expected": []
+  }
+ },
+ "found": {
+  "A01-F": {
+   "group": "A",
+   "note": "",
+   "partner": "A01-L"
+  },
+  "A02-F": {
+   "group": "A",
+   "note": "",
+   "partner": "A02-L"
+  },
+  "A03-F": {
+   "group": "A",
+   "note": "",
+   "partner": "A03-L"
+  },
+  "A04-F": {
+   "group": "A",
+   "note": "",
+   "partner": "A04-L"
+  },
+  "A05-F": {
+   "group": "A",
+   "note": "",
+   "partner": "A05-L"
+  },
+  "A06-F": {
+   "group": "A",
+   "note": "",
+   "partner": "A06-L"
+  },
+  "A07-F": {
+   "group": "A",
+   "note": "",
+   "partner": "A07-L"
+  },
+  "A08-F": {
+   "group": "A",
+   "note": "",
+   "partner": "A08-L"
+  },
+  "A09-F": {
+   "group": "A",
+   "note": "",
+   "partner": "A09-L"
+  },
+  "A10-F": {
+   "group": "A",
+   "note": "",
+   "partner": "A10-L"
+  },
+  "B01-F": {
+   "group": "B",
+   "note": "",
+   "decoy": "B01-L"
+  },
+  "B02-F": {
+   "group": "B",
+   "note": "",
+   "decoy": "B02-L"
+  },
+  "B04-F": {
+   "group": "B",
+   "note": "",
+   "decoy": "B04-L"
+  },
+  "B05-F": {
+   "group": "B",
+   "note": "",
+   "decoy": "B05-L"
+  },
+  "B06-F": {
+   "group": "B",
+   "note": "",
+   "decoy": "B06-L"
+  },
+  "B08-F": {
+   "group": "B",
+   "note": "",
+   "decoy": "B08-L"
+  },
+  "B09-F": {
+   "group": "B",
+   "note": "",
+   "decoy": "B09-L"
+  },
+  "B10-F": {
+   "group": "B",
+   "note": "",
+   "decoy": "B10-L"
+  },
+  "C06-F": {
+   "group": "C",
+   "note": "대응 분실물 없음"
+  },
+  "C07-F": {
+   "group": "C",
+   "note": "대응 분실물 없음"
+  },
+  "C08-F": {
+   "group": "C",
+   "note": "대응 분실물 없음"
+  },
+  "C09-F": {
+   "group": "C",
+   "note": "대응 분실물 없음"
+  },
+  "C10-F": {
+   "group": "C",
+   "note": "대응 분실물 없음 (신분증 모형)"
+  },
+  "B03-F": {
+   "group": "B",
+   "note": "사진 누락(Commons 에서 이어폰 보호 케이스 사진을 찾지 못함)",
+   "decoy": "B03-L"
+  },
+  "B07-F": {
+   "group": "B",
+   "note": "",
+   "decoy": "B07-L"
+  }
+ }
+}
